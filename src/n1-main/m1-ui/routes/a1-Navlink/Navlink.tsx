@@ -21,7 +21,7 @@ export const Nav = () => {
                 <NavLink to={pathEnum.profile}>Profile</NavLink>
             </div>
             <div >
-                <NavLink to={pathEnum.test}>test</NavLink>
+                <NavLink to={pathEnum.test}>Test</NavLink>
             </div>
         </nav>
     )
