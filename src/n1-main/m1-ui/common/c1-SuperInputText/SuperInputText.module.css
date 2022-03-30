@@ -1,0 +1,22 @@
+.superInput {
+    width: 200px;
+    height: 20px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+
+.errorInput {
+    width: 200px;
+    height: 20px;
+    border-radius: 4px;
+    border: 3px solid rgb(18, 43, 18);
+    background-color: #f8f8f8;
+}
+
+.error {
+    color: red;
+}
