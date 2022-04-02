@@ -1,22 +1,49 @@
+import { Dispatch } from "redux"
+import { profileAPI } from "../../n4-dal/API/CardsAPI"
+
+// types 
+export type userType = {
+    name: string
+    avatar: string 
+}
+
 export type ProfileReducerType = {
-    userName: string
+   user: userType
 }
 
 const initialState: ProfileReducerType = {
-    userName: 'User name'
+    user: {
+        name: 'User Name',
+        avatar: ''
+    }
 }
 
 export const ProfileReducer = (state: ProfileReducerType = initialState, action: MainActionType): ProfileReducerType => {
     switch(action.type) {
-        case 'PROFILE/SET-USER-NAME': {
-            return {...state, userName: action.userName}
+        case 'PROFILE/UPDATE-USER': {
+            return {...state, user: action.user}
         }
     }
     return state
 }
 
+// types for actions
+
 export type MainActionType = setUserNameACtype
 
 export type setUserNameACtype = ReturnType<typeof setUserNameAC>
 
-export const setUserNameAC = (userName: string) => ({type: 'PROFILE/SET-USER-NAME', userName} as const)
+// actions
+
+export const setUserNameAC = (user: userType) => ({type: 'PROFILE/UPDATE-USER', user} as const)
+
+//tunks
+
+export const updateUserTC = (user:{name?: string, avatar?: string}) => {
+    return (dispatch: Dispatch) => {
+        return profileAPI.updateUserName(user)
+        .then((res) => {
+           debugger 
+        })
+    }
+}

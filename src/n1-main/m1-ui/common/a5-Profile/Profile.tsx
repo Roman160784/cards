@@ -2,17 +2,18 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { EditableSpan } from '../c4-EditableSpan/EditableSpan';
 import {RootReducerType} from '../../../../n3-redux/a1-store/store'
-import { setUserNameAC } from '../../../../n3-redux/a6-ProfileReducer/ProfileReducer';
+import { updateUserTC } from '../../../../n3-redux/a6-ProfileReducer/ProfileReducer';
+
 
 
 
 export const Profile = () => {
 
     const dispatch = useDispatch()
-    const userName = useSelector<RootReducerType, string>(state => state.profile.userName)
+    const userName = useSelector<RootReducerType, string>(state => state.profile.user.name)
 
-const changeTitleHandler = (title: string) => {
-    dispatch(setUserNameAC(title))
+const changeTitleHandler = (name: string) => {
+    dispatch(updateUserTC({name}))
 }
 
     return (
