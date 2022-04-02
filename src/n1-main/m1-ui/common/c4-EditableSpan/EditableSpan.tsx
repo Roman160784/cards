@@ -17,7 +17,10 @@ export const EditableSpan = ({ title, changeTitle, ...props }: EditableSpanProps
     }
 
     const onBlurHandler = () => {
-        if (value.trim() !== '') {
+        if(value.length > 30){
+            setError('max user name 30')
+        }
+         else if (value.trim() !== '') {
             changeTitle(value)
             setValue('')
             setMode(false)
