@@ -12,7 +12,7 @@ export const Nav = () => {
                 <NavLink to={pathEnum.registration}>Registration</NavLink>
             </div>
             <div >
-                <NavLink to={pathEnum.restorePassword}>Restore Password</NavLink>
+                <NavLink to={pathEnum.restorePassword}>Forgot Password</NavLink>
             </div>
             <div >
                 <NavLink to={pathEnum.newPassword}>New Password</NavLink>
