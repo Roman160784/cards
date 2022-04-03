@@ -1,38 +1,47 @@
 import {Dispatch} from "redux";
+import { AxiosError } from "axios"
+import {authLoginAPI} from "../../n4-dal/API/CardsAPI";
 
-export type LoginReducerType = {
+export type LoginType = {
     email: string
     password: string
     rememberMe?: boolean
 }
 
+export type LoginReducerType = {
+    data: LoginType
+}
+
 const initialState: LoginReducerType = {
-    email: "relt@gmail.com",
-    password: "wrTsPeIslmkdrka",
-    rememberMe: true
+    data: {
+        email: "",
+        password: "",
+    }
 }
 
 export const LoginReducer = (state: LoginReducerType = initialState, action: MainActionType): LoginReducerType => {
     switch (action.type) {
         case "SET-LOGIN": {
-            return {...state, email: action.email, password: action.password}
+            return {...state, data: action.data}
         }
         default:
             return {...state}
     }
 }
 
-export const setLoginAC = (email: string,password:string) =>
-    ({type: 'SET-LOGIN', email,password})
+export const setLoginAC = (data: LoginType) =>
+    ({type: 'SET-LOGIN', data})
 
-export const loginTC = (email:string,password:string) => (dispatch: Dispatch) => {
-    authLoginAPI.login(email,password)
-        .then((res:any) => {
-                dispatch(setLoginAC(email,password))
+export const loginTC = (data:LoginType) => (dispatch: Dispatch) => {
+    debugger
+    authLoginAPI.login(data)
+        .then((res) => {
+                dispatch(setLoginAC(data))
         })
         .catch((e: AxiosError) => {
-           e.response ? e.response.data.error : (e.message + ', more details in the console')
+          const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
             console.log('Error: ', {...e})
+            console.log(error)
         })
 }
 
