@@ -1,7 +1,8 @@
 import React from 'react';
-import SuperInputText from "../c1-SuperInputText/SuperInputText";
 import {InputField} from "./InputField";
 import {Button} from "./Button";
+import {useDispatch} from "react-redux";
+import {loginTC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
 
 export const Login = () => {
     return (
