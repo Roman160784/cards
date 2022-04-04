@@ -23,6 +23,7 @@ export const Main = () => {
 
 
     return (
+     
         <HashRouter>
             <div>
                 <Nav />
