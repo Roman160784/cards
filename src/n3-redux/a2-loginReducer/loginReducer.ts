@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import { AxiosError } from "axios"
+import {AxiosError} from "axios"
 import {authLoginAPI} from "../../n4-dal/API/CardsAPI";
 
 export type LoginType = {
@@ -10,39 +10,50 @@ export type LoginType = {
 
 export type LoginReducerType = {
     data: LoginType
+    isLogin: boolean
 }
 
 const initialState: LoginReducerType = {
     data: {
         email: "",
         password: "",
-    }
+    },
+    isLogin: false,
 }
 
 export const LoginReducer = (state: LoginReducerType = initialState, action: MainActionType): LoginReducerType => {
     switch (action.type) {
-        case "SET-LOGIN": {
+        case "LOGIN/SET-LOGIN": {
             return {...state, data: action.data}
+        }
+        case "LOGIN/SET-IS-LOGIN": {
+            return {...state, isLogin: action.isLogin}
         }
         default:
             return {...state}
     }
 }
 
-export const setLoginAC = (data: LoginType) =>
-    ({type: 'SET-LOGIN', data})
+export type MainActionType = ReturnType<typeof setLoginAC> | ReturnType<typeof setIsLoginAC>
 
-export const loginTC = (data:LoginType) => (dispatch: Dispatch) => {
-    debugger
+export const setLoginAC = (data: LoginType) =>
+    ({type: 'LOGIN/SET-LOGIN', data} as const)
+
+export const setIsLoginAC = (isLogin: boolean) =>
+    ({type: 'LOGIN/SET-IS-LOGIN', isLogin} as const)
+
+export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
     authLoginAPI.login(data)
         .then((res) => {
+            if (res.data) {
                 dispatch(setLoginAC(data))
+                dispatch(setIsLoginAC(true))
+            }
         })
         .catch((e: AxiosError) => {
-          const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
             console.log('Error: ', {...e})
             console.log(error)
         })
 }
 
-export type MainActionType = ReturnType<typeof setLoginAC>

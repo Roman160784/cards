@@ -1,7 +1,10 @@
 import React from 'react';
 import {useFormik} from "formik";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
+import {RootReducerType} from "../../../../n3-redux/a1-store/store";
+import {pathEnum} from "../../routes/a0-Main/Main";
+import {Navigate} from "react-router-dom";
 
 type FormikErrorType = {
     email?: string
@@ -11,6 +14,7 @@ type FormikErrorType = {
 
 export const Login = () => {
     const dispatch = useDispatch()
+    const isLogin = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
 
     const formik = useFormik({
         initialValues: {
@@ -27,8 +31,8 @@ export const Login = () => {
             }
             if (!values.password) {
                 errors.password = 'Required';
-            } else if (values.password.length < 10) {
-                errors.password = 'Password must be 10 characters or more'
+            } else if (values.password.length < 4) {
+                errors.password = 'Password must be 4 characters or more'
             }
             return errors
         },
@@ -37,6 +41,11 @@ export const Login = () => {
             // alert(JSON.stringify(values, null, 2));
         },
     });
+
+    if (isLogin) {
+        return <Navigate to={pathEnum.profile}/>
+    }
+
     return (
         <form onSubmit={formik.handleSubmit}>
             <h1>Login</h1>
