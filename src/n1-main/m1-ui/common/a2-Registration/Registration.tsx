@@ -25,9 +25,7 @@ export const Registration = () => {
     });
 
     if(isRegistration){
-        console.log(isRegistration);
-        
-       return <Navigate to={pathEnum.profile}/>
+       return <Navigate to={pathEnum.login}/>
     }
 
     return (
