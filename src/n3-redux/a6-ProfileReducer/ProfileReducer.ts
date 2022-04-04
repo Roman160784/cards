@@ -18,13 +18,16 @@ const initialState: ProfileReducerType = {
     }
 }
 
+//reducer
+
 export const ProfileReducer = (state: ProfileReducerType = initialState, action: MainActionType): ProfileReducerType => {
     switch(action.type) {
         case 'PROFILE/UPDATE-USER': {
             return {...state, user: action.user}
         }
-    }
-    return state
+        default:
+            return {...state}
+    } 
 }
 
 // types for actions
@@ -41,7 +44,7 @@ export const setUserNameAC = (user: userType) => ({type: 'PROFILE/UPDATE-USER', 
 
 export const updateUserTC = (user:{name?: string, avatar?: string}) => {
     return (dispatch: Dispatch) => {
-        return profileAPI.updateUserName(user)
+        return profileAPI.updateUser(user)
         .then((res) => {
            debugger 
         })
