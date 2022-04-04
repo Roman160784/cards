@@ -37,11 +37,11 @@ export const Registration = () => {
             </div>
             <div>
                 <p style={{ opacity: '0.5' }}>Password</p>
-                <input {...formik.getFieldProps('password')} />
+                <input type='password' {...formik.getFieldProps('password')} />
             </div>
             <div>
                 <p style={{ opacity: '0.5' }}>Confrim password</p>
-                <input {...formik.getFieldProps('confrimPassword')} />
+                <input type='password' {...formik.getFieldProps('confrimPassword')} />
             </div>
 
             <button type="submit">Register</button>

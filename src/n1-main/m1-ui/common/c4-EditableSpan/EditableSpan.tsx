@@ -1,4 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { RootReducerType } from '../../../../n3-redux/a1-store/store';
+import { pathEnum } from '../../routes/a0-Main/Main';
+
 
 type EditableSpanPropsType = {
     title: string
@@ -7,6 +12,10 @@ type EditableSpanPropsType = {
 
 export const EditableSpan = ({ title, changeTitle, ...props }: EditableSpanPropsType) => {
 
+    const isLogin = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
+    
+   let navigate = useNavigate()
+
     const [value, setValue] = useState<string>(title)
     const [mode, setMode] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
@@ -14,6 +23,7 @@ export const EditableSpan = ({ title, changeTitle, ...props }: EditableSpanProps
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)
         setError(null)
+        if (!isLogin) navigate(pathEnum.login)
     }
 
     const onBlurHandler = () => {

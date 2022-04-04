@@ -16,8 +16,8 @@ export const authLoginAPI = {
 }
 
 export const profileAPI = {
-    updateUser(user: updateUserNameType) {
-        return instance.put<updateUserNameType, AxiosResponse<updateUserResponseType>>('auth/me', user)
+    updateUser(user: UserRequestType) {
+        return instance.put<UserRequestType, AxiosResponse<updateUserResponseType>>('auth/me', user)
     },
 }
 
@@ -42,14 +42,30 @@ export type LoginResponseType = {
     error?: string
 }
 
+export type UserRequestType = {
+name? : string
+avatar? : string
+}
+
 export type updateUserResponseType = {
-    updatedUser: updateUserNameType
+    updatedUser: updateUserType
     error?: string
 }
 
-export type updateUserNameType = {
-    name?: string
-    avatar?: string
+export type updateUserType = {
+    avatar: string
+    created: string
+    email: string
+    isAdmin: boolean
+    name: string
+    publicCardPacksCount: number
+    rememberMe: boolean
+    token: string
+    tokenDeathTime: number
+    updated: string
+    verified: boolean
+    __v: number
+    _id: string
 }
 
 export type AddUserResponseType = {

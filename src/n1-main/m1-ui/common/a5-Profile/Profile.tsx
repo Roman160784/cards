@@ -7,22 +7,24 @@ import { updateUserTC } from '../../../../n3-redux/a6-ProfileReducer/ProfileRedu
 
 
 
+
 export const Profile = () => {
 
+    const userName = useSelector<RootReducerType, string | null>(state => state.profile.user.name)
     const dispatch = useDispatch()
-    const userName = useSelector<RootReducerType, string>(state => state.profile.user.name)
-
+    
 const changeTitleHandler = (name: string) => {
     dispatch(updateUserTC({name}))
 }
 
+ 
     return (
         <div>
             <div>
                 <div>
                     <div>Place for photo</div>
                     <div>
-                        <EditableSpan title={userName} changeTitle={(title: string) => {changeTitleHandler(title)}} />
+                        <EditableSpan title={userName? userName: 'User Name'} changeTitle={(title: string) => {changeTitleHandler(title)}} />
                     </div>
                     <div>Front-end developer</div>
                 </div>

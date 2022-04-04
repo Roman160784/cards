@@ -16,6 +16,7 @@ export const Login = () => {
     const dispatch = useDispatch()
     const isLogin = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
 
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -42,10 +43,8 @@ export const Login = () => {
         },
     });
 
-    if (isLogin) {
-        return <Navigate to={pathEnum.profile}/>
-    }
-
+    if (isLogin) return <Navigate to={pathEnum.profile}/>
+        
     return (
         <form onSubmit={formik.handleSubmit}>
             <h1>Login</h1>

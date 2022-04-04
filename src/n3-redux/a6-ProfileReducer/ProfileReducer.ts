@@ -1,10 +1,23 @@
+import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import { profileAPI } from "../../n4-dal/API/CardsAPI"
+import { setIsLoginAC } from "../a2-loginReducer/loginReducer"
 
 // types 
 export type userType = {
-    name: string
     avatar: string
+    created: string
+    email: string
+    isAdmin: boolean
+    name: string | null
+    publicCardPacksCount: number
+    rememberMe: boolean
+    token: string
+    tokenDeathTime: number
+    updated: string
+    verified: boolean
+    __v: number
+    _id: string
 }
 
 export type ProfileReducerType = {
@@ -13,9 +26,21 @@ export type ProfileReducerType = {
 
 const initialState: ProfileReducerType = {
     user: {
-        name: 'User Name',
-        avatar: ''
-    }
+        avatar: '',
+        created: '',
+        email: '',
+        isAdmin: false,
+        name: null,
+        publicCardPacksCount: 0,
+        rememberMe: false,
+        token: '',
+        tokenDeathTime: 0,
+        updated: '',
+        verified: false,
+        __v: 0,
+        _id: ''
+    },
+   
 }
 
 //reducer
@@ -23,8 +48,9 @@ const initialState: ProfileReducerType = {
 export const ProfileReducer = (state: ProfileReducerType = initialState, action: MainActionType): ProfileReducerType => {
     switch (action.type) {
         case 'PROFILE/UPDATE-USER': {
-            return { ...state, user: action.user }
+            return  { ...state, user: action.user } 
         }
+
         default:
             return { ...state }
     }
@@ -32,13 +58,15 @@ export const ProfileReducer = (state: ProfileReducerType = initialState, action:
 
 // types for actions
 
-export type MainActionType = setUserNameACtype
+export type MainActionType = setUserACtype 
 
-export type setUserNameACtype = ReturnType<typeof setUserNameAC>
+export type setUserACtype = ReturnType<typeof setUserAC>
+
 
 // actions
 
-export const setUserNameAC = (user: userType) => ({ type: 'PROFILE/UPDATE-USER', user } as const)
+export const setUserAC = (user: userType) => ({ type: 'PROFILE/UPDATE-USER', user } as const)
+
 
 //tunks
 
@@ -46,7 +74,12 @@ export const updateUserTC = (user: { name?: string, avatar?: string }) => {
     return (dispatch: Dispatch) => {
         return profileAPI.updateUser(user)
             .then((res) => {
-                debugger
+                dispatch(setUserAC(res.data.updatedUser))
+            })
+            .catch((err: AxiosError) => {
+                if(err.response?.data.error){
+                    dispatch(setIsLoginAC(false))
+                }
             })
     }
 }

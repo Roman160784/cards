@@ -58,10 +58,10 @@ export const addUserTC = (user: userType) => {
                 dispatch(addUserAC(true))   
             }
         })
-        .catch((err: any) => {
+        .catch((err: AxiosError) => {
             //good method for reading error
             // console.log({...err});
-            dispatch(registrationErrorAC(err.response.data.error)) 
+            dispatch(registrationErrorAC(err.response?.data.error)) 
         })
     }
 }
