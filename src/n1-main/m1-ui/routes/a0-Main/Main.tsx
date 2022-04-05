@@ -6,6 +6,7 @@ import { NewPassword } from "../../common/a4-NewPassword/NewRassword"
 import { Profile } from "../../common/a5-Profile/Profile"
 import { TestComponent } from "../../common/a6-test/test"
 import { Nav } from "../a1-Navlink/Navlink"
+import classes from "./Main.module.css"
 
 export enum pathEnum {
     login = '/login',
@@ -27,7 +28,8 @@ export const Main = () => {
         <HashRouter>
             <div>
                 <Nav />
-                <div>
+                <div className={classes.blockComponents}>
+                    <div className={classes.content}>
                     <Routes>
                         <Route path={pathEnum.login} element={<Login />} />
                         <Route path={pathEnum.registration} element={<Registration />} />
@@ -38,6 +40,7 @@ export const Main = () => {
                         <Route path={pathEnum.error404} element={<h1 style={{ textAlign: 'center', color: 'red' }}>404: PAGE NOT FOUND</h1>} />
                         <Route path={pathEnum.empty} element={<Navigate to={pathEnum.error404} />} />
                     </Routes>
+                    </div>
                 </div>
             </div>
         </HashRouter>

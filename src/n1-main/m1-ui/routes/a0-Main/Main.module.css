@@ -1,0 +1,17 @@
+.blockComponents {
+    display: flex;
+    justify-content: center;
+    margin: 50px auto 0;
+    padding: 30px;
+    width: 70%;
+    height: 500px;
+    background: linear-gradient(180deg, #86f75e 0%, #228427 100%)
+}
+
+.content {
+    border: 1px solid white;
+    background-color: white;
+    width: 350px;
+    height: 470px;
+    margin: auto;
+}
