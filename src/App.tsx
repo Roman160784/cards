@@ -23,6 +23,7 @@ function App() {
 
 
   if (!initialised) return <Preloader />
+      //This dont work
   // if (!auth) return <Navigate to={pathEnum.login}/>
   // <Navigate to={pathEnum.login}/>
 
