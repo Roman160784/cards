@@ -13,13 +13,18 @@ function App() {
   const dispatch = useDispatch()
   const loading = useSelector<RootReducerType, boolean>(state => state.app.loading)
   const auth = useSelector<RootReducerType, boolean>(state => state.app.auth)
+  const initialised = useSelector<RootReducerType, boolean>(state => state.app.initialised)
 
   useEffect(() => {
     dispatch(isAuthTC())
 
   }, [])
 
+
+
+  if (!initialised) return <Preloader />
   // if (!auth) return <Navigate to={pathEnum.login}/>
+  // <Navigate to={pathEnum.login}/>
 
   return (
     <div className="App">

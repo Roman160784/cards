@@ -45,7 +45,7 @@ export const Registration = () => {
             </div>
 
             <button type="submit">Register</button>
-            <button >Cancel</button>
+            <button> Cancel </button>
         </form>
     );
 
