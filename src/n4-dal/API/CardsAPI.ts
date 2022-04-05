@@ -1,6 +1,6 @@
-import axios, {AxiosResponse} from "axios";
-import {userType} from "../../n3-redux/a3-RegistrationReducer/RegistrationReducer";
-import {LoginType} from "../../n3-redux/a2-loginReducer/loginReducer";
+import axios, { AxiosResponse } from "axios";
+import { userType } from "../../n3-redux/a3-RegistrationReducer/RegistrationReducer";
+import { LoginType } from "../../n3-redux/a2-loginReducer/loginReducer";
 
 
 export const instance = axios.create({
@@ -9,6 +9,13 @@ export const instance = axios.create({
 })
 
 //API
+
+export const appAPI = {
+    me() {
+        return instance.post<LoginResponseType>('auth/me')
+    }
+}
+
 export const authLoginAPI = {
     login(data: LoginType) {
         return instance.post<LoginType, AxiosResponse<LoginResponseType>>('auth/login', data)
@@ -42,9 +49,10 @@ export type LoginResponseType = {
     error?: string
 }
 
+
 export type UserRequestType = {
-name? : string
-avatar? : string
+    name?: string
+    avatar?: string
 }
 
 export type updateUserResponseType = {
@@ -54,7 +62,7 @@ export type updateUserResponseType = {
 
 export type updateUserType = {
     avatar: string
-    created: string
+    created: Date
     email: string
     isAdmin: boolean
     name: string
@@ -62,7 +70,7 @@ export type updateUserType = {
     rememberMe: boolean
     token: string
     tokenDeathTime: number
-    updated: string
+    updated: Date
     verified: boolean
     __v: number
     _id: string

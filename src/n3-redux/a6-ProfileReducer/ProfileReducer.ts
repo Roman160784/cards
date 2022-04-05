@@ -5,20 +5,22 @@ import { setIsLoginAC } from "../a2-loginReducer/loginReducer"
 
 // types 
 export type userType = {
-    avatar: string
-    created: string
+    avatar?: string
+    created: Date | null
     email: string
     isAdmin: boolean
     name: string | null
     publicCardPacksCount: number
     rememberMe: boolean
-    token: string
-    tokenDeathTime: number
-    updated: string
+    token?: string
+    tokenDeathTime?: number
+    updated: Date | null
     verified: boolean
-    __v: number
+    __v?: number
     _id: string
+    error?: string
 }
+
 
 export type ProfileReducerType = {
     user: userType
@@ -27,7 +29,7 @@ export type ProfileReducerType = {
 const initialState: ProfileReducerType = {
     user: {
         avatar: '',
-        created: '',
+        created: null,
         email: '',
         isAdmin: false,
         name: null,
@@ -35,12 +37,12 @@ const initialState: ProfileReducerType = {
         rememberMe: false,
         token: '',
         tokenDeathTime: 0,
-        updated: '',
+        updated: null,
         verified: false,
         __v: 0,
         _id: ''
     },
-   
+
 }
 
 //reducer
@@ -48,7 +50,7 @@ const initialState: ProfileReducerType = {
 export const ProfileReducer = (state: ProfileReducerType = initialState, action: MainActionType): ProfileReducerType => {
     switch (action.type) {
         case 'PROFILE/UPDATE-USER': {
-            return  { ...state, user: action.user } 
+            return { ...state, user: action.user }
         }
 
         default:
@@ -58,7 +60,7 @@ export const ProfileReducer = (state: ProfileReducerType = initialState, action:
 
 // types for actions
 
-export type MainActionType = setUserACtype 
+export type MainActionType = setUserACtype
 
 export type setUserACtype = ReturnType<typeof setUserAC>
 
@@ -77,7 +79,7 @@ export const updateUserTC = (user: { name?: string, avatar?: string }) => {
                 dispatch(setUserAC(res.data.updatedUser))
             })
             .catch((err: AxiosError) => {
-                if(err.response?.data.error){
+                if (err.response?.data.error) {
                     dispatch(setIsLoginAC(false))
                 }
             })

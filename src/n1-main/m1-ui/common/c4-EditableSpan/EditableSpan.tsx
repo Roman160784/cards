@@ -14,7 +14,7 @@ export const EditableSpan = ({ title, changeTitle, ...props }: EditableSpanProps
 
     const isLogin = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
     
-   let navigate = useNavigate()
+    const navigate = useNavigate()
 
     const [value, setValue] = useState<string>(title)
     const [mode, setMode] = useState<boolean>(false)

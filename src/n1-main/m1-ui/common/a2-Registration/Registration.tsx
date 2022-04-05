@@ -16,7 +16,7 @@ export const Registration = () => {
         initialValues: {
             email: '',
             password: '',
-           
+
         },
         onSubmit: values => {
             dispatch(addUserTC(values))
@@ -24,9 +24,9 @@ export const Registration = () => {
         },
     });
 
-    if(isRegistration){
-       return <Navigate to={pathEnum.login}/>
-    }
+    if (isRegistration) return <Navigate to={pathEnum.login} />
+
+
 
     return (
         <form onSubmit={formik.handleSubmit}>

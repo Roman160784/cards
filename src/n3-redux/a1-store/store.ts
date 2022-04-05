@@ -5,6 +5,7 @@ import {RegistrtionReducer} from "../a3-RegistrationReducer/RegistrationReducer"
 import {RestoreRasswordReducer} from "../a4-RestoreRasswordReducer/RestoreRasswordRducer";
 import {NewRasswordReducer} from "../a5-NewRasswordReducer/NewRasswordRducer";
 import {ProfileReducer} from "../a6-ProfileReducer/ProfileReducer";
+import { AppReducer } from "../a7-AppReducer/AppReducer";
 
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     restorePassword: RestoreRasswordReducer,
     newPassword: NewRasswordReducer,
     profile: ProfileReducer,
+    app: AppReducer,
 
 })
 

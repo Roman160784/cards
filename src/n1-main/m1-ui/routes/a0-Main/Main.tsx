@@ -21,7 +21,6 @@ export enum pathEnum {
 
 export const Main = () => {
 
-
     return (
      
         <HashRouter>
