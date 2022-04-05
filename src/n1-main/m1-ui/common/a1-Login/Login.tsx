@@ -6,7 +6,7 @@ import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {pathEnum} from "../../routes/a0-Main/Main";
 import {Navigate} from "react-router-dom";
 
-type FormikErrorType = {
+export type FormikErrorType = {
     email?: string
     password?: string
     rememberMe?: boolean
@@ -32,8 +32,8 @@ export const Login = () => {
             }
             if (!values.password) {
                 errors.password = 'Required';
-            } else if (values.password.length < 4) {
-                errors.password = 'Password must be 4 characters or more'
+            } else if (values.password.length < 6) {
+                errors.password = 'Password must be 7 characters or more'
             }
             return errors
         },

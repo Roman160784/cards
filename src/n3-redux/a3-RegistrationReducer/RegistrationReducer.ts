@@ -13,7 +13,7 @@ export type userType = {
 
 type RegistrtionReducerType = {
     registration: boolean
-    registrationError: string
+    registrationError: string | null
 }
 
 const initialState: RegistrtionReducerType = {
@@ -46,7 +46,7 @@ export type registrationErrorACtype = ReturnType<typeof registrationErrorAC>
 //actions
 
 export const addUserAC = (success: boolean) => ({ type: 'REGISTRATION/ADD-USER', success } as const)
-export const registrationErrorAC = (error: string) => ({ type: 'REGISTRATION/REGISTRATION-ERROR', error } as const)
+export const registrationErrorAC = (error: string | null) => ({ type: 'REGISTRATION/REGISTRATION-ERROR', error } as const)
 
 //tunks
 
