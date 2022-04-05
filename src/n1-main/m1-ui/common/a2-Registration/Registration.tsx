@@ -1,8 +1,8 @@
-
+import * as Yup from 'yup';
 import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUserTC } from '../../../../n3-redux/a3-RegistrationReducer/RegistrationReducer';
+import {addUserTC, registrationErrorAC} from '../../../../n3-redux/a3-RegistrationReducer/RegistrationReducer';
 import { RootReducerType } from '../../../../n3-redux/a1-store/store';
 import { Navigate } from 'react-router-dom';
 import { pathEnum } from '../../routes/a0-Main/Main';
