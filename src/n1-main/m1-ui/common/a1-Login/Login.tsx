@@ -1,12 +1,12 @@
 import React from 'react';
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {loginTC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
+import {loginTC, setLoginErrorAC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {pathEnum} from "../../routes/a0-Main/Main";
 import {Navigate} from "react-router-dom";
 
-type FormikErrorType = {
+export type FormikErrorType = {
     email?: string
     password?: string
     rememberMe?: boolean
@@ -15,6 +15,7 @@ type FormikErrorType = {
 export const Login = () => {
     const dispatch = useDispatch()
     const isLogin = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
+    const error = useSelector<RootReducerType, string | null>(state => state.login.error)
 
 
     const formik = useFormik({
@@ -32,13 +33,14 @@ export const Login = () => {
             }
             if (!values.password) {
                 errors.password = 'Required';
-            } else if (values.password.length < 4) {
-                errors.password = 'Password must be 4 characters or more'
+            } else if (values.password.length < 6) {
+                errors.password = 'Password must be 7 characters or more'
             }
             return errors
         },
         onSubmit: values => {
             dispatch(loginTC(values))
+            dispatch(setLoginErrorAC(null))
             // alert(JSON.stringify(values, null, 2));
         },
     });
@@ -62,6 +64,7 @@ export const Login = () => {
                 />
                 {formik.touched.password && formik.errors.password ?
                     <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
+                <div style={{color: 'red'}}>{error}</div>
             </div>
             <div>
                 <input type={"checkbox"}

@@ -70,7 +70,7 @@ export type setUserACtype = ReturnType<typeof setUserAC>
 export const setUserAC = (user: userType) => ({ type: 'PROFILE/UPDATE-USER', user } as const)
 
 
-//tunks
+//thunks
 
 export const updateUserTC = (user: { name?: string, avatar?: string }) => {
     return (dispatch: Dispatch) => {
