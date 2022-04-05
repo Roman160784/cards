@@ -8,7 +8,7 @@ import { registrationAPI } from "../../n4-dal/API/CardsAPI"
 export type userType = {
     email: string
     password: string
-    confrimPassword?: string
+    confirmPassword?: string
 }
 
 type RegistrtionReducerType = {
