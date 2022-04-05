@@ -1,17 +1,16 @@
+
 import React from 'react';
-import {useFormik} from 'formik';
-import {useDispatch, useSelector} from 'react-redux';
-import {addUserTC, registrationErrorAC} from '../../../../n3-redux/a3-RegistrationReducer/RegistrationReducer';
-import {RootReducerType} from '../../../../n3-redux/a1-store/store';
-import {Navigate} from 'react-router-dom';
-import {pathEnum} from '../../routes/a0-Main/Main';
-import * as Yup from 'yup'
+import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUserTC } from '../../../../n3-redux/a3-RegistrationReducer/RegistrationReducer';
+import { RootReducerType } from '../../../../n3-redux/a1-store/store';
+import { Navigate } from 'react-router-dom';
+import { pathEnum } from '../../routes/a0-Main/Main';
 
 export const Registration = () => {
 
     const isRegistration = useSelector<RootReducerType, boolean>(state => state.registration.registration)
     const dispatch = useDispatch()
-
 
     const formik = useFormik({
         initialValues: {
@@ -37,15 +36,15 @@ export const Registration = () => {
         },
     });
 
-    if (isRegistration) {
-        return <Navigate to={pathEnum.login}/>
-    }
+    if (isRegistration) return <Navigate to={pathEnum.login} />
+
+
 
     return (
         <form onSubmit={formik.handleSubmit}>
             <label htmlFor="email">Sing Up</label>
             <div>
-                <p style={{opacity: '0.5'}}>Email</p>
+                <p style={{ opacity: '0.5' }}>Email</p>
                 <input {...formik.getFieldProps('email')} />
                 {formik.touched.email && formik.errors.email ?
                     <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
@@ -64,7 +63,7 @@ export const Registration = () => {
             </div>
 
             <button type="submit">Register</button>
-            <button>Cancel</button>
+            <button> Cancel </button>
         </form>
     );
 
