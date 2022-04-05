@@ -7,7 +7,7 @@ import {pathEnum} from "../../routes/a0-Main/Main";
 import {Navigate, NavLink} from "react-router-dom";
 import classes from './Login.module.css'
 
-type FormikErrorType = {
+export type FormikErrorType = {
     email?: string
     password?: string
     rememberMe?: boolean
@@ -17,6 +17,7 @@ export const Login = () => {
     const dispatch = useDispatch()
     const isLogin = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
     const error = useSelector<RootReducerType, string | null>(state => state.login.error)
+
 
     const formik = useFormik({
         initialValues: {
@@ -33,8 +34,8 @@ export const Login = () => {
             }
             if (!values.password) {
                 errors.password = 'Required';
-            } else if (values.password.length < 4) {
-                errors.password = 'Password must be 4 characters or more'
+            } else if (values.password.length < 6) {
+                errors.password = 'Password must be 7 characters or more'
             }
             return errors
         },
@@ -45,10 +46,8 @@ export const Login = () => {
         },
     });
 
-    if (isLogin) {
-        return <Navigate to={pathEnum.profile}/>
-    }
-
+    if (isLogin) return <Navigate to={pathEnum.profile}/>
+        
     return (
         <form onSubmit={formik.handleSubmit} className={classes.loginForm}>
             <h1 className={classes.headerLogin}>Login</h1>

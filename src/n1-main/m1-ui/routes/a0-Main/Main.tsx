@@ -22,10 +22,9 @@ export enum pathEnum {
 
 export const Main = () => {
 
-
     return (
      
-        <HashRouter>
+        
             <div>
                 <Nav />
                 <div className={classes.blockComponents}>
@@ -43,6 +42,6 @@ export const Main = () => {
                     </div>
                 </div>
             </div>
-        </HashRouter>
+      
     )
 }

@@ -8,12 +8,12 @@ import { registrationAPI } from "../../n4-dal/API/CardsAPI"
 export type userType = {
     email: string
     password: string
-    confrimPassword?: string
+    confirmPassword?: string
 }
 
 type RegistrtionReducerType = {
     registration: boolean
-    registrationError: string
+    registrationError: string | null
 }
 
 const initialState: RegistrtionReducerType = {
@@ -46,7 +46,7 @@ export type registrationErrorACtype = ReturnType<typeof registrationErrorAC>
 //actions
 
 export const addUserAC = (success: boolean) => ({ type: 'REGISTRATION/ADD-USER', success } as const)
-export const registrationErrorAC = (error: string) => ({ type: 'REGISTRATION/REGISTRATION-ERROR', error } as const)
+export const registrationErrorAC = (error: string | null) => ({ type: 'REGISTRATION/REGISTRATION-ERROR', error } as const)
 
 //tunks
 
@@ -58,10 +58,10 @@ export const addUserTC = (user: userType) => {
                 dispatch(addUserAC(true))   
             }
         })
-        .catch((err: any) => {
+        .catch((err: AxiosError) => {
             //good method for reading error
             // console.log({...err});
-            dispatch(registrationErrorAC(err.response.data.error)) 
+            dispatch(registrationErrorAC(err.response?.data.error)) 
         })
     }
 }
