@@ -1,6 +1,6 @@
 import { AxiosError } from "axios"
 import { Dispatch } from "redux"
-import { appAPI, LoginResponseType } from "../../n4-dal/API/CardsAPI"
+import { authAPI } from "../../n4-dal/API/CardsAPI"
 import { setIsLoginAC } from "../a2-loginReducer/loginReducer"
 import { setUserAC } from "../a6-ProfileReducer/ProfileReducer"
 
@@ -51,17 +51,17 @@ export type setInitializedACtype = ReturnType<typeof setInitializedAC>
 // actions
 
 export const isAuthAC = (auth: boolean) => ({ type: 'APP/IS-AUTH', auth } as const)
-export const setErrorAC = (authError: string | null) => ({type: 'APP/SET-ERROR', authError} as const)
 export const setLoadingAC = (loading: boolean) => ({ type: 'APP/LOADING', loading } as const)
 export const setInitializedAC = (initialized: boolean) => ({ type: 'APP/SET-INITIALIZE', initialized } as const)
+export const setErrorAC = (authError: string | null) => ({type: 'APP/SET-ERROR', authError} as const)
 
 
-//tunks
+//thunks
 
 export const isAuthTC = () => {
     return (dispatch: Dispatch) => {
         dispatch(setLoadingAC(true))
-        return appAPI.me()
+        return authAPI.me()
             .then((res) => {
                 dispatch(setUserAC(res.data))
                 dispatch(isAuthAC(true))

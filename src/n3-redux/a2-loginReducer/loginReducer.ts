@@ -66,3 +66,11 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
         })
 }
 
+export const logoutTC = () => (dispatch: Dispatch) => {
+    authLogoutAPI.logout()
+        .then(res => {
+            if (res.data) {
+                dispatch(setIsLoginAC(false))
+            }
+        })
+}

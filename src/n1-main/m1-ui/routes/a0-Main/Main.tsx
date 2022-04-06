@@ -1,5 +1,8 @@
 
 import classes from "./Main.module.css"
+import React from "react";
+
+
 import {NewPassword} from "../../common/a4-NewPassword/NewRassword";
 import {Nav} from "../a1-Navlink/Navlink";
 import {TestComponent} from "../../common/a6-test/test";
