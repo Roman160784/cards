@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {AxiosError} from "axios"
-import {authLoginAPI} from "../../n4-dal/API/CardsAPI";
+import {authLoginAPI, authLogoutAPI} from "../../n4-dal/API/CardsAPI";
 import {setErrorAC} from "../a7-AppReducer/AppReducer";
 
 
@@ -55,6 +55,15 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
         .catch((e: AxiosError) => {
            dispatch(setErrorAC( e.response ? e.response.data.error : (e.message + ', more details in the console')))
             console.log('Error: ', {...e})
+        })
+}
+
+export const logoutTC = () => (dispatch: Dispatch) => {
+    authLogoutAPI.logout()
+        .then(res => {
+            if (res.data) {
+                dispatch(setIsLoginAC(false))
+            }
         })
 }
 

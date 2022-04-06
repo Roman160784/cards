@@ -24,7 +24,9 @@ const initialState: AppReducerType = {
 //reducer
 export const AppReducer = (state: AppReducerType = initialState, action: MainActionType): AppReducerType => {
     switch (action.type) {
-
+        case "APP/SET-ERROR": {
+            return {...state, authError: action.authError}
+        }
         case 'APP/IS-AUTH': {
             return { ...state, auth: action.auth }
         }
@@ -42,7 +44,7 @@ export const AppReducer = (state: AppReducerType = initialState, action: MainAct
 
 // types for actions
 
-export type MainActionType = isAuthACtype | setLoadingACtype | setInitializedACtype
+export type MainActionType = isAuthACtype | setLoadingACtype | setInitializedACtype | ReturnType<typeof setErrorAC>
 
 export type isAuthACtype = ReturnType<typeof isAuthAC>
 export type setLoadingACtype = ReturnType<typeof setLoadingAC>
@@ -53,6 +55,7 @@ export type setInitializedACtype = ReturnType<typeof setInitializedAC>
 export const isAuthAC = (auth: boolean) => ({ type: 'APP/IS-AUTH', auth } as const)
 export const setLoadingAC = (loading: boolean) => ({ type: 'APP/LOADING', loading } as const)
 export const setInitializedAC = (initialized: boolean) => ({ type: 'APP/SET-INITIALIZE', initialized } as const)
+export const setErrorAC = (authError: string | null) => ({type: 'APP/SET-ERROR', authError} as const)
 
 
 //thunks
