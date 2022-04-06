@@ -52,7 +52,6 @@ export const ProfileReducer = (state: ProfileReducerType = initialState, action:
         case 'PROFILE/UPDATE-USER': {
             return { ...state, user: action.user }
         }
-
         default:
             return { ...state }
     }

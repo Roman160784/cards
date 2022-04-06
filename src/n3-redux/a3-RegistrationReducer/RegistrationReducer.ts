@@ -48,7 +48,7 @@ export type registrationErrorACtype = ReturnType<typeof registrationErrorAC>
 export const addUserAC = (success: boolean) => ({ type: 'REGISTRATION/ADD-USER', success } as const)
 export const registrationErrorAC = (error: string | null) => ({ type: 'REGISTRATION/REGISTRATION-ERROR', error } as const)
 
-//tunks
+//thunks
 
 export const addUserTC = (user: userType) => {
     return (dispatch: Dispatch) => {
