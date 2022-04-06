@@ -2,8 +2,8 @@ import {Dispatch} from "redux";
 import {AxiosError} from "axios"
 import {authLoginAPI, authLogoutAPI} from "../../n4-dal/API/CardsAPI";
 import {setUserAC} from "../a6-ProfileReducer/ProfileReducer";
-import {authLoginAPI} from "../../n4-dal/API/CardsAPI";
 import {setErrorAC} from "../a7-AppReducer/AppReducer";
+
 
 
 export type LoginType = {
@@ -35,15 +35,13 @@ export const LoginReducer = (state: LoginReducerType = initialState, action: Mai
         case "LOGIN/SET-IS-LOGIN": {
             return {...state, isLogin: action.isLogin}
         }
-        case "LOGIN/SET-ERROR": {
-            return {...state, error: action.error}
-        }
+
         default:
             return {...state}
     }
 }
 
-export type MainActionType = ReturnType<typeof setLoginAC> | ReturnType<typeof setIsLoginAC> | ReturnType<typeof setLoginErrorAC>
+export type MainActionType = ReturnType<typeof setLoginAC> | ReturnType<typeof setIsLoginAC>
 
 export const setLoginAC = (data: LoginType) =>
     ({type: 'LOGIN/SET-LOGIN', data} as const)
