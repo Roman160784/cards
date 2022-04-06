@@ -1,7 +1,7 @@
 import React from 'react';
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {loginTC, setLoginErrorAC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
+import {loginTC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {pathEnum} from "../../routes/a0-Main/Main";
 import {Navigate, NavLink} from "react-router-dom";
@@ -16,7 +16,7 @@ export type FormikErrorType = {
 export const Login = () => {
     const dispatch = useDispatch()
     const isLogin = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
-    const error = useSelector<RootReducerType, string | null>(state => state.login.error)
+    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
 
 
     const formik = useFormik({
@@ -34,14 +34,13 @@ export const Login = () => {
             }
             if (!values.password) {
                 errors.password = 'Required';
-            } else if (values.password.length < 6) {
+            } else if (values.password.length < 7) {
                 errors.password = 'Password must be 7 characters or more'
             }
             return errors
         },
         onSubmit: values => {
             dispatch(loginTC(values))
-            dispatch(setLoginErrorAC(null))
             // alert(JSON.stringify(values, null, 2));
         },
     });
@@ -50,26 +49,26 @@ export const Login = () => {
         
     return (
         <form onSubmit={formik.handleSubmit} className={classes.loginForm}>
-            <h1 className={classes.headerLogin}>Login</h1>
+            <h1>Login</h1>
             <div>
+                {formik.touched.email && formik.errors.email ?
+                    <div className={classes.errors}>{formik.errors.email}</div> : null}
                 <input className={classes.inputLogin} placeholder={'Email'}
                        {...formik.getFieldProps('email')}
                 />
-                {formik.touched.email && formik.errors.email ?
-                    <div className={classes.errorsLogin}>{formik.errors.email}</div> : null}
             </div>
 
             <div>
+                {formik.touched.password && formik.errors.password && error?
+                    <div className={classes.errors}>{formik.errors.password}</div> :
+                    <div className={classes.errors}>{error}</div>}
                 <input className={classes.inputLogin} placeholder={'Password'}
                        {...formik.getFieldProps('password')}
                 />
-                {formik.touched.password && formik.errors.password ?
-                    <div className={classes.errorsLogin}>{formik.errors.password}</div> : null}
-                <div className={classes.errorsLogin}>{error}</div>
             </div>
             <div>
                 <label>
-                    <input type={"checkbox"}
+                    <input type={"checkbox"} className={classes.checkboxLogin}
                            {...formik.getFieldProps('rememberMe')}
                     />
                     Remember me

@@ -1,11 +1,12 @@
 import * as Yup from 'yup';
 import React from 'react';
-import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import {useFormik} from 'formik';
+import {useDispatch, useSelector} from 'react-redux';
 import {addUserTC, registrationErrorAC} from '../../../../n3-redux/a3-RegistrationReducer/RegistrationReducer';
-import { RootReducerType } from '../../../../n3-redux/a1-store/store';
-import { Navigate } from 'react-router-dom';
-import { pathEnum } from '../../routes/a0-Main/Main';
+import {RootReducerType} from '../../../../n3-redux/a1-store/store';
+import {Navigate} from 'react-router-dom';
+import {pathEnum} from '../../routes/a0-Main/Main';
+import classes from "./Registration.module.css";
 
 export const Registration = () => {
 
@@ -36,34 +37,36 @@ export const Registration = () => {
         },
     });
 
-    if (isRegistration) return <Navigate to={pathEnum.login} />
-
-
+    if (isRegistration) return <Navigate to={pathEnum.login}/>
 
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <label htmlFor="email">Sing Up</label>
+        <form onSubmit={formik.handleSubmit} className={classes.registrationForm}>
+            <h1>Sing Up</h1>
             <div>
-                <p style={{ opacity: '0.5' }}>Email</p>
-                <input {...formik.getFieldProps('email')} />
+                <input {...formik.getFieldProps('email')} placeholder={'Email'}
+                       className={classes.inputRegistration}
+                />
                 {formik.touched.email && formik.errors.email ?
-                    <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
+                    <div className={classes.errors}>{formik.errors.email}</div> : null}
             </div>
             <div>
-                <p style={{opacity: '0.5'}}>Password</p>
-                <input {...formik.getFieldProps('password')} />
+                <input {...formik.getFieldProps('password')} placeholder={'Password'}
+                       className={classes.inputRegistration}
+                />
                 {formik.touched.password && formik.errors.password ?
-                    <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
+                    <div className={classes.errors}>{formik.errors.password}</div> : null}
             </div>
             <div>
-                <p style={{opacity: '0.5'}}>Confirm password</p>
-                <input {...formik.getFieldProps('confirmPassword')} />
+                <input {...formik.getFieldProps('confirmPassword')} placeholder={'Confirm password'}
+                       className={classes.inputRegistration}
+                />
                 {formik.touched.confirmPassword && formik.errors.confirmPassword ?
-                    <div style={{color: 'red'}}>{formik.errors.confirmPassword}</div> : null}
+                    <div className={classes.errors}>{formik.errors.confirmPassword}</div> : null}
             </div>
-
-            <button type="submit">Register</button>
-            <button> Cancel </button>
+            <div className={classes.boxButton}>
+                <button className={classes.buttonCancel}>Cancel</button>
+                <button type="submit" className={classes.buttonRegistration}>Register</button>
+            </div>
         </form>
     );
 
