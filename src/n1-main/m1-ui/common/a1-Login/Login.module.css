@@ -1,0 +1,53 @@
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: auto;
+}
+
+.headerLogin {
+    text-align: center;
+}
+
+.inputLogin {
+    width: 300px;
+    /*border-style: none;*/
+    /*border-bottom-style: ridge;*/
+    /*border-color: blue;*/
+    margin-top: 10px;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid black;
+    outline-color: blue;
+}
+
+.errorsLogin {
+    color: red;
+    margin: 10px 0;
+}
+
+.forgot, .signUp {
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    margin-top: 30px;
+}
+
+.forgot:hover, .signUp:hover {
+    text-decoration: underline;
+    color: limegreen;
+}
+
+.buttonLogin {
+    justify-content: center;
+    width: 250px;
+    margin: 60px auto 0;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid limegreen;
+    background-color: limegreen;
+    color: white;
+    cursor: pointer;
+}
+
