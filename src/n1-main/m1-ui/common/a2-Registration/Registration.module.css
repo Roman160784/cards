@@ -1,0 +1,46 @@
+.registrationForm {
+    width: 300px;
+    min-height: 50vh;
+    margin: auto;
+}
+
+.errors {
+    color: red;
+}
+
+.inputRegistration {
+    width: 300px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid black;
+    outline-color: blue;
+}
+
+.buttonRegistration, .buttonCancel {
+    margin: 40px auto 0;
+    padding: 10px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.buttonRegistration {
+    width: 150px;
+    margin-left: 50px;
+    background-color: limegreen;
+    border: 1px solid limegreen;
+}
+
+.buttonCancel {
+    width: 100px;
+    background: linear-gradient(90deg, #affdc5 0%, #d9f4cd 100%);
+    border: 1px solid white;
+    color: limegreen;
+}
+
+.boxButton {
+    margin: 10px 0;
+}
