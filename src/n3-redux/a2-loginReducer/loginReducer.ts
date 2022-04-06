@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {AxiosError} from "axios"
 import {authLoginAPI, authLogoutAPI} from "../../n4-dal/API/CardsAPI";
+import {setUserAC} from "../a6-ProfileReducer/ProfileReducer";
 
 
 export type LoginType = {
@@ -55,6 +56,7 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
     authLoginAPI.login(data)
         .then((res) => {
             if (res.data) {
+                dispatch(setUserAC(res.data))
                 dispatch(setLoginAC(data))
                 dispatch(setIsLoginAC(true))
             }
