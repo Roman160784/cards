@@ -12,7 +12,7 @@ function App() {
 
   const dispatch = useDispatch()
   const loading = useSelector<RootReducerType, boolean>(state => state.app.loading)
-  const auth = useSelector<RootReducerType, boolean>(state => state.app.auth)
+  const isLogin = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
   const initialised = useSelector<RootReducerType, boolean>(state => state.app.initialised)
 
   useEffect(() => {
@@ -23,8 +23,9 @@ function App() {
 
 
   if (!initialised) return <Preloader />
-  // if (!auth) return <Navigate to={pathEnum.login}/>
-  // <Navigate to={pathEnum.login}/>
+
+  // if (!isLogin) return <Navigate to={pathEnum.login}/>
+
 
   return (
     <div className="App">

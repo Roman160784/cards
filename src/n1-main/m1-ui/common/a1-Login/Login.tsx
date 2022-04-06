@@ -4,7 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {loginTC, setLoginErrorAC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {pathEnum} from "../../routes/a0-Main/Main";
-import {Navigate} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
+import classes from './Login.module.css'
 
 export type FormikErrorType = {
     email?: string
@@ -48,30 +49,35 @@ export const Login = () => {
     if (isLogin) return <Navigate to={pathEnum.profile}/>
         
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <h1>Login</h1>
+        <form onSubmit={formik.handleSubmit} className={classes.loginForm}>
+            <h1 className={classes.headerLogin}>Login</h1>
             <div>
-                <input
-                    {...formik.getFieldProps('email')}
+                <input className={classes.inputLogin} placeholder={'Email'}
+                       {...formik.getFieldProps('email')}
                 />
                 {formik.touched.email && formik.errors.email ?
-                    <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
+                    <div className={classes.errorsLogin}>{formik.errors.email}</div> : null}
             </div>
 
             <div>
-                <input
-                    {...formik.getFieldProps('password')}
+                <input className={classes.inputLogin} placeholder={'Password'}
+                       {...formik.getFieldProps('password')}
                 />
                 {formik.touched.password && formik.errors.password ?
-                    <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
-                <div style={{color: 'red'}}>{error}</div>
+                    <div className={classes.errorsLogin}>{formik.errors.password}</div> : null}
+                <div className={classes.errorsLogin}>{error}</div>
             </div>
             <div>
-                <input type={"checkbox"}
-                       {...formik.getFieldProps('rememberMe')}
-                />
+                <label>
+                    <input type={"checkbox"}
+                           {...formik.getFieldProps('rememberMe')}
+                    />
+                    Remember me
+                </label>
             </div>
-            <button type="submit">Login</button>
+            <NavLink to={pathEnum.restorePassword} className={classes.forgot}>Forgot Password</NavLink>
+            <button type="submit" className={classes.buttonLogin}>Login</button>
+            <NavLink to={pathEnum.registration} className={classes.signUp}>Sign Up</NavLink>
         </form>
     );
 }

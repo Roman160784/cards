@@ -46,13 +46,13 @@ export type MainActionType = isAuthACtype | setLoadingACtype | setInitialisegACt
 
 export type isAuthACtype = ReturnType<typeof isAuthAC>
 export type setLoadingACtype = ReturnType<typeof setLoadingAC>
-export type setInitialisegACtype = ReturnType<typeof setInitialisegAC>
+export type setInitialisegACtype = ReturnType<typeof setInitialisedAC>
 
 // actions
 
 export const isAuthAC = (auth: boolean) => ({ type: 'APP/IS-AUTH', auth } as const)
 export const setLoadingAC = (loading: boolean) => ({ type: 'APP/LOADING', loading } as const)
-export const setInitialisegAC = (initialised: boolean) => ({ type: 'APP/SET-INITIALISE', initialised } as const)
+export const setInitialisedAC = (initialised: boolean) => ({ type: 'APP/SET-INITIALISE', initialised } as const)
 
 
 //tunks
@@ -64,13 +64,14 @@ export const isAuthTC = () => {
             .then((res) => {
                 dispatch(setUserAC(res.data))
                 dispatch(isAuthAC(true))
+                dispatch(setIsLoginAC(true))
             })
             .catch((err: AxiosError) => {
-                dispatch(isAuthAC(false))
+                dispatch(setIsLoginAC(false))
             })
             .finally(() => {
                 dispatch(setLoadingAC(false))
-                dispatch(setInitialisegAC(true))
+                dispatch(setInitialisedAC(true))
             })
     }
 }
