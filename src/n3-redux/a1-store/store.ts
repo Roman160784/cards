@@ -2,7 +2,7 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunk from "redux-thunk";
 import {LoginReducer} from "../a2-loginReducer/loginReducer";
 import {RegistrtionReducer} from "../a3-RegistrationReducer/RegistrationReducer";
-import {RestoreRasswordReducer} from "../a4-RestoreRasswordReducer/RestoreRasswordRducer";
+import {ForgotPasswordReducer} from "../a4-ForgotRasswordReducer/ForgotRasswordRducer";
 import {NewRasswordReducer} from "../a5-NewRasswordReducer/NewRasswordRducer";
 import {ProfileReducer} from "../a6-ProfileReducer/ProfileReducer";
 import { AppReducer } from "../a7-AppReducer/AppReducer";
@@ -11,7 +11,7 @@ import { AppReducer } from "../a7-AppReducer/AppReducer";
 const rootReducer = combineReducers({
     login: LoginReducer,
     registration: RegistrtionReducer,
-    restorePassword: RestoreRasswordReducer,
+    restorePassword: ForgotPasswordReducer,
     newPassword: NewRasswordReducer,
     profile: ProfileReducer,
     app: AppReducer,
