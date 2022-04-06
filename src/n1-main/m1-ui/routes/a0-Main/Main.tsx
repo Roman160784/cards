@@ -7,8 +7,12 @@ import { Profile } from "../../common/a5-Profile/Profile"
 import { TestComponent } from "../../common/a6-test/test"
 import { Nav } from "../a1-Navlink/Navlink"
 import classes from "./Main.module.css"
+import React from "react";
+import {useSelector} from "react-redux";
+import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 
 export enum pathEnum {
+    main = '/',
     login = '/login',
     registration = '/registration',
     restorePassword = '/restorePasword',
@@ -16,15 +20,13 @@ export enum pathEnum {
     profile = '/profile',
     test = '/test',
     error404 = '/404',
-    empty = '*',
+    empty = '/*',
 }
 
 
 export const Main = () => {
 
     return (
-     
-        
             <div>
                 <Nav />
                 <div className={classes.blockComponents}>
@@ -35,6 +37,7 @@ export const Main = () => {
                         <Route path={pathEnum.restorePassword} element={<ForgotPassword />} />
                         <Route path={pathEnum.newPassword} element={<NewPassword />} />
                         <Route path={pathEnum.profile} element={<Profile />} />
+                        <Route path={pathEnum.main} element={<Profile />} />
                         <Route path={pathEnum.test} element={<TestComponent />} />
                         <Route path={pathEnum.error404} element={<h1 style={{ textAlign: 'center', color: 'red' }}>404: PAGE NOT FOUND</h1>} />
                         <Route path={pathEnum.empty} element={<Navigate to={pathEnum.error404} />} />
