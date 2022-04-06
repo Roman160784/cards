@@ -1,6 +1,6 @@
 import { AxiosError } from "axios"
 import { Dispatch } from "redux"
-import { appAPI, LoginResponseType } from "../../n4-dal/API/CardsAPI"
+import { authAPI } from "../../n4-dal/API/CardsAPI"
 import { setIsLoginAC } from "../a2-loginReducer/loginReducer"
 import { setUserAC } from "../a6-ProfileReducer/ProfileReducer"
 
@@ -9,7 +9,7 @@ export type AppReducerType = {
     auth: boolean
     authError: string | null
     loading: boolean
-    initialised: boolean
+    initialized: boolean
 }
 
 
@@ -18,7 +18,7 @@ const initialState: AppReducerType = {
     auth: false,
     authError: null,
     loading: false,
-    initialised: false,
+    initialized: false,
 }
 
 //reducer
@@ -31,8 +31,8 @@ export const AppReducer = (state: AppReducerType = initialState, action: MainAct
         case 'APP/LOADING': {
             return { ...state, loading: action.loading }
         }
-        case 'APP/SET-INITIALISE' : {
-            return{ ...state, initialised: action.initialised }
+        case 'APP/SET-INITIALIZE' : {
+            return{ ...state, initialized: action.initialized }
         }
         default:
             return { ...state }
@@ -42,25 +42,25 @@ export const AppReducer = (state: AppReducerType = initialState, action: MainAct
 
 // types for actions
 
-export type MainActionType = isAuthACtype | setLoadingACtype | setInitialisegACtype
+export type MainActionType = isAuthACtype | setLoadingACtype | setInitializedACtype
 
 export type isAuthACtype = ReturnType<typeof isAuthAC>
 export type setLoadingACtype = ReturnType<typeof setLoadingAC>
-export type setInitialisegACtype = ReturnType<typeof setInitialisedAC>
+export type setInitializedACtype = ReturnType<typeof setInitializedAC>
 
 // actions
 
 export const isAuthAC = (auth: boolean) => ({ type: 'APP/IS-AUTH', auth } as const)
 export const setLoadingAC = (loading: boolean) => ({ type: 'APP/LOADING', loading } as const)
-export const setInitialisedAC = (initialised: boolean) => ({ type: 'APP/SET-INITIALISE', initialised } as const)
+export const setInitializedAC = (initialized: boolean) => ({ type: 'APP/SET-INITIALIZE', initialized } as const)
 
 
-//tunks
+//thunks
 
 export const isAuthTC = () => {
     return (dispatch: Dispatch) => {
         dispatch(setLoadingAC(true))
-        return appAPI.me()
+        return authAPI.me()
             .then((res) => {
                 dispatch(setUserAC(res.data))
                 dispatch(isAuthAC(true))
@@ -71,7 +71,7 @@ export const isAuthTC = () => {
             })
             .finally(() => {
                 dispatch(setLoadingAC(false))
-                dispatch(setInitialisedAC(true))
+                dispatch(setInitializedAC(true))
             })
     }
 }

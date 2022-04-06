@@ -10,7 +10,7 @@ export const instance = axios.create({
 
 //API
 
-export const appAPI = {
+export const authAPI = {
     me() {
         return instance.post<LoginResponseType>('auth/me')
     }
@@ -19,6 +19,11 @@ export const appAPI = {
 export const authLoginAPI = {
     login(data: LoginType) {
         return instance.post<LoginType, AxiosResponse<LoginResponseType>>('auth/login', data)
+    }
+}
+export const authLogoutAPI = {
+    logout() {
+        return instance.delete<LogoutResponseType>('auth/me')
     }
 }
 
@@ -48,7 +53,10 @@ export type LoginResponseType = {
     rememberMe: boolean
     error?: string
 }
-
+export type LogoutResponseType = {
+    info: string
+    error?: string
+}
 
 export type UserRequestType = {
     name?: string
