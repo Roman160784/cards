@@ -13,15 +13,13 @@ function App() {
     const dispatch = useDispatch()
     const loading = useSelector<RootReducerType, boolean>(state => state.app.loading)
     const isInitialized = useSelector<RootReducerType, boolean>(state => state.app.initialized)
-    const isLoggedIn = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
+
 
     useEffect(() => {
         dispatch(isAuthTC())
     }, [])
 
-    const logoutHandler = useCallback(() =>{
-        dispatch(logoutTC())
-    }, [])
+
 
 
     if (!isInitialized) return <Preloader />
@@ -33,7 +31,7 @@ function App() {
         <div className="App">
             {loading && <Preloader/>}
             <Main/>
-            {isLoggedIn && <button onClick={logoutHandler}>Log out</button>}
+
         </div>
     );
 }
