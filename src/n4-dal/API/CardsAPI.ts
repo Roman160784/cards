@@ -3,6 +3,10 @@ import { userType } from "../../n3-redux/a3-RegistrationReducer/RegistrationRedu
 import { LoginType } from "../../n3-redux/a2-loginReducer/loginReducer";
 
 
+
+// baseURL for herocu https://neko-back.herokuapp.com/2.0
+// baseURL for  http://localhost:7542/2.0/
+
 export const instance = axios.create({
     baseURL: 'http://localhost:7542/2.0/',
     withCredentials: true,
@@ -39,7 +43,25 @@ export const registrationAPI = {
     }
 }
 
+export const passwordAPI = {
+    forgotPassword(data : PasswordType) {
+        return instance.post<PasswordType, AxiosResponse<PasswordResponseType> >('auth/forgot', data)
+    }
+}
+
 // types
+
+export type PasswordType = {
+    email: string
+    from: string
+    message: string
+}
+
+export type PasswordResponseType = {
+    info: string
+    error?: string
+}
+
 export type LoginResponseType = {
     _id: string
     email: string

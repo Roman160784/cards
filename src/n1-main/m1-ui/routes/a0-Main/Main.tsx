@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { Login } from "../../common/a1-Login/Login"
 import { Registration } from "../../common/a2-Registration/Registration"
-import { RestorePassword } from "../../common/a3-RestorePasword/RestorePassword"
+import { ForgotPassword } from "../../common/a3-ForgotPasword/ForgotPassword"
 import { NewPassword } from "../../common/a4-NewPassword/NewRassword"
 import { Profile } from "../../common/a5-Profile/Profile"
 import { TestComponent } from "../../common/a6-test/test"
@@ -32,7 +32,7 @@ export const Main = () => {
                     <Routes>
                         <Route path={pathEnum.login} element={<Login />} />
                         <Route path={pathEnum.registration} element={<Registration />} />
-                        <Route path={pathEnum.restorePassword} element={<RestorePassword />} />
+                        <Route path={pathEnum.restorePassword} element={<ForgotPassword />} />
                         <Route path={pathEnum.newPassword} element={<NewPassword />} />
                         <Route path={pathEnum.profile} element={<Profile />} />
                         <Route path={pathEnum.main} element={<Profile />} />
