@@ -6,13 +6,13 @@ import { NewPassword } from "../../common/a4-NewPassword/NewRassword"
 import { Profile } from "../../common/a5-Profile/Profile"
 import { TestComponent } from "../../common/a6-test/test"
 import { Nav } from "../a1-Navlink/Navlink"
-<<<<<<<<< Temporary merge branch 1
+
 import classes from "./Main.module.css"
-=========
+
 import React from "react";
 import {useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
->>>>>>>>> Temporary merge branch 2
+
 
 export enum pathEnum {
     main = '/',

@@ -1,6 +1,7 @@
 import {NavLink} from "react-router-dom"
-import {pathEnum} from "../a0-Main/Main"
+
 import classes from './NavLink.module.css'
+import {pathEnum} from "../a0-Main/Main";
 
 
 export const Nav = () => {
