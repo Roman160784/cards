@@ -74,7 +74,7 @@ export const Login = () => {
                     Remember me
                 </label>
             </div>
-            <NavLink to={pathEnum.restorePassword} className={classes.forgot}>Forgot Password</NavLink>
+            <NavLink to={pathEnum.forgotPassword} className={classes.forgot}>Forgot Password</NavLink>
             <button type="submit" className={classes.buttonLogin}>Login</button>
             <NavLink to={pathEnum.registration} className={classes.signUp}>Sign Up</NavLink>
         </form>
