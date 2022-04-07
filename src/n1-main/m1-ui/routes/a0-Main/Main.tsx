@@ -14,13 +14,15 @@ export enum pathEnum {
     main = '/',
     login = '/login',
     registration = '/registration',
-    restorePassword = '/restorePasword',
-    newPassword = '/newPasword',
+    forgotPassword = '/forgotPassword',
+    newPassword = '/set-new-password/:token',
     profile = '/profile',
     test = '/test',
     error404 = '/404',
     empty = '/*',
 }
+
+// http://localhost:3000/#/set-new-password/5a75e040-b656-11ec-a69a-65588f1fc455
 
 
 export const Main = () => {
@@ -33,7 +35,7 @@ export const Main = () => {
                     <Routes>
                         <Route path={pathEnum.login} element={<Login />} />
                         <Route path={pathEnum.registration} element={<Registration />} />
-                        <Route path={pathEnum.restorePassword} element={<ForgotPassword />} />
+                        <Route path={pathEnum.forgotPassword} element={<ForgotPassword />} />
                         <Route path={pathEnum.newPassword} element={<NewPassword />} />
                         <Route path={pathEnum.profile} element={<Profile />} />
                         <Route path={pathEnum.main} element={<Profile />} />

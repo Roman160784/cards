@@ -11,7 +11,7 @@ import { AppReducer } from "../a7-AppReducer/AppReducer";
 const rootReducer = combineReducers({
     login: LoginReducer,
     registration: RegistrtionReducer,
-    restorePassword: ForgotPasswordReducer,
+    forgotPassword: ForgotPasswordReducer,
     newPassword: NewRasswordReducer,
     profile: ProfileReducer,
     app: AppReducer,

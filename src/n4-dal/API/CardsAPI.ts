@@ -4,11 +4,11 @@ import { LoginType } from "../../n3-redux/a2-loginReducer/loginReducer";
 
 
 
-// baseURL for herocu https://neko-back.herokuapp.com/2.0
-// baseURL for  http://localhost:7542/2.0/
+// baseURL for herocu https://neko-back.herokuapp.com/2.0/
+// baseURL   http://localhost:7542/2.0/
 
 export const instance = axios.create({
-    baseURL: 'http://localhost:7542/2.0/',
+    baseURL: 'https://neko-back.herokuapp.com/2.0/',
     withCredentials: true,
 })
 

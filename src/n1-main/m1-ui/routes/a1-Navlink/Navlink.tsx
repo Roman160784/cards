@@ -20,7 +20,7 @@ export const Nav = () => {
                 </NavLink>
             </div>
             <div>
-                <NavLink to={pathEnum.restorePassword}
+                <NavLink to={pathEnum.forgotPassword}
                          className={({isActive}) => `${isActive ? classes.active : classes.link}`}>
                     Forgot Password
                 </NavLink>
