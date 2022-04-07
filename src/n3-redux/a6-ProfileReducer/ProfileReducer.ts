@@ -2,6 +2,7 @@ import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import { profileAPI } from "../../n4-dal/API/CardsAPI"
 import { setIsLoginAC } from "../a2-loginReducer/loginReducer"
+import {handleServerNetwork} from "../../n5-utils/error-utils";
 
 // types 
 export type userType = {
@@ -24,6 +25,7 @@ export type userType = {
 
 export type ProfileReducerType = {
     user: userType
+    error: string | null
 }
 
 const initialState: ProfileReducerType = {
@@ -42,7 +44,7 @@ const initialState: ProfileReducerType = {
         __v: 0,
         _id: ''
     },
-
+    error: null
 }
 
 //reducer
@@ -52,6 +54,9 @@ export const ProfileReducer = (state: ProfileReducerType = initialState, action:
         case 'PROFILE/UPDATE-USER': {
             return { ...state, user: action.user }
         }
+        case 'PROFILE/SET-USER-ERROR': {
+            return {...state, error: action.error}
+        }
         default:
             return { ...state }
     }
@@ -59,14 +64,16 @@ export const ProfileReducer = (state: ProfileReducerType = initialState, action:
 
 // types for actions
 
-export type MainActionType = setUserACtype
+export type MainActionType = setUserACtype | setUserErrorACType
 
 export type setUserACtype = ReturnType<typeof setUserAC>
+export type setUserErrorACType = ReturnType<typeof setUserErrorAC>
 
 
 // actions
 
 export const setUserAC = (user: userType) => ({ type: 'PROFILE/UPDATE-USER', user } as const)
+export const setUserErrorAC = (error: string | null) => ({ type: 'PROFILE/SET-USER-ERROR', error } as const)
 
 
 //thunks
@@ -77,10 +84,8 @@ export const updateUserTC = (user: { name?: string, avatar?: string }) => {
             .then((res) => {
                 dispatch(setUserAC(res.data.updatedUser))
             })
-            .catch((err: AxiosError) => {
-                if (err.response?.data.error) {
-                    dispatch(setIsLoginAC(false))
-                }
+            .catch((e: AxiosError) => {
+                dispatch(setUserErrorAC(e.response?.data.error))
             })
     }
 }

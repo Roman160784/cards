@@ -2,7 +2,7 @@ import {passwordAPI, PasswordType} from "../../n4-dal/API/CardsAPI";
 import {Dispatch} from "redux";
 import {AxiosError} from "axios";
 import {handleServerNetwork} from "../../n5-utils/error-utils";
-
+import { Navigate } from "react-router-dom"
 // types
 export type ForgotPasswordReducerType = {
     email: string | null
@@ -42,7 +42,7 @@ export const getParamsForNewPasswordTC = (data: PasswordType) => {
     return (dispatch: Dispatch) => {
         return passwordAPI.forgotPassword(data)
             .then((res) => {
-                // console.log({...res})
+                
             })
             .catch((e: AxiosError) => {
                 handleServerNetwork(e, dispatch)

@@ -3,6 +3,7 @@ import {Dispatch} from "redux"
 import {authAPI} from "../../n4-dal/API/CardsAPI"
 import {setIsLoginAC} from "../a2-loginReducer/loginReducer"
 import {setUserAC} from "../a6-ProfileReducer/ProfileReducer"
+import {handleServerNetwork} from "../../n5-utils/error-utils";
 
 // types
 export type AppReducerType = {
@@ -73,7 +74,7 @@ export const isAuthTC = () => {
             })
             .catch((e: AxiosError) => {
                 dispatch(setIsLoginAC(false))
-
+                handleServerNetwork(e, dispatch)
             })
             .finally(() => {
                 dispatch(setLoadingAC(false))

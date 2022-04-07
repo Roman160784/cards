@@ -17,13 +17,10 @@ export const ForgotPassword = () => {
 
     const from = "for person, f <matveyenkaraman@gmail.com>"
     const message = `<div style="background-color: lime; padding: 15px">
-password recovery link: 
-<a href='http://localhost:3000/#/set-new-password/$token$'>
-link</a>
-</div>`
-
-
-
+                    password recovery link: 
+                    <a href='http://localhost:3000/#/set-new-password/$token$'>
+                        link</a>
+                    </div>`
 
     const formik = useFormik({
         initialValues: {
@@ -57,7 +54,7 @@ link</a>
                 {errorServerMessage ? <div> {errorServerMessage} </div> : null}
             </div>
             <button type="submit" className={classes.buttonSend}>Send Instructions</button>
-            <NavLink to={'/'} className={classes.linkRemember}>Did you remember yor password?</NavLink>
+            <div className={classes.linkRemember}>Did you remember yor password?</div>
             <NavLink to={'/'} className={classes.loggingIn}>Try logging in</NavLink>
         </form>
     )

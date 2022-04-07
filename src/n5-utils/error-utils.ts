@@ -3,6 +3,7 @@ import {Dispatch} from "redux";
 import {setAppErrorAC, setAppErrorACType} from "../n3-redux/a7-AppReducer/AppReducer";
 
 
+
 export type AppErrorType<R = {}> = {
     response: {
         data: {

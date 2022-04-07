@@ -11,7 +11,7 @@ import classes from "./Registration.module.css";
 export const Registration = () => {
 
     const isRegistration = useSelector<RootReducerType, boolean>(state => state.registration.registration)
-    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
+    const error = useSelector<RootReducerType, string | null>(state => state.registration.registrationError)
     const dispatch = useDispatch()
 
     const formik = useFormik({

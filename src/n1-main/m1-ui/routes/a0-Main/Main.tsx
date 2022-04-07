@@ -1,4 +1,4 @@
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import { Login } from "../../common/a1-Login/Login"
 import { Registration } from "../../common/a2-Registration/Registration"
 import { ForgotPassword } from "../../common/a3-ForgotPasword/ForgotPassword"
