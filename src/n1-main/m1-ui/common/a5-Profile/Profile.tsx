@@ -21,6 +21,10 @@ export const Profile = () => {
         dispatch(logoutTC())
     }, [])
 
+    if(!isLoggedIn) {
+        return <Navigate to={pathEnum.login}/>
+    }
+
     return (
         <div>
             <div>
