@@ -5,7 +5,6 @@ import {setUserAC} from "../a6-ProfileReducer/ProfileReducer";
 import {setErrorAC} from "../a7-AppReducer/AppReducer";
 
 
-
 export type LoginType = {
     email: string
     password: string
@@ -15,7 +14,6 @@ export type LoginType = {
 export type LoginReducerType = {
     data: LoginType
     isLogin: boolean
-    error: string | null
 }
 
 const initialState: LoginReducerType = {
@@ -24,7 +22,6 @@ const initialState: LoginReducerType = {
         password: "",
     },
     isLogin: false,
-    error: null,
 }
 
 export const LoginReducer = (state: LoginReducerType = initialState, action: MainActionType): LoginReducerType => {
@@ -35,14 +32,12 @@ export const LoginReducer = (state: LoginReducerType = initialState, action: Mai
         case "LOGIN/SET-IS-LOGIN": {
             return {...state, isLogin: action.isLogin}
         }
-
         default:
             return {...state}
     }
 }
 
 export type MainActionType = ReturnType<typeof setLoginAC> | ReturnType<typeof setIsLoginAC>
-
 export const setLoginAC = (data: LoginType) =>
     ({type: 'LOGIN/SET-LOGIN', data} as const)
 
@@ -59,7 +54,7 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
             }
         })
         .catch((e: AxiosError) => {
-           dispatch(setErrorAC( e.response ? e.response.data.error : (e.message + ', more details in the console')))
+            dispatch(setErrorAC( e.response ? e.response.data.error : (e.message + ', more details in the console')))
             console.log('Error: ', {...e})
         })
 }
