@@ -1,6 +1,7 @@
 import {passwordAPI, PasswordType} from "../../n4-dal/API/CardsAPI";
 import {Dispatch} from "redux";
 import {AxiosError} from "axios";
+import {handleServerNetwork} from "../../n5-utils/error-utils";
 
 // types
 export type ForgotPasswordReducerType = {
@@ -43,8 +44,8 @@ export const getParamsForNewPasswordTC = (data: PasswordType) => {
             .then((res) => {
                 // console.log({...res})
             })
-            .catch((err: AxiosError) => {
-                dispatch(setErrorMessageAC(err.response?.data.error))
+            .catch((e: AxiosError) => {
+                handleServerNetwork(e, dispatch)
             } )
     }
 

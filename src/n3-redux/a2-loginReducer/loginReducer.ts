@@ -2,7 +2,7 @@ import {Dispatch} from "redux";
 import {AxiosError} from "axios"
 import {authLoginAPI, authLogoutAPI} from "../../n4-dal/API/CardsAPI";
 import {setUserAC} from "../a6-ProfileReducer/ProfileReducer";
-import {setErrorAC} from "../a7-AppReducer/AppReducer";
+import {handleServerNetwork} from "../../n5-utils/error-utils";
 
 
 export type LoginType = {
@@ -54,8 +54,7 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
             }
         })
         .catch((e: AxiosError) => {
-            dispatch(setErrorAC( e.response ? e.response.data.error : (e.message + ', more details in the console')))
-            console.log('Error: ', {...e})
+            handleServerNetwork(e, dispatch)
         })
 }
 
@@ -65,5 +64,8 @@ export const logoutTC = () => (dispatch: Dispatch) => {
             if (res.data) {
                 dispatch(setIsLoginAC(false))
             }
+        })
+        .catch((e: AxiosError)=> {
+            handleServerNetwork(e, dispatch)
         })
 }

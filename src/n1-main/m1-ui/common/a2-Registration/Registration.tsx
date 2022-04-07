@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import React from 'react';
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
-import {addUserTC, registrationErrorAC} from '../../../../n3-redux/a3-RegistrationReducer/RegistrationReducer';
+import {addUserTC} from '../../../../n3-redux/a3-RegistrationReducer/RegistrationReducer';
 import {RootReducerType} from '../../../../n3-redux/a1-store/store';
 import {Navigate} from 'react-router-dom';
 import {pathEnum} from '../../routes/a0-Main/Main';
@@ -11,6 +11,7 @@ import classes from "./Registration.module.css";
 export const Registration = () => {
 
     const isRegistration = useSelector<RootReducerType, boolean>(state => state.registration.registration)
+    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
     const dispatch = useDispatch()
 
     const formik = useFormik({
@@ -32,7 +33,6 @@ export const Registration = () => {
         }),
         onSubmit: values => {
             dispatch(addUserTC(values))
-            dispatch(registrationErrorAC(null))
             // alert(JSON.stringify(values, null, 2));
         },
     });
@@ -47,7 +47,8 @@ export const Registration = () => {
                        className={classes.inputRegistration}
                 />
                 {formik.touched.email && formik.errors.email ?
-                    <div className={classes.errors}>{formik.errors.email}</div> : null}
+                    <div className={classes.errors}>{formik.errors.email}</div> :
+                    <div className={classes.errors}>{error}</div>}
             </div>
             <div>
                 <input {...formik.getFieldProps('password')} placeholder={'Password'}

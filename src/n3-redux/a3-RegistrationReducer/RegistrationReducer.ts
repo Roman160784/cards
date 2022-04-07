@@ -1,6 +1,7 @@
 import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import { registrationAPI } from "../../n4-dal/API/CardsAPI"
+import {handleServerNetwork} from "../../n5-utils/error-utils";
 
 
 //types
@@ -58,10 +59,10 @@ export const addUserTC = (user: userType) => {
                 dispatch(addUserAC(true))   
             }
         })
-        .catch((err: AxiosError) => {
+        .catch((e: AxiosError) => {
             //good method for reading error
             // console.log({...err});
-            dispatch(registrationErrorAC(err.response?.data.error)) 
+            handleServerNetwork(e, dispatch)
         })
     }
 }

@@ -59,7 +59,7 @@ export const Login = () => {
             </div>
 
             <div>
-                {formik.touched.password && formik.errors.password && error?
+                {formik.touched.password && formik.errors.password ?
                     <div className={classes.errors}>{formik.errors.password}</div> :
                     <div className={classes.errors}>{error}</div>}
                 <input className={classes.inputLogin} placeholder={'Password'}
