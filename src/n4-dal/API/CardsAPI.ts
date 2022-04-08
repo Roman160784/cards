@@ -56,8 +56,8 @@ export const passwordAPI = {
 
 export type PasswordType = {
     email: string
-    from: string
-    message: string
+    from: string | null
+    message: string | null
 }
 export type SetPasswordType = {
     password: string
