@@ -46,7 +46,7 @@ export const Login = () => {
     });
 
     if (isLogin) return <Navigate to={pathEnum.profile}/>
-        
+
     return (
         <form onSubmit={formik.handleSubmit} className={classes.loginForm}>
             <h1>Login</h1>
@@ -59,7 +59,7 @@ export const Login = () => {
             </div>
 
             <div>
-                {formik.touched.password && formik.errors.password && error?
+                {formik.touched.password && formik.errors.password && error ?
                     <div className={classes.errors}>{formik.errors.password}</div> :
                     <div className={classes.errors}>{error}</div>}
                 <input className={classes.inputLogin} placeholder={'Password'}

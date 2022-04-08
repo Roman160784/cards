@@ -39,7 +39,7 @@ h1 {
 }
 
 .signUp {
-   margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .forgot:hover, .signUp:hover {
@@ -53,9 +53,20 @@ h1 {
     margin: 40px auto 0;
     padding: 10px;
     border-radius: 20px;
-    border: 1px solid limegreen;
+    border: none;
     background-color: limegreen;
     color: white;
     cursor: pointer;
+    transition: background 9999999s;
+}
+
+.buttonLogin:hover {
+    background: linear-gradient(270deg, #b2f5ba 0%, #b2f5f1 100%);
+    color: green;
+}
+
+.buttonLogin:active {
+    background: linear-gradient(270deg, #b2f5ba 0%, #b2f5f1 100%);
+    transition: background 0s;
 }
 
