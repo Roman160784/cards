@@ -8,10 +8,12 @@ import { TestComponent } from "../../common/a6-test/test"
 import { Nav } from "../a1-Navlink/Navlink"
 import classes from "./Main.module.css"
 import React from "react";
+import {CheckEmail} from "../../common/a4-NewPassword/CheckEmail";
 
 
 export enum pathEnum {
     main = '/',
+    checkEmail ='/checkEmail',
     login = '/login',
     registration = '/registration',
     forgotPassword = '/forgotPassword',
@@ -33,6 +35,7 @@ export const Main = () => {
                 <div className={classes.content}>
                     <Routes>
                         <Route path={pathEnum.login} element={<Login/>}/>
+                        <Route path={pathEnum.checkEmail} element={<CheckEmail/>}/>
                         <Route path={pathEnum.registration} element={<Registration/>}/>
                         <Route path={pathEnum.forgotPassword} element={<ForgotPassword/>}/>
                         <Route path={pathEnum.newPassword} element={<NewPassword/>}/>

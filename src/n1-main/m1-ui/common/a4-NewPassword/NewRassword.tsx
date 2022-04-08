@@ -11,10 +11,6 @@ import {pathEnum} from "../../routes/a0-Main/Main";
 import {logoutTC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
 
 
-export type FormikErrorPasswordType = {
-    errors?: string
-    password?: string
-}
 
 export const NewPassword = () => {
     const dispatch = useDispatch()
