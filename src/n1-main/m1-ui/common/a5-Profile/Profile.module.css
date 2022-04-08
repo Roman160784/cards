@@ -1,0 +1,57 @@
+.profileBoxUserName {
+    width: 300px;
+    min-height: 50vh;
+    margin: 70px auto;
+}
+
+.profileUser {
+    text-align: center;
+}
+
+.profileImg {
+    border-radius: 60px;
+}
+
+.inputName {
+    margin-top: 30px;
+    padding: 5px;
+    border-radius: 5px;
+    outline-color: blue;
+}
+
+.error {
+    color: red;
+}
+
+.inputClick {
+    opacity: 0.3;
+}
+
+.profileUserName {
+    margin-top: 30px;
+    border-radius: 10px;
+    outline-color: blue;
+}
+
+.textProfile {
+    color: green;
+    margin-top: 30px;
+    font-size: 18px;
+}
+
+.profileButton {
+    color: green;
+    padding: 5px;
+    width: 100px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 50px;
+    cursor: pointer;
+    user-select: none;
+    background: linear-gradient(270deg, #b2f5ba 0%, #b2f5f1 100%);
+}
+.profileButton:hover {
+    background: lawngreen;
+    color: green;
+}
+

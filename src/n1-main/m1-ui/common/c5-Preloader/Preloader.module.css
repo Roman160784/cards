@@ -1,0 +1,23 @@
+.circle1 {
+    stroke: #ABB7E0;
+    fill: none;
+    stroke-width: 15;
+    stroke-dasharray: 3 10.08;
+    width: 200px;
+    height: 200px;
+}
+
+.circle2 {
+    stroke: #ffffff;
+    fill: none;
+    stroke-width: 15;
+    stroke-dasharray: 3 154;
+    stroke-dashoffset: 15;
+}
+
+.circleSVG {
+    display: flex;
+    width: 400px;
+    height: 400px;
+    margin: 50px auto;
+}
