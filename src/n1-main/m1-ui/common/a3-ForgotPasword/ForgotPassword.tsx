@@ -1,10 +1,11 @@
 import React from 'react';
 import classes from "./RestorePassword.module.css";
-import {NavLink} from "react-router-dom";
+import {NavLink, Navigate} from "react-router-dom";
 import {useFormik} from "formik";
 import {getParamsForNewPasswordTC} from "../../../../n3-redux/a4-ForgotRasswordReducer/ForgotRasswordRducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
+import {pathEnum} from "../../routes/a0-Main/Main";
 
 export type FormikErrorRestoreType = {
     email?: string
@@ -43,7 +44,10 @@ export const ForgotPassword = () => {
     });
     const emailForSending = formik.values.email
     const from = `for person, f ${emailForSending}`
-    // make the redirection to new page in order to cofirm new password on your email(Max)
+    // make the redirection to new page in order to cofirm new password on your email(Max) "sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—"
+    if(notification === "sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—") {
+        return <Navigate to={pathEnum.checkEmail} />
+    }
 
     return (
         <form onSubmit={formik.handleSubmit} className={classes.restoreForm}>

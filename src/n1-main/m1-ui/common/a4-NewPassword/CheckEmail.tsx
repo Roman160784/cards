@@ -10,6 +10,7 @@ export const CheckEmail = () => {
             <img className={classes.img} src={email}/>
             <h2 className={classes.title}>Check Email</h2>
             <span className={classes.span}>We’ve sent an Email with instructions to your email</span>
+            <span className={classes.span}>You can close this page</span>
         </div>
     )
 }
