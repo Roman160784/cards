@@ -1,7 +1,6 @@
-import {passwordAPI, PasswordType, SetPasswordType} from "../../n4-dal/API/CardsAPI";
+import {passwordAPI, SetPasswordType} from "../../n4-dal/API/CardsAPI";
 import {Dispatch} from "redux";
 import {AxiosError} from "axios";
-import {handleServerNetwork} from "../../n5-utils/error-utils";
 
 export type NewRasswordReducerRducerType = {
     info: string | null
@@ -49,7 +48,10 @@ export const setNewPasswordTC = (data: SetPasswordType) => {
                 }, 3000)
             })
             .catch((e: AxiosError) => {
-                handleServerNetwork(e, dispatch)
+                dispatch(setErrorMessageAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                setTimeout(() => {
+                    dispatch(setErrorMessageAC(null))
+                }, 3000)
             } )
     }
 

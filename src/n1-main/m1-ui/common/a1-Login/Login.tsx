@@ -52,7 +52,7 @@ export const Login = () => {
         <form onSubmit={formik.handleSubmit} className={classes.loginForm}>
             <h1>Login</h1>
             <div>
-                {formik.touched.email && formik.errors.email ?
+                {formik.touched.email && formik.errors.email && error ?
                     <div className={classes.errors}>{formik.errors.email}</div> : null}
                 <input className={classes.inputLogin} placeholder={'Email'}
                        {...formik.getFieldProps('email')}

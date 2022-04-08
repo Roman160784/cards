@@ -2,7 +2,6 @@ import {Dispatch} from "redux";
 import {AxiosError} from "axios"
 import {authLoginAPI, authLogoutAPI} from "../../n4-dal/API/CardsAPI";
 import {setUserAC} from "../a6-ProfileReducer/ProfileReducer";
-import {handleServerNetwork} from "../../n5-utils/error-utils";
 import {setAppErrorAC} from "../a7-AppReducer/AppReducer";
 
 
@@ -55,7 +54,10 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
             }
         })
         .catch((e: AxiosError) => {
-            handleServerNetwork(e, dispatch)
+            dispatch(setAppErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+            setTimeout(() => {
+                dispatch(setAppErrorAC(null))
+            }, 3000)
         })
 }
 
@@ -67,6 +69,9 @@ export const logoutTC = () => (dispatch: Dispatch) => {
             }
         })
         .catch((e: AxiosError)=> {
-            handleServerNetwork(e, dispatch)
+            dispatch(setAppErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+            setTimeout(() => {
+                dispatch(setAppErrorAC(null))
+            }, 3000)
         })
 }

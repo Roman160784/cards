@@ -1,6 +1,7 @@
 import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import { registrationAPI } from "../../n4-dal/API/CardsAPI"
+import {setErrorMessageAC} from "../a4-ForgotRasswordReducer/ForgotRasswordRducer";
 
 
 //types
@@ -58,10 +59,13 @@ export const addUserTC = (user: userType) => {
                 dispatch(addUserAC(true))   
             }
         })
-        .catch((err: AxiosError) => {
+        .catch((e: AxiosError) => {
             //good method for reading error
             // console.log({...err});
-            dispatch(registrationErrorAC(err.response?.data.error))
+            dispatch(registrationErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+            setTimeout(() => {
+                dispatch(registrationErrorAC(null))
+            }, 3000)
         })
     }
 }

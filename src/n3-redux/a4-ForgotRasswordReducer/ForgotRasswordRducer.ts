@@ -1,8 +1,7 @@
 import {passwordAPI, PasswordType} from "../../n4-dal/API/CardsAPI";
 import {Dispatch} from "redux";
 import {AxiosError} from "axios";
-import {handleServerNetwork} from "../../n5-utils/error-utils";
-import { Navigate } from "react-router-dom"
+
 // types
 export type ForgotPasswordReducerType = {
     email: string | null
@@ -39,7 +38,7 @@ export type setNotificationACType = ReturnType<typeof setNotificationAC>
 
 
 // actions
-export const setErrorMessageAC = (error: string) => ({type: 'FORGOT-PASSWORD/SETT-ERROR-MESSAGE',  error} as const)
+export const setErrorMessageAC = (error: string | null) => ({type: 'FORGOT-PASSWORD/SETT-ERROR-MESSAGE',  error} as const)
 export const setNotificationAC = (info: string | null) => ({type: 'FORGOT-PASSWORD/SET-NOTIFICATION', info} as const)
 
 //thunks
@@ -55,7 +54,10 @@ export const getParamsForNewPasswordTC = (data: PasswordType) => {
                 }, 3000)
             })
             .catch((e: AxiosError) => {
-                handleServerNetwork(e, dispatch)
+                dispatch(setErrorMessageAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                setTimeout(() => {
+                    dispatch(setErrorMessageAC(null))
+                }, 3000)
             } )
     }
 
