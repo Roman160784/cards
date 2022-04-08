@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {pathEnum} from "../../routes/a0-Main/Main";
 import {Navigate, NavLink} from "react-router-dom";
-import classes from './Login.module.css';
+import classes from './Login.module.css'
 
 export type FormikErrorType = {
     email?: string
@@ -18,6 +18,7 @@ export const Login = () => {
     const dispatch = useDispatch()
     const isLogin = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
     const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
+
 
     const formik = useFormik({
         initialValues: {
@@ -46,7 +47,7 @@ export const Login = () => {
     });
 
     if (isLogin) return <Navigate to={pathEnum.profile}/>
-
+        
     return (
         <form onSubmit={formik.handleSubmit} className={classes.loginForm}>
             <h1>Login</h1>

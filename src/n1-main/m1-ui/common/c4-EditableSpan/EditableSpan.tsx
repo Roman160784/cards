@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootReducerType } from '../../../../n3-redux/a1-store/store';
 import { pathEnum } from '../../routes/a0-Main/Main';
+import classes from './../a5-Profile/Profile.module.css'
 
 
 type EditableSpanPropsType = {
@@ -42,10 +43,11 @@ export const EditableSpan = ({ title, changeTitle, ...props }: EditableSpanProps
     return (
         <div>
             {mode
-                ? <input type="text" value={value} onChange={onChangeHandler} onBlur={onBlurHandler} autoFocus />
+                ? <input type="text" value={value} onChange={onChangeHandler}
+                         onBlur={onBlurHandler} autoFocus  className={classes.inputName}/>
                 : <span onDoubleClick={() => {setMode(true)}}>{title}</span>}
-            {error && <div style={{ color: 'red' }}>{error}</div>}
-            <div style={{ opacity: '0.5' }}>dobble click for change user name</div>
+            {error && <div className={classes.error}>{error}</div>}
+            <div className={classes.inputClick}>double click for change user name</div>
         </div>
 
     )
