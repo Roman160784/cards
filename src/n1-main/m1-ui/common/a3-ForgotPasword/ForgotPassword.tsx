@@ -13,9 +13,10 @@ export type FormikErrorRestoreType = {
 export const ForgotPassword = () => {
 
     const errorServerMessage = useSelector<RootReducerType, string | null>(state => state.forgotPassword.error)
+    const notification = useSelector<RootReducerType, string | null>(state => state.forgotPassword.message)
     const dispatch = useDispatch()
 
-    const from = "for person, f <matveyenkaraman@gmail.com>"
+    const from = "for person, f <crokster1996@gmail.com>"
     const message = `<div style="background-color: lime; padding: 15px">
                     password recovery link: 
                     <a href='http://localhost:3000/#/set-new-password/$token$'>
@@ -40,18 +41,19 @@ export const ForgotPassword = () => {
             // alert(JSON.stringify(values, null, 2));
         },
     });
-
+    // make the redirection to new page in order to cofirm new password on your email(Max)
 
     return (
         <form onSubmit={formik.handleSubmit} className={classes.restoreForm}>
             <h1 className={classes.header}>Forgot your password?</h1>
             <div>
                 {formik.touched.email && formik.errors.email ?
-                    <div className={classes.errors}>{formik.errors.email}</div> : null}
+                    <div className={classes.errors}>{formik.errors.email}</div> :
+                    <div className={classes.errors}>{errorServerMessage}</div>}
                 <input className={classes.inputRestore} placeholder={'Email'}
                        {...formik.getFieldProps('email')}
                 />
-                {errorServerMessage ? <div> {errorServerMessage} </div> : null}
+                <div className={classes.notification}>{notification}</div>
             </div>
             <button type="submit" className={classes.buttonSend}>Send Instructions</button>
             <div className={classes.linkRemember}>Did you remember yor password?</div>

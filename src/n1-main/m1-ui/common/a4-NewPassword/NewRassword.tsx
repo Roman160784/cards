@@ -1,12 +1,15 @@
 import React from 'react';
-import {Navigate, NavLink, useParams} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import classes from './NewPassword.module.css'
-import {RootReducerType} from "../../../../n3-redux/a1-store/store";
+
 import * as Yup from "yup";
-import {addUserTC} from "../../../../n3-redux/a3-RegistrationReducer/RegistrationReducer";
+import {setNewPasswordTC} from "../../../../n3-redux/a5-NewRasswordReducer/NewRasswordRducer";
+import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {pathEnum} from "../../routes/a0-Main/Main";
+import {logoutTC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
+
 
 export type FormikErrorPasswordType = {
     errors?: string
@@ -16,18 +19,17 @@ export type FormikErrorPasswordType = {
 export const NewPassword = () => {
     const dispatch = useDispatch()
     const params = useParams<'token'>()
-    const token = params.token
-    console.log(token)
+    const resetPasswordToken = params.token
+
+    const successInfo = useSelector<RootReducerType, string | null>(state => state.newPassword.info)
+
 
     const formik = useFormik({
         initialValues: {
             password: '',
-            confirmPassword: '',
+            confirmPassword: ''
         },
         validationSchema: Yup.object({
-            email: Yup.string()
-                .email('Invalid email address')
-                .required('Required'),
             password: Yup.string()
                 .min(6, 'Password must be 7 characters or more')
                 .required('Required'),
@@ -36,9 +38,15 @@ export const NewPassword = () => {
                 .required('Confirm password is required '),
         }),
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            dispatch(setNewPasswordTC({...values, password, resetPasswordToken}))
         },
     });
+    const password = formik.values.password
+
+    if(successInfo === 'setNewPassword success —ฅ/ᐠ.̫ .ᐟฅ—') {
+        dispatch(logoutTC())
+       return <Navigate to={pathEnum.login}/>
+    }
 
     return (
         <div>

@@ -1,13 +1,56 @@
+import {passwordAPI, PasswordType, SetPasswordType} from "../../n4-dal/API/CardsAPI";
+import {Dispatch} from "redux";
+import {AxiosError} from "axios";
+import {handleServerNetwork} from "../../n5-utils/error-utils";
+
 export type NewRasswordReducerRducerType = {
-    
+    info: string | null
+    error: string | null
 }
 
 const initialState: NewRasswordReducerRducerType = {
-
+    info: null,
+    error: null
 }
 
-export const NewRasswordReducer = (state: NewRasswordReducerRducerType = initialState, action: MainActionType): NewRasswordReducerRducerType => {
+export const NewRasswordReducer = (state: NewRasswordReducerRducerType = initialState, action: ActionTypes): NewRasswordReducerRducerType => {
+    switch (action.type) {
+        case 'NEW-PASSWORD/SET-NOTIFICATION': {
+            return {...state, info: action.info}
+        }
+        case 'NEW-PASSWORD/SET-ERROR-MESSAGE': {
+            return {...state, error: action.error}
+        }
+    }
+
+
     return state
 }
 
-export type MainActionType =''
+export type ActionTypes = setErrorMessageACtype | setNotificationACType
+
+export type setErrorMessageACtype = ReturnType<typeof setErrorMessageAC>
+export type setNotificationACType = ReturnType<typeof setNotificationAC>
+
+
+export const setErrorMessageAC = (error: string | null) => ({type: 'NEW-PASSWORD/SET-ERROR-MESSAGE',  error} as const)
+export const setNotificationAC = (info: string | null) => ({type: 'NEW-PASSWORD/SET-NOTIFICATION', info} as const)
+
+
+export const setNewPasswordTC = (data: SetPasswordType) => {
+    return (dispatch: Dispatch) => {
+        return passwordAPI.setNewPassword(data)
+            .then((res) => {
+                dispatch(setNotificationAC(res.data.info))
+            })
+            .then(res => {
+                setTimeout(() => {
+                    dispatch(setNotificationAC(null))
+                }, 3000)
+            })
+            .catch((e: AxiosError) => {
+                handleServerNetwork(e, dispatch)
+            } )
+    }
+
+}

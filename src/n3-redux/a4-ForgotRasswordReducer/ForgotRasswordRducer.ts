@@ -23,26 +23,36 @@ export const ForgotPasswordReducer = (state: ForgotPasswordReducerType = initial
        case 'FORGOT-PASSWORD/SETT-ERROR-MESSAGE' : {
            return {...state, error: action.error}
        }
+       case 'FORGOT-PASSWORD/SET-NOTIFICATION': {
+           return {...state, message: action.info}
+       }
        default:
            return { ...state }
    }
 }
 
 // types for actions
-export type MainActionType = setErrorMessageACtype
+export type MainActionType = setErrorMessageACtype | setNotificationACType
 
 export type setErrorMessageACtype = ReturnType<typeof setErrorMessageAC>
+export type setNotificationACType = ReturnType<typeof setNotificationAC>
+
 
 // actions
 export const setErrorMessageAC = (error: string) => ({type: 'FORGOT-PASSWORD/SETT-ERROR-MESSAGE',  error} as const)
-
+export const setNotificationAC = (info: string | null) => ({type: 'FORGOT-PASSWORD/SET-NOTIFICATION', info} as const)
 
 //thunks
 export const getParamsForNewPasswordTC = (data: PasswordType) => {
     return (dispatch: Dispatch) => {
         return passwordAPI.forgotPassword(data)
             .then((res) => {
-                
+                dispatch(setNotificationAC(res.data.info))
+            })
+            .then(res => {
+                setTimeout(() => {
+                    dispatch(setNotificationAC(null))
+                }, 3000)
             })
             .catch((e: AxiosError) => {
                 handleServerNetwork(e, dispatch)

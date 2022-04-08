@@ -46,6 +46,9 @@ export const registrationAPI = {
 export const passwordAPI = {
     forgotPassword(data : PasswordType) {
         return instance.post<PasswordType, AxiosResponse<PasswordResponseType> >('auth/forgot', data)
+    },
+    setNewPassword(data: SetPasswordType) {
+        return instance.post<SetPasswordType, AxiosResponse<PasswordResponseType>>('/auth/set-new-password', data)
     }
 }
 
@@ -55,6 +58,10 @@ export type PasswordType = {
     email: string
     from: string
     message: string
+}
+export type SetPasswordType = {
+    password: string
+    resetPasswordToken: string | undefined
 }
 
 export type PasswordResponseType = {
