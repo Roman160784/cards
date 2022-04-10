@@ -1,6 +1,6 @@
 import { AxiosError } from "axios"
 import { Dispatch } from "redux"
-import {CardPackType, packCardsAPI, profileAPI, ProfileCardPacksType} from "../../n4-dal/API/CardsAPI"
+import { packCardsAPI, profileAPI} from "../../n4-dal/API/CardsAPI"
 import {setAppErrorAC} from "../a7-AppReducer/AppReducer";
 
 // types 
@@ -25,7 +25,7 @@ export type userType = {
 export type ProfileReducerType = {
     user: userType
     error: string | null
-    cardPacks: ProfileCardPacksType
+    // cardPacks: ProfileCardPacksType
 }
 
 const initialState: ProfileReducerType = {
@@ -45,25 +45,6 @@ const initialState: ProfileReducerType = {
         _id: ''
     },
     error: null,
-    cardPacks: {
-        cardPacks: [
-            {
-                _id: '',
-                user_id: '',
-                name: '',
-                cardsCount: 0,
-                created: new Date(),
-                updated: new Date()
-            },
-
-        ],
-        cardPacksTotalCount: 0,
-        maxCardsCount: 0,
-        page: 1,
-        pageCount: 1,
-        token: '',
-        tokenDeathTime: 0
-    }
 }
 
 //reducer
@@ -76,10 +57,6 @@ export const ProfileReducer = (state: ProfileReducerType = initialState, action:
         case 'PROFILE/SET-USER-ERROR': {
             return {...state, error: action.error}
         }
-        // case 'PROFILE/SET-PACK-CARDS': {
-        //     return action.cardPack.map(pack => ({...pack}))
-        //
-        // }
         default:
             return { ...state }
     }
@@ -87,17 +64,17 @@ export const ProfileReducer = (state: ProfileReducerType = initialState, action:
 
 // types for actions
 
-export type MainActionType = setUserACtype | setUserErrorACType | setPackCardsACType
+export type MainActionType = setUserACtype | setUserErrorACType
 
 export type setUserACtype = ReturnType<typeof setUserAC>
 export type setUserErrorACType = ReturnType<typeof setUserErrorAC>
-export type setPackCardsACType= ReturnType<typeof setPackCardsAC>
+// export type setPackCardsACType= ReturnType<typeof setPackCardsAC>
 
 // actions
 
 export const setUserAC = (user: userType) => ({ type: 'PROFILE/UPDATE-USER', user } as const)
 export const setUserErrorAC = (error: string | null) => ({ type: 'PROFILE/SET-USER-ERROR', error } as const)
-export const setPackCardsAC = (cardPack: CardPackType[]) => ({ type: 'PROFILE/SET-PACK-CARDS', cardPack } as const)
+// export const setPackCardsAC = (cardPack: CardPackType[]) => ({ type: 'PROFILE/SET-PACK-CARDS', cardPack } as const)
 
 
 //thunks
@@ -117,18 +94,3 @@ export const updateUserTC = (user: { name?: string, avatar?: string }) => {
     }
 }
 
-export const fetchPackCardsTC = () => {
-    return (dispatch: Dispatch) => {
-        return packCardsAPI.getPackOfCards()
-            .then((res) => {
-                dispatch(setPackCardsAC(res.data.cardPacks))
-                console.log(res.data)
-            })
-            .catch((e: AxiosError) => {
-                dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-                setTimeout(() => {
-                    dispatch(setUserErrorAC(null))
-                }, 3000)
-            })
-    }
-}

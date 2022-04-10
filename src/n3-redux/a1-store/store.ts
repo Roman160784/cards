@@ -6,6 +6,8 @@ import {ForgotPasswordReducer} from "../a4-ForgotRasswordReducer/ForgotRasswordR
 import {NewRasswordReducer} from "../a5-NewRasswordReducer/NewRasswordRducer";
 import {ProfileReducer} from "../a6-ProfileReducer/ProfileReducer";
 import { AppReducer } from "../a7-AppReducer/AppReducer";
+import {CardsPacksReducer} from "../a8-CardsPacksReducer/CardsPacksReducer";
+import {CardsReducer} from "../a9-CardsReducer/CardsReducer";
 
 
 const rootReducer = combineReducers({
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
     newPassword: NewRasswordReducer,
     profile: ProfileReducer,
     app: AppReducer,
+    cardsPacks: CardsPacksReducer,
+    // cards: CardsReducer,
 
 })
 

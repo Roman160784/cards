@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { userType } from "../../n3-redux/a3-RegistrationReducer/RegistrationReducer";
 import { LoginType } from "../../n3-redux/a2-loginReducer/loginReducer";
+import {CardsPacksType} from "../../n1-main/m1-ui/common/a7-CardPacks/CardsPacks";
 
 
 
@@ -8,7 +9,7 @@ import { LoginType } from "../../n3-redux/a2-loginReducer/loginReducer";
 // baseURL   http://localhost:7542/2.0/
 
 export const instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0/',
+    baseURL: 'http://localhost:7542/2.0/',
     withCredentials: true,
 })
 
@@ -54,15 +55,15 @@ export const passwordAPI = {
 
 export const packCardsAPI = {
     getPackOfCards(){
-        return instance.get<any>('/cards/pack')
+        return instance.get<CardPacksResponseType>('/cards/pack')
     }
 }
 
 
 // types
 
-export type ProfileCardPacksType = {
-    cardPacks: CardPackType[]
+export type CardPacksResponseType = {
+    cardPacks: CardsPacksType[]
     cardPacksTotalCount: number
     maxCardsCount: number
     page: number
@@ -71,14 +72,6 @@ export type ProfileCardPacksType = {
     tokenDeathTime: number
 }
 
-export type CardPackType = {
-    _id: string
-    user_id: string
-    name: string
-    cardsCount: number
-    created: Date
-    updated: Date
-}
 
 export type PasswordType = {
     email: string

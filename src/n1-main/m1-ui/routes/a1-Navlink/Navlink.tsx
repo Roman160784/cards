@@ -36,6 +36,11 @@ export const Nav = () => {
                          className={({isActive}) => `${isActive ? classes.active : classes.link}`}>
                     Profile
                 </NavLink>
+            </div><div>
+                <NavLink to={pathEnum.packs}
+                         className={({isActive}) => `${isActive ? classes.active : classes.link}`}>
+                    Packs
+                </NavLink>
             </div>
             <div>
                 <NavLink to={pathEnum.test}
