@@ -52,7 +52,33 @@ export const passwordAPI = {
     }
 }
 
+export const packCardsAPI = {
+    getPackOfCards(){
+        return instance.get<any>('/cards/pack')
+    }
+}
+
+
 // types
+
+export type ProfileCardPacksType = {
+    cardPacks: CardPackType[]
+    cardPacksTotalCount: number
+    maxCardsCount: number
+    page: number
+    pageCount: number
+    token: string
+    tokenDeathTime: number
+}
+
+export type CardPackType = {
+    _id: string
+    user_id: string
+    name: string
+    cardsCount: number
+    created: Date
+    updated: Date
+}
 
 export type PasswordType = {
     email: string
