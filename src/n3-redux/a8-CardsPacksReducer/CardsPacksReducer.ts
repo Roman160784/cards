@@ -1,4 +1,4 @@
-import {CardsPacksType} from "../../n1-main/m1-ui/common/a7-CardPacks/CardsPacks";
+
 import {Dispatch} from "redux";
 import {packCardsAPI} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
@@ -6,6 +6,24 @@ import {setUserErrorAC} from "../a6-ProfileReducer/ProfileReducer";
 
 
 //types
+export type CardsPacksType = {
+    cardsCount: number
+    created: Date
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: Date
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
+}
+
 export type CardsPacksReducerType = {
     cardsPacks: CardsPacksType[]
     cardPacksTotalCount: number
@@ -45,8 +63,10 @@ export type MainActionType = setPackCardsACType
 
 export type setPackCardsACType = ReturnType<typeof setPackCardsAC>
 
+
 //actions
 export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SET-PACK-CARDS', cardPacks} as const)
+
 
 // thunks
 

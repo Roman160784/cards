@@ -1,24 +1,10 @@
 import React from 'react';
 import {useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
+import { CardsPacksType } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
+import {Search} from "../c6-Search/Search";
 
-export type CardsPacksType = {
-    cardsCount: number
-    created: Date
-    grade: number
-    more_id: string
-    name: string
-    path: string
-    private: boolean
-    rating: number
-    shots: number
-    type: string
-    updated: Date
-    user_id: string
-    user_name: string
-    __v: number
-    _id: string
-}
+
 
 export const CardsPacks = () => {
 
@@ -26,6 +12,7 @@ export const CardsPacks = () => {
 
     return (
         <div>
+            <Search searchArray={cardsPacks}/>
             <div>
                 <span>Name  </span>
                 <span>cardsCount  </span>
@@ -56,3 +43,4 @@ export const CardsPacks = () => {
     )
 
 }
+

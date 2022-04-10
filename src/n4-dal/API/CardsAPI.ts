@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import { userType } from "../../n3-redux/a3-RegistrationReducer/RegistrationReducer";
 import { LoginType } from "../../n3-redux/a2-loginReducer/loginReducer";
-import {CardsPacksType} from "../../n1-main/m1-ui/common/a7-CardPacks/CardsPacks";
+import { CardsPacksType } from "../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
+
 
 
 
