@@ -55,13 +55,17 @@ export const passwordAPI = {
 }
 
 export const packCardsAPI = {
-    getPackOfCards(){
-        return instance.get<CardPacksResponseType>('/cards/pack')
+    getPackOfCards(packName?: string){
+        return instance.get<CardPacksResponseType>(`/cards/pack?pack`)
+    },
+    searchPacs(packName?: string){
+        return instance.get<CardPacksResponseType>(`/cards/pack?packName=${packName}`)
     }
 }
 
 
 // types
+
 
 export type CardPacksResponseType = {
     cardPacks: CardsPacksType[]

@@ -1,8 +1,9 @@
 
 import {Dispatch} from "redux";
-import {packCardsAPI} from "../../n4-dal/API/CardsAPI";
+import { packCardsAPI} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
 import {setUserErrorAC} from "../a6-ProfileReducer/ProfileReducer";
+import {setLoadingAC} from "../a7-AppReducer/AppReducer";
 
 
 //types
@@ -73,6 +74,21 @@ export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SE
 export const fetchPackCardsTC = () => {
     return (dispatch: Dispatch) => {
         return packCardsAPI.getPackOfCards()
+            .then((res) => {
+                dispatch(setPackCardsAC(res.data.cardPacks))
+            })
+            .catch((e: AxiosError) => {
+                dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                setTimeout(() => {
+                    dispatch(setUserErrorAC(null))
+                }, 3000)
+            })
+    }
+}
+
+export const searchPacksCardsTC = (value?: string) => {
+    return (dispatch: Dispatch) => {
+        return packCardsAPI.searchPacs(value)
             .then((res) => {
                 dispatch(setPackCardsAC(res.data.cardPacks))
             })

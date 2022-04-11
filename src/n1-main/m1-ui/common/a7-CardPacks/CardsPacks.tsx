@@ -1,18 +1,27 @@
-import React from 'react';
-import {useSelector} from "react-redux";
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
-import { CardsPacksType } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
-import {Search} from "../c6-Search/Search";
+import {
+    CardsPacksType,
+    fetchPackCardsTC,
+} from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
+import { SearchPacks} from "../c6-SearchPacks/SearchPacks";
 
 
 
 export const CardsPacks = () => {
 
     const cardsPacks = useSelector<RootReducerType, CardsPacksType[]>(state => state.cardsPacks.cardsPacks)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchPackCardsTC())
+    }, [])
+
 
     return (
         <div>
-            <Search searchArray={cardsPacks}/>
+            <SearchPacks/>
             <div>
                 <span>Name  </span>
                 <span>cardsCount  </span>
