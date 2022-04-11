@@ -3,7 +3,7 @@ import {Dispatch} from "redux";
 import {AddCardPackType, packCardsAPI, UpdateNameCardPackType} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
 import {setUserErrorAC} from "../a6-ProfileReducer/ProfileReducer";
-
+import {setLoadingAC} from "../a7-AppReducer/AppReducer";
 
 
 //types
@@ -65,10 +65,8 @@ export type MainActionType = setPackCardsACType
 export type setPackCardsACType = ReturnType<typeof setPackCardsAC>
 
 
-
 //actions
 export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SET-PACK-CARDS', cardPacks} as const)
-
 
 
 // thunks
@@ -123,4 +121,19 @@ export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (d
                 dispatch(setUserErrorAC(null))
             }, 3000)
         })
+}
+
+export const searchPacksCardsTC = (value?: string) => {
+    return (dispatch: Dispatch) => {
+        return packCardsAPI.searchPacs(value)
+            .then((res) => {
+                dispatch(setPackCardsAC(res.data.cardPacks))
+            })
+            .catch((e: AxiosError) => {
+                dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                setTimeout(() => {
+                    dispatch(setUserErrorAC(null))
+                }, 3000)
+            })
+    }
 }

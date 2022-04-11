@@ -20,7 +20,9 @@ function App() {
         dispatch(isAuthTC())
     }, [])
 
-
+    useEffect(() => {
+        dispatch(fetchPackCardsTC())
+    }, [])
 
 
     if (!isInitialized) return <Preloader/>

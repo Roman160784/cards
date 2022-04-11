@@ -64,11 +64,15 @@ export const packCardsAPI = {
     },
     updateNamePackOfCards(cardsPack: UpdateNameCardPackType){
         return instance.put('/cards/pack', {cardsPack})
+    },
+    searchPacs(packName?: string){
+        return instance.get<CardPacksResponseType>(`/cards/pack?packName=${packName}`)
     }
 }
 
 
 // types
+
 
 export type CardPacksResponseType = {
     cardPacks: CardsPacksType[]
