@@ -6,12 +6,9 @@ import {
     CardsPacksType,
     fetchPackCardsTC, removePackOfCardsTC, updateNamePackOfCardsTC
 } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
-
 import {Modal} from "./Modal/Modal";
 import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
-
-import { SearchPacks} from "../c6-SearchPacks/SearchPacks";
-
+import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 
 
 export const CardsPacks = () => {
@@ -49,7 +46,7 @@ export const CardsPacks = () => {
                 <span>cardsCount  </span>
                 <span>updated  </span>
                 <span>url  </span>
-                <button onClick={openModalHandler}>ADD   </button>
+                <button onClick={openModalHandler}>ADD</button>
             </div>
             <Modal
                 addItem={(title: string) => addPack(title)}

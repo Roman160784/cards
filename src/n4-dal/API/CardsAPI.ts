@@ -70,9 +70,35 @@ export const packCardsAPI = {
     }
 }
 
+export const cardsApi = {
+    getCards(cardsPack_id: string){
+        return instance.get<CardsResponseType>(`/cards/card?cardsPack_id=${cardsPack_id}`)
+    }
 
+}
 // types
 
+export type CardsResponseType = {
+    cards: CardsType[]
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
+    page: number
+    pageCount: number
+    packUserId: string
+}
+
+export type CardsType = {
+    answer: string
+    question: string
+    cardsPack_id: string
+    grade: number
+    shots: number
+    user_id: string
+    created: string
+    updated: string
+    _id: string
+}
 
 export type CardPacksResponseType = {
     cardPacks: CardsPacksType[]

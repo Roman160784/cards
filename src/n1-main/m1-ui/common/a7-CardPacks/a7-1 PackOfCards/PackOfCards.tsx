@@ -1,5 +1,7 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Modal} from "../Modal/Modal";
+import {useDispatch} from "react-redux";
+import {getCardsTC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
 
 
 type PropsType = {
@@ -17,6 +19,11 @@ export const PackOfCards = ({
                                 removePackOfCards, path, updated
 }: PropsType) => {
 
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getCardsTC(packId))
+    }, [])
 
     const removePackHandler = useCallback(() => {
         removePackOfCards(packId)
