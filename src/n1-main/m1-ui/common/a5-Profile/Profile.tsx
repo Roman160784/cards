@@ -45,7 +45,9 @@ export const Profile = () => {
                     </div>
                     {/*<button onClick={handlerData}>click</button>*/}
                     <div className={classes.profileUserName}>
-                        <EditableSpan title={userName ? userName : 'User name'} changeTitle={(title: string) => {
+                        <EditableSpan
+                            title={userName ? userName : 'User name'}
+                            changeTitle={(title: string) => {
                             changeTitleHandler(title)
                         }}/>
                     </div>

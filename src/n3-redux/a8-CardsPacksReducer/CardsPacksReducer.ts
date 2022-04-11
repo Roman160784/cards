@@ -1,8 +1,9 @@
 
 import {Dispatch} from "redux";
-import {packCardsAPI} from "../../n4-dal/API/CardsAPI";
+import {AddCardPackType, packCardsAPI, UpdateNameCardPackType} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
 import {setUserErrorAC} from "../a6-ProfileReducer/ProfileReducer";
+
 
 
 //types
@@ -50,7 +51,7 @@ const initialState: CardsPacksReducerType = {
 //reducer
 export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, action: MainActionType): CardsPacksReducerType => {
     switch (action.type) {
-        case "PACKS/SET-PACK-CARDS": {
+        case 'PACKS/SET-PACK-CARDS': {
             return {...state, cardsPacks: action.cardPacks}
         }
         default:
@@ -64,8 +65,10 @@ export type MainActionType = setPackCardsACType
 export type setPackCardsACType = ReturnType<typeof setPackCardsAC>
 
 
+
 //actions
 export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SET-PACK-CARDS', cardPacks} as const)
+
 
 
 // thunks
@@ -83,4 +86,41 @@ export const fetchPackCardsTC = () => {
                 }, 3000)
             })
     }
+}
+export const addPackofCardsTC = (cardsPack: AddCardPackType) => (dispatch: any) => {
+        packCardsAPI.addPackOfCards(cardsPack)
+            .then((res) => {
+                dispatch(fetchPackCardsTC())
+            })
+            .catch((e: AxiosError) => {
+                dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                setTimeout(() => {
+                    dispatch(setUserErrorAC(null))
+                }, 3000)
+            })
+}
+export const removePackOfCardsTC = (id: string) => (dispatch: any) => {
+    packCardsAPI.removePackOfCards(id)
+        .then((res) => {
+            dispatch(fetchPackCardsTC())
+        })
+        .catch((e: AxiosError) => {
+            dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+            setTimeout(() => {
+                dispatch(setUserErrorAC(null))
+            }, 3000)
+        })
+}
+
+export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (dispatch: any) => {
+    packCardsAPI.updateNamePackOfCards(cardsPack)
+        .then((res) => {
+            dispatch(fetchPackCardsTC())
+        })
+        .catch((e: AxiosError) => {
+            dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+            setTimeout(() => {
+                dispatch(setUserErrorAC(null))
+            }, 3000)
+        })
 }

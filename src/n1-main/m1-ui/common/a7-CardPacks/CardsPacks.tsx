@@ -1,14 +1,45 @@
-import React from 'react';
-import {useSelector} from "react-redux";
+import React, {useCallback, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
-import { CardsPacksType } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
+import {
+    addPackofCardsTC,
+    CardsPacksType,
+    fetchPackCardsTC, removePackOfCardsTC, updateNamePackOfCardsTC
+} from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
+
+import {Modal} from "./Modal/Modal";
 import {Search} from "../c6-Search/Search";
+import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
+
 
 
 
 export const CardsPacks = () => {
+    let dispatch = useDispatch()
 
     const cardsPacks = useSelector<RootReducerType, CardsPacksType[]>(state => state.cardsPacks.cardsPacks)
+    const [isOpened, setOpened] = useState<boolean>(false)
+
+    useEffect(() => {
+        dispatch(fetchPackCardsTC())
+    }, [])
+    const openModalHandler = useCallback(() => {
+        setOpened(true)
+    }, [])
+    const closeModalHandler = useCallback(() => {
+        setOpened(false)
+    }, [])
+    const addPack = (name: string) => {
+        dispatch(addPackofCardsTC({name}))
+    }
+
+    const removePackOfCards = useCallback((packId: string) => {
+        dispatch(removePackOfCardsTC(packId));
+    }, [dispatch])
+    const updateNamePackOfCards = useCallback((packId: string) => {
+        dispatch(updateNamePackOfCardsTC({_id: packId}));
+    }, [dispatch])
+
 
     return (
         <div>
@@ -18,21 +49,28 @@ export const CardsPacks = () => {
                 <span>cardsCount  </span>
                 <span>updated  </span>
                 <span>url  </span>
-                <button>ADD   </button>
+                <button onClick={openModalHandler}>ADD   </button>
             </div>
-
+            <Modal
+                addItem={(title: string) => addPack(title)}
+                isOpened={isOpened}
+                title={'Add new pack of cards'}
+                onModalClose={closeModalHandler}
+            />
             <div>
                 {
                     cardsPacks.map(pack => {
                         return (
                             <div key={pack._id}>
-                                <span>{pack.name}</span>
-                                <span>{pack.cardsCount}</span>
-                                <span>{pack.updated}</span>
-                                <span>{pack.path}</span>
-                                <button>del</button>
-                                <button>update</button>
-                                <span>cards</span>
+                                <PackOfCards
+                                    packId={pack._id}
+                                    name={pack.name}
+                                    cardsCount={pack.cardsCount}
+                                    updated={pack.updated}
+                                    path={pack.path}
+                                    removePackOfCards={removePackOfCards}
+                                    updateNamePackOfCards={updateNamePackOfCards}
+                                />
                             </div>
                         )
                     })
