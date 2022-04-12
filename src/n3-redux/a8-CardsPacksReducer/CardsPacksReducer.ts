@@ -83,8 +83,7 @@ export const fetchPackCardsTC = () => {
     return (dispatch: Dispatch) => {
         return packCardsAPI.getPackOfCards()
             .then((res) => {
-                dispatch(isAuthAC(true))
-                dispatch(setIsLoginAC(true))
+
                 dispatch(setPackCardsAC(res.data.cardPacks))
             })
             .catch((e: AxiosError) => {

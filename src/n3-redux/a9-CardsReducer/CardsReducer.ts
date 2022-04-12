@@ -86,9 +86,25 @@ export const removeCardTC = (cardsPack_id: string, cardId: string) => {
             })
     }
 }
-export const createCardTC = (cardsPack_id: string) => {
+export const createCardTC = (cardsPack_id: string ) => {
     return (dispatch: any) => {
         cardsApi.createCard(cardsPack_id)
+            .then((res) => {
+                console.log({...res})
+                dispatch(getCardsTC(cardsPack_id))
+            })
+            .catch((e: AxiosError) => {
+                dispatch(setCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                setTimeout(() => {
+                    dispatch(setCardsErrorAC(null))
+                }, 5000)
+            })
+    }
+}
+
+export const updateNameCardTC = (cardsPack_id: string, cardId: string) => {
+    return (dispatch: any) => {
+        cardsApi.updateNameCard(cardId)
             .then((res) => {
                 dispatch(getCardsTC(cardsPack_id))
             })
@@ -101,17 +117,11 @@ export const createCardTC = (cardsPack_id: string) => {
     }
 }
 
-export const updateNameCard = (cardsPack_id: string, cardId: string) => {
+export const searchCardsTC = (cardsPack_id: string, cardAnswer: string) => {
     return (dispatch: any) => {
-        cardsApi.updateNameCard(cardId)
-            .then((res) => {
+        cardsApi.searchCards(cardsPack_id, cardAnswer)
+            .then(res => {
                 dispatch(getCardsTC(cardsPack_id))
-            })
-            .catch((e: AxiosError) => {
-                dispatch(setCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-                setTimeout(() => {
-                    dispatch(setCardsErrorAC(null))
-                }, 3000)
             })
     }
 }

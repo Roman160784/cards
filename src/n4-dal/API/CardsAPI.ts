@@ -78,10 +78,13 @@ export const cardsApi = {
         return instance.delete(`/cards/card?id=${id}`)
     },
     createCard(cardsPack_id: string) {
-        return instance.post<CardType>('/cards/card', {cardsPack_id})
+        return instance.post<CardType>('/cards/card', {card:{cardsPack_id}})
     },
     updateNameCard(_id: string) {
-        return instance.put('/cards/card', {_id})
+        return instance.put('/cards/card', {card:{_id}})
+    },
+    searchCards(cardsPack_id: string, cardAnswer: string) {
+        return instance.get<CardsResponseType>(`/cards/card?cardsPack_id=${cardsPack_id}&cardAnswer=english=${cardAnswer}`)
     }
 }
 // types

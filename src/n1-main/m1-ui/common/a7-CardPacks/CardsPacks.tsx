@@ -39,6 +39,7 @@ export const CardsPacks = () => {
     const removePackOfCards = useCallback((packId: string) => {
         dispatch(removePackOfCardsTC(packId));
     }, [dispatch])
+
     const updateNamePackOfCards = useCallback((packId: string, name: string) => {
         dispatch(updateNamePackOfCardsTC({_id: packId, name}));
     }, [dispatch])

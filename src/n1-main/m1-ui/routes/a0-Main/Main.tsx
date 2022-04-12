@@ -25,7 +25,7 @@ export enum pathEnum {
     error404 = '/404',
     empty = '/*',
     packs = '/packs',
-    cards = '/cards',
+    cards = '/cards/:id',
 }
 
 // http://localhost:3000/#/set-new-password/5a75e040-b656-11ec-a69a-65588f1fc455
