@@ -33,7 +33,7 @@ export const PackOfCards = ({
     }, [])
     const openModalHandler = useCallback(() => {
         setOpened(true)
-
+    }, [])
 
     const closeModalHandler = useCallback(() => {
         setOpened(false)
@@ -51,7 +51,6 @@ export const PackOfCards = ({
             <div>{cardsCount}</div>
             <div>{path}</div>
             <div>{updated}</div>
-            <button>learn</button>
             <button onClick={openModalHandler}>edit</button>
             <button onClick={() =>{learnClickHandler(packId)}}>learn</button>
             <button onClick={removePackHandler}>delete</button>
