@@ -67,3 +67,15 @@ export const getCardsTC = (cardsPack_id: string) => {
             })
     }
 }
+export const removeCardTC = (cardId: string) => {
+    return (dispatch: any) => {
+        cardsApi.removeCard(cardId)
+            .then((res) => {
+                dispatch(isAuthAC(true))
+                dispatch(setIsLoginAC(true))
+            })
+            .finally(() => {
+                dispatch(setInitializedAC(true))
+            })
+    }
+}

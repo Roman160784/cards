@@ -1,7 +1,9 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Modal} from "../Modal/Modal";
 import {useDispatch} from "react-redux";
 import {getCardsTC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
+import {Navigate, useNavigate} from "react-router-dom";
+import {pathEnum} from "../../../routes/a0-Main/Main";
 
 
 type PropsType = {
@@ -23,6 +25,7 @@ export const PackOfCards = ({
 
     const [isOpened, setOpened] = useState<boolean>(false)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
 
     const removePackHandler = useCallback(() => {
@@ -41,7 +44,9 @@ export const PackOfCards = ({
 
 
     const learnClickHandler = (packId: string) => {
+        debugger;
         dispatch(getCardsTC(packId))
+        return navigate(pathEnum.cards)
     }
 
     return (

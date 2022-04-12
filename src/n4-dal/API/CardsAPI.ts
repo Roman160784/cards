@@ -8,7 +8,7 @@ import {CardsPacksType} from "../../n3-redux/a8-CardsPacksReducer/CardsPacksRedu
 // baseURL   http://localhost:7542/2.0/
 
 export const instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0/',
+    baseURL: 'http://localhost:7542/2.0/',
     withCredentials: true,
 })
 
@@ -73,7 +73,10 @@ export const packCardsAPI = {
 export const cardsApi = {
     getCards(cardsPack_id: string){
         return instance.get<CardsResponseType>(`/cards/card?cardsPack_id=${cardsPack_id}`)
-    }
+    },
+    removeCard(id: string){
+      return instance.delete(`/cards/card?id=${id}`)
+    },
 
 }
 // types
