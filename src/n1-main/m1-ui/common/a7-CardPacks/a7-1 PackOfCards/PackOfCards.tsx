@@ -41,8 +41,7 @@ export const PackOfCards = ({
 
 
     const learnClickHandler = (packId: string) => {
-            dispatch(getCardsTC(packId))
-
+        dispatch(getCardsTC(packId))
     }
 
     return (

@@ -8,7 +8,7 @@ import {CardsPacksType} from "../../n3-redux/a8-CardsPacksReducer/CardsPacksRedu
 // baseURL   http://localhost:7542/2.0/
 
 export const instance = axios.create({
-    baseURL: 'http://localhost:7542/2.0/',
+    baseURL: 'https://neko-back.herokuapp.com/2.0/',
     withCredentials: true,
 })
 
@@ -86,8 +86,8 @@ export type CardsResponseType = {
     page: number
     pageCount: number
     packUserId: string
-    token: "987a1cf0-ba37-11ec-bb9d-533c30a712e3"
-    tokenDeathTime: 1649761648575
+    token: string
+    tokenDeathTime: number
 }
 
 export type CardsType = {
