@@ -12,9 +12,6 @@ import {Modal} from "./Modal/Modal";
 import classes from './../a7-CardPacks/CardsPacks.module.css'
 
 
-
-
-
 export const CardsPacks = () => {
     let dispatch = useDispatch()
 
@@ -44,12 +41,23 @@ export const CardsPacks = () => {
         dispatch(updateNamePackOfCardsTC({_id: packId, name}));
     }, [dispatch])
 
+    const allPacksHandler = (userId: string) => {
+        alert(userId)
+    }
+    const MyPacksHandler = (userId: string) => {
+        alert(userId)
+    }
+
 
     return (
         <div className={classes.blockCards}>
             <div className={classes.boxSearchButton}>
                 <SearchPacks/>
                 <button onClick={openModalHandler} className={classes.btnHandler}>Add new pack</button>
+            </div>
+            <div>
+                {/*<button className={classes.btnHandler} onClick={()=>{allPacksHandler(userId)}}>All</button>*/}
+                <button className={classes.btnHandler}>My</button>
             </div>
             <div className={classes.boxCardsPack}>
                 <div className={classes.blockNameCards}>
@@ -71,6 +79,7 @@ export const CardsPacks = () => {
                             <div key={pack._id}>
                                 <PackOfCards
                                     packId={pack._id}
+                                    userId={pack.user_id}
                                     name={pack.name}
                                     cardsCount={pack.cardsCount}
                                     updated={pack.updated}
@@ -78,6 +87,7 @@ export const CardsPacks = () => {
                                     title={'Edit the name of pack'}
                                     removePackOfCards={removePackOfCards}
                                     updateNamePackOfCards={updateNamePackOfCards}
+                                    allPacksHandler={allPacksHandler}
                                 />
                             </div>
                         )

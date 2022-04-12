@@ -8,24 +8,27 @@ import {pathEnum} from "../../../routes/a0-Main/Main";
 
 type PropsType = {
     packId: string
-    removePackOfCards: (packId: string) => void
-    updateNamePackOfCards: (packId: string, name: string) => void
+    userId: string
     title: string
     name: string
     cardsCount: number
     updated: Date
     path: string
+    removePackOfCards: (packId: string) => void
+    updateNamePackOfCards: (packId: string, name: string) => void
+    allPacksHandler: (userId: string) => void
 }
 
 export const PackOfCards = ({
                                 packId, name, cardsCount, updateNamePackOfCards,
                                 removePackOfCards, path, updated,
-                                title
+                                title, userId, allPacksHandler
                             }: PropsType) => {
 
     const [isOpened, setOpened] = useState<boolean>(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
 
 
     const removePackHandler = useCallback(() => {

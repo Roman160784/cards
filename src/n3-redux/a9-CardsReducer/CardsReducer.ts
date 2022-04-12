@@ -118,10 +118,11 @@ export const updateNameCardTC = (cardsPack_id: string, cardId: string) => {
 }
 
 export const searchCardsTC = (cardsPack_id: string, cardAnswer: string) => {
-    return (dispatch: any) => {
+    return (dispatch: Dispatch) => {
         cardsApi.searchCards(cardsPack_id, cardAnswer)
-            .then(res => {
-                dispatch(getCardsTC(cardsPack_id))
+            .then((res) => {
+                console.log({...res})
+                dispatch(setCardsAC(res.data.cards))
             })
     }
 }
