@@ -1,14 +1,16 @@
 import React from 'react';
 import {useDispatch, useSelector,} from "react-redux";
-import {createCardTC, removeCardTC, updateNameCard} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
+import {removeCardTC, updateNameCard} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
+import classes from "../a1-Login/Login.module.css";
 
 
 export const Cards = () => {
 
     const cards = useSelector<RootReducerType, CardsType[]>(state => state.cards.cards)
+    const error = useSelector<RootReducerType, string | null>(state => state.cards.error)
     const dispatch = useDispatch()
     const createCardHandler = () => {
 
@@ -38,6 +40,7 @@ export const Cards = () => {
                     )
                 })
             }
+            {error && <div className={classes.errors}>{error}</div>}
         </div>
     )
 }

@@ -1,7 +1,6 @@
 import {Dispatch} from "redux";
 import {cardsApi, CardsType} from "../../n4-dal/API/CardsAPI";
-import {setIsLoginAC} from "../a2-loginReducer/loginReducer";
-import {isAuthAC, setInitializedAC} from "../a7-AppReducer/AppReducer";
+import {AxiosError} from "axios";
 
 
 //types
@@ -15,6 +14,7 @@ export type CardsReducerType = {
     pageCount: number | null
     token: string | null
     tokenDeathTime: number | null
+    error: string | null
 }
 
 //state
@@ -27,7 +27,8 @@ const initialState: CardsReducerType = {
     page: 1,
     pageCount: 4,
     token: null,
-    tokenDeathTime: null
+    tokenDeathTime: null,
+    error: null
 }
 
 //reducer
@@ -36,19 +37,24 @@ export const CardsReducer = (state: CardsReducerType = initialState, action: Mai
         case 'CARDS/SET-CARDS': {
             return {...state, cards: action.cards}
         }
+        case 'PACKS/SET-CARDS-ERROR': {
+            return {...state, error: action.error}
+        }
         default:
             return {...state}
     }
 }
 
 //actions type
-export type MainActionType = setCardsACType
+export type MainActionType = setCardsACType | setCardsErrorACType
 
 export type setCardsACType = ReturnType<typeof setCardsAC>
-
+export type setCardsErrorACType = ReturnType<typeof setCardsErrorAC>
 
 //actions
 export const setCardsAC = (cards: CardsType[]) => ({type: 'CARDS/SET-CARDS', cards} as const)
+export const setCardsErrorAC = (error: string | null) => ({type: 'PACKS/SET-CARDS-ERROR', error} as const)
+
 
 
 // thunks
@@ -58,6 +64,12 @@ export const getCardsTC = (cardsPack_id: string) => {
             .then((res) => {
                 dispatch(setCardsAC(res.data.cards))
             })
+            .catch((e: AxiosError) => {
+                dispatch(setCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                setTimeout(() => {
+                    dispatch(setCardsErrorAC(null))
+                }, 3000)
+            })
     }
 }
 export const removeCardTC = (cardsPack_id: string, cardId: string) => {
@@ -65,6 +77,12 @@ export const removeCardTC = (cardsPack_id: string, cardId: string) => {
         cardsApi.removeCard(cardId)
             .then((res) => {
                 dispatch(getCardsTC(cardsPack_id))
+            })
+            .catch((e: AxiosError) => {
+                dispatch(setCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                setTimeout(() => {
+                    dispatch(setCardsErrorAC(null))
+                }, 3000)
             })
     }
 }
@@ -74,6 +92,12 @@ export const createCardTC = (cardsPack_id: string) => {
             .then((res) => {
                 dispatch(getCardsTC(cardsPack_id))
             })
+            .catch((e: AxiosError) => {
+                dispatch(setCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                setTimeout(() => {
+                    dispatch(setCardsErrorAC(null))
+                }, 3000)
+            })
     }
 }
 
@@ -82,6 +106,12 @@ export const updateNameCard = (cardsPack_id: string, cardId: string) => {
         cardsApi.updateNameCard(cardId)
             .then((res) => {
                 dispatch(getCardsTC(cardsPack_id))
+            })
+            .catch((e: AxiosError) => {
+                dispatch(setCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                setTimeout(() => {
+                    dispatch(setCardsErrorAC(null))
+                }, 3000)
             })
     }
 }

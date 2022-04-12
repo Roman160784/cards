@@ -35,7 +35,7 @@ export type CardsPacksReducerType = {
     pageCount: number
     token: string | null
     tokenDeathTime: number | null
-    error?: string | null
+    error: string | null
 }
 
 //state

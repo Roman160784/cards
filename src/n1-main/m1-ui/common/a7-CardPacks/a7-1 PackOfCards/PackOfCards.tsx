@@ -1,9 +1,10 @@
 import React, {useCallback, useState} from 'react';
 import {Modal} from "../Modal/Modal";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getCardsTC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {Navigate, useNavigate} from "react-router-dom";
 import {pathEnum} from "../../../routes/a0-Main/Main";
+import {RootReducerType} from "../../../../../n3-redux/a1-store/store";
 
 
 type PropsType = {
@@ -26,6 +27,7 @@ export const PackOfCards = ({
     const [isOpened, setOpened] = useState<boolean>(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
 
     const removePackHandler = useCallback(() => {
         removePackOfCards(packId)
@@ -62,6 +64,7 @@ export const PackOfCards = ({
                 isOpened={isOpened}
                 onModalClose={closeModalHandler}
             />
+
         </div>
     );
 };
