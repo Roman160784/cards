@@ -30,7 +30,7 @@ export const Profile = () => {
     }
 
     return (
-        <div>
+        <div className={classes.blockProfile}>
             <div className={classes.profileBoxUserName}>
                 <div className={classes.profileUser}>
                     <div>

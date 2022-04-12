@@ -9,7 +9,7 @@ import {
 import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
 import {Modal} from "./Modal/Modal";
-import classes from "../a1-Login/Login.module.css";
+import classes from './../a7-CardPacks/CardsPacks.module.css'
 
 
 
@@ -46,22 +46,25 @@ export const CardsPacks = () => {
 
 
     return (
-        <div>
-            <SearchPacks/>
-            <div>
-                <span>Name  </span>
-                <span>cardsCount  </span>
-                <span>updated  </span>
-                <span>url  </span>
-                <button onClick={openModalHandler}>ADD   </button>
+        <div className={classes.blockCards}>
+            <div className={classes.boxSearchButton}>
+                <SearchPacks/>
+                <button onClick={openModalHandler} className={classes.btnHandler}>Add new pack</button>
             </div>
-            <Modal
-                addItem={(title: string) => addPack(title)}
-                isOpened={isOpened}
-                title={'Add new pack of cards'}
-                onModalClose={closeModalHandler}
-            />
-            <div>
+            <div className={classes.boxCardsPack}>
+                <div className={classes.blockNameCards}>
+                    <span>Name</span>
+                    <span>Cards Count</span>
+                    <span>Updated</span>
+                    <span>url</span>
+                    <span>Actions</span>
+                </div>
+                <Modal
+                    addItem={(title: string) => addPack(title)}
+                    isOpened={isOpened}
+                    title={'Add new pack of cards'}
+                    onModalClose={closeModalHandler}
+                />
                 {
                     cardsPacks.map(pack => {
                         return (

@@ -40,35 +40,37 @@ export const Registration = () => {
     if (isRegistration) return <Navigate to={pathEnum.login}/>
 
     return (
-        <form onSubmit={formik.handleSubmit} className={classes.registrationForm}>
-            <h1>Sing Up</h1>
-            <div>
-                <input {...formik.getFieldProps('email')} placeholder={'Email'}
-                       className={classes.inputRegistration}
-                />
-                {formik.touched.email && formik.errors.email ?
-                    <div className={classes.errors}>{formik.errors.email}</div> :
-                    <div className={classes.errors}>{error}</div>}
-            </div>
-            <div>
-                <input {...formik.getFieldProps('password')} placeholder={'Password'}
-                       className={classes.inputRegistration}
-                />
-                {formik.touched.password && formik.errors.password ?
-                    <div className={classes.errors}>{formik.errors.password}</div> : null}
-            </div>
-            <div>
-                <input {...formik.getFieldProps('confirmPassword')} placeholder={'Confirm password'}
-                       className={classes.inputRegistration}
-                />
-                {formik.touched.confirmPassword && formik.errors.confirmPassword ?
-                    <div className={classes.errors}>{formik.errors.confirmPassword}</div> : null}
-            </div>
-            <div className={classes.boxButton}>
-                <button className={classes.buttonCancel}>Cancel</button>
-                <button type="submit" className={classes.buttonRegistration}>Register</button>
-            </div>
-        </form>
+        <div className={classes.blockRegistration}>
+            <form onSubmit={formik.handleSubmit} className={classes.registrationForm}>
+                <h1>Sing Up</h1>
+                <div>
+                    <input {...formik.getFieldProps('email')} placeholder={'Email'}
+                           className={classes.inputRegistration}
+                    />
+                    {formik.touched.email && formik.errors.email ?
+                        <div className={classes.errors}>{formik.errors.email}</div> :
+                        <div className={classes.errors}>{error}</div>}
+                </div>
+                <div>
+                    <input {...formik.getFieldProps('password')} placeholder={'Password'}
+                           className={classes.inputRegistration}
+                    />
+                    {formik.touched.password && formik.errors.password ?
+                        <div className={classes.errors}>{formik.errors.password}</div> : null}
+                </div>
+                <div>
+                    <input {...formik.getFieldProps('confirmPassword')} placeholder={'Confirm password'}
+                           className={classes.inputRegistration}
+                    />
+                    {formik.touched.confirmPassword && formik.errors.confirmPassword ?
+                        <div className={classes.errors}>{formik.errors.confirmPassword}</div> : null}
+                </div>
+                <div className={classes.boxButton}>
+                    <button className={classes.buttonCancel}>Cancel</button>
+                    <button type="submit" className={classes.buttonRegistration}>Register</button>
+                </div>
+            </form>
+        </div>
     );
 
 }

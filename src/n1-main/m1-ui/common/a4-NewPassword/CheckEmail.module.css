@@ -1,5 +1,10 @@
 .wrapper {
-    border-radius: 8px;
+    border-radius: 10px;
+    background-color: #fff;
+    width: 350px;
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
 }
 
 .img {

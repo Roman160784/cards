@@ -2,12 +2,11 @@ import React, {ChangeEvent, useState} from 'react';
 import {useDebounce, useUpdateEffect} from 'usehooks-ts'
 import {searchPacksCardsTC} from "../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 import {useDispatch} from "react-redux";
+import classes from './SearchPacks.module.css'
 
-export type SearchPacksPropsType = {
+export type SearchPacksPropsType = {}
 
-}
-
-export const SearchPacks = ({ ...props}: SearchPacksPropsType) => {
+export const SearchPacks = ({...props}: SearchPacksPropsType) => {
 
     const dispatch = useDispatch()
     const [value, setValue] = useState('')
@@ -25,8 +24,11 @@ export const SearchPacks = ({ ...props}: SearchPacksPropsType) => {
 
     return (
         <div>
-            <input type="text" value={value} onChange={onChangeHandler}/>
-            <span>Search</span>
+            <input type="text" value={value}
+                   onChange={onChangeHandler}
+                   className={classes.searchInput}
+                   placeholder={'Search...'}
+            />
         </div>
     )
 }

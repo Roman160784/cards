@@ -1,18 +1,21 @@
+.blockMain {
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: space-around;*/
+    /*height: 60px;*/
+    /*background: #ebe0e9;*/
+}
 .blockComponents {
     display: flex;
     justify-content: center;
-    margin: 50px auto 0;
-    padding: 30px;
-    width: 70%;
-    min-height: 500px;
+    align-items: center;
+    height: 100vh;
     background: linear-gradient(180deg, #86f75e 0%, #228427 100%)
 }
 
 .content {
-    border: 1px solid white;
-    border-radius: 10px;
-    background-color: white;
-    width: 350px;
-    min-height: 470px;
-    margin: auto;
+    /*border-radius: 10px;*/
+    /*background-color: white;*/
+    /*width: 350px;*/
+    /*min-height: 470px;*/
 }

@@ -1,0 +1,29 @@
+.boxCards {
+    display: flex;
+    text-align: center;
+    padding: 15px;
+}
+
+.blockText {
+    width: 150px;
+}
+
+.contentBtn {
+    width: 200px;
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+}
+
+.btn {
+    border-radius: 5px;
+    background-color: #b2ff59;
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: lime;
+
+}
