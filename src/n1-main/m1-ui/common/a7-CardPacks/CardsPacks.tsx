@@ -6,9 +6,12 @@ import {
     CardsPacksType,
     fetchPackCardsTC, removePackOfCardsTC, updateNamePackOfCardsTC
 } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
-import {Modal} from "./Modal/Modal";
-import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
 import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
+import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
+import {Modal} from "./Modal/Modal";
+
+
+
 
 
 export const CardsPacks = () => {
@@ -33,8 +36,8 @@ export const CardsPacks = () => {
     const removePackOfCards = useCallback((packId: string) => {
         dispatch(removePackOfCardsTC(packId));
     }, [dispatch])
-    const updateNamePackOfCards = useCallback((packId: string) => {
-        dispatch(updateNamePackOfCardsTC({_id: packId}));
+    const updateNamePackOfCards = useCallback((packId: string, name: string) => {
+        dispatch(updateNamePackOfCardsTC({_id: packId, name}));
     }, [dispatch])
 
 
@@ -46,7 +49,7 @@ export const CardsPacks = () => {
                 <span>cardsCount  </span>
                 <span>updated  </span>
                 <span>url  </span>
-                <button onClick={openModalHandler}>ADD</button>
+                <button onClick={openModalHandler}>ADD   </button>
             </div>
             <Modal
                 addItem={(title: string) => addPack(title)}
@@ -65,6 +68,7 @@ export const CardsPacks = () => {
                                     cardsCount={pack.cardsCount}
                                     updated={pack.updated}
                                     path={pack.path}
+                                    title={'Edit the name of pack'}
                                     removePackOfCards={removePackOfCards}
                                     updateNamePackOfCards={updateNamePackOfCards}
                                 />

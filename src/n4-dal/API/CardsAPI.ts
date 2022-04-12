@@ -118,7 +118,7 @@ export type AddCardPackType = {
 }
 export type UpdateNameCardPackType = {
     _id: string
-    name?: string
+    name: string
 }
 
 export type AddPackOfCardsResponseType = {
