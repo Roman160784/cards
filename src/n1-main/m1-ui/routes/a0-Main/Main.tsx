@@ -33,10 +33,10 @@ export enum pathEnum {
 
 export const Main = () => {
     return (
-        <div>
+        <div className={classes.blockMain}>
             <Nav/>
             <div className={classes.blockComponents}>
-                <div className={classes.content}>
+                <div>
                     <Routes>
                         <Route path={pathEnum.login} element={<Login/>}/>
                         <Route path={pathEnum.checkEmail} element={<CheckEmail/>}/>

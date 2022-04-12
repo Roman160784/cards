@@ -47,37 +47,39 @@ export const Login = () => {
     });
 
     if (isLogin) return <Navigate to={pathEnum.profile}/>
-        
-    return (
-        <form onSubmit={formik.handleSubmit} className={classes.loginForm}>
-            <h1>Login</h1>
-            <div>
-                {formik.touched.email && formik.errors.email && error ?
-                    <div className={classes.errors}>{formik.errors.email}</div> : null}
-                <input className={classes.inputLogin} placeholder={'Email'}
-                       {...formik.getFieldProps('email')}
-                />
-            </div>
 
-            <div>
-                {formik.touched.password && formik.errors.password ?
-                    <div className={classes.errors}>{formik.errors.password}</div> :
-                    <div className={classes.errors}>{error}</div>}
-                <input className={classes.inputLogin} placeholder={'Password'}
-                       {...formik.getFieldProps('password')}
-                />
-            </div>
-            <div>
-                <label>
-                    <input type={"checkbox"} className={classes.checkboxLogin}
-                           {...formik.getFieldProps('rememberMe')}
+    return (
+        <div className={classes.blockLogin}>
+            <form onSubmit={formik.handleSubmit} className={classes.loginForm}>
+                <h1>Login</h1>
+                <div>
+                    {formik.touched.email && formik.errors.email && error ?
+                        <div className={classes.errors}>{formik.errors.email}</div> : null}
+                    <input className={classes.inputLogin} placeholder={'Email'}
+                           {...formik.getFieldProps('email')}
                     />
-                    Remember me
-                </label>
-            </div>
-            <NavLink to={pathEnum.forgotPassword} className={classes.forgot}>Forgot Password</NavLink>
-            <button type="submit" className={classes.buttonLogin}>Login</button>
-            <NavLink to={pathEnum.registration} className={classes.signUp}>Sign Up</NavLink>
-        </form>
+                </div>
+
+                <div>
+                    {formik.touched.password && formik.errors.password ?
+                        <div className={classes.errors}>{formik.errors.password}</div> :
+                        <div className={classes.errors}>{error}</div>}
+                    <input className={classes.inputLogin} placeholder={'Password'}
+                           {...formik.getFieldProps('password')}
+                    />
+                </div>
+                <div>
+                    <label>
+                        <input type={"checkbox"} className={classes.checkboxLogin}
+                               {...formik.getFieldProps('rememberMe')}
+                        />
+                        Remember me
+                    </label>
+                </div>
+                <NavLink to={pathEnum.forgotPassword} className={classes.forgot}>Forgot Password</NavLink>
+                <button type="submit" className={classes.buttonLogin}>Login</button>
+                <NavLink to={pathEnum.registration} className={classes.signUp}>Sign Up</NavLink>
+            </form>
+        </div>
     );
 }
