@@ -7,6 +7,7 @@ import {NewRasswordReducer} from "../a5-NewRasswordReducer/NewRasswordRducer";
 import {ProfileReducer} from "../a6-ProfileReducer/ProfileReducer";
 import { AppReducer } from "../a7-AppReducer/AppReducer";
 import {CardsPacksReducer} from "../a8-CardsPacksReducer/CardsPacksReducer";
+import {CardsReducer} from "../a9-CardsReducer/CardsReducer";
 
 
 
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     newPassword: NewRasswordReducer,
     profile: ProfileReducer,
     app: AppReducer,
-    cardsPacks: CardsPacksReducer
+    cardsPacks: CardsPacksReducer,
+    cards: CardsReducer,
 })
 
 export type RootReducerType = ReturnType<typeof rootReducer>

@@ -3,7 +3,8 @@ import {Dispatch} from "redux";
 import {AddCardPackType, packCardsAPI, UpdateNameCardPackType} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
 import {setUserErrorAC} from "../a6-ProfileReducer/ProfileReducer";
-import {setLoadingAC} from "../a7-AppReducer/AppReducer";
+import {isAuthAC, setInitializedAC, setLoadingAC} from "../a7-AppReducer/AppReducer";
+import {setIsLoginAC} from "../a2-loginReducer/loginReducer";
 
 
 //types
@@ -75,6 +76,8 @@ export const fetchPackCardsTC = () => {
     return (dispatch: Dispatch) => {
         return packCardsAPI.getPackOfCards()
             .then((res) => {
+                dispatch(isAuthAC(true))
+                dispatch(setIsLoginAC(true))
                 dispatch(setPackCardsAC(res.data.cardPacks))
             })
             .catch((e: AxiosError) => {
@@ -82,6 +85,9 @@ export const fetchPackCardsTC = () => {
                 setTimeout(() => {
                     dispatch(setUserErrorAC(null))
                 }, 3000)
+            })
+            .finally(() => {
+                dispatch(setInitializedAC(true))
             })
     }
 }

@@ -21,16 +21,19 @@ export const PackOfCards = ({
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getCardsTC(packId))
-    }, [])
 
     const removePackHandler = useCallback(() => {
         removePackOfCards(packId)
     }, [])
+
     const updatePackNameHandler = useCallback(() =>{
         updateNamePackOfCards(packId)
     }, [])
+
+    const learnClickHandler = (packId: string) => {
+            dispatch(getCardsTC(packId))
+
+    }
 
     return (
         <div>
@@ -38,7 +41,7 @@ export const PackOfCards = ({
             <div>{cardsCount}</div>
             <div>{path}</div>
             <div>{updated}</div>
-            <button>learn</button>
+            <button onClick={() =>{learnClickHandler(packId)}}>learn</button>
             <button onClick={updatePackNameHandler}>edit</button>
             <button onClick={removePackHandler}>delete</button>
         </div>

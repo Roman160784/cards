@@ -1,55 +1,42 @@
+import {Dispatch} from "redux";
+import {cardsApi, CardsType} from "../../n4-dal/API/CardsAPI";
+import {setIsLoginAC} from "../a2-loginReducer/loginReducer";
+import {isAuthAC, setInitializedAC} from "../a7-AppReducer/AppReducer";
+
+
 
 
 //types
-import {Dispatch} from "redux";
-import {cardsApi} from "../../n4-dal/API/CardsAPI";
-
-export type CardsPacksType = {
-    cardsCount: number
-    created: Date
-    grade: number
-    more_id: string
-    name: string
-    path: string
-    private: boolean
-    rating: number
-    shots: number
-    type: string
-    updated: Date
-    user_id: string
-    user_name: string
-    __v: number
-    _id: string
-}
-
-export type CardsPacksReducerType = {
-    cardsPacks: CardsPacksType[]
-    cardPacksTotalCount: number
-    maxCardsCount: number
-    minCardsCount: number
-    page: number
-    pageCount: number
+export type CardsReducerType = {
+    cards: CardsType[]
+    cardsTotalCount: number | null
+    maxGrade: number | null
+    minGrade: number | null
+    packUserId: string| null
+    page: number | null
+    pageCount: number | null
     token: string | null
     tokenDeathTime: number | null
 }
 
 //state
-const initialState: CardsPacksReducerType = {
-    cardsPacks: [],
-    cardPacksTotalCount: 0,
-    maxCardsCount: 0,
-    minCardsCount: 0,
+const initialState: CardsReducerType = {
+    cards: [],
+    cardsTotalCount: 0,
+    maxGrade: 6,
+    minGrade: 0,
+    packUserId: null,
     page: 1,
-    pageCount: 0,
+    pageCount: 4,
     token: null,
     tokenDeathTime: null
 }
 
 //reducer
-export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, action: MainActionType): CardsPacksReducerType => {
+export const CardsReducer = (state: CardsReducerType = initialState, action: MainActionType): CardsReducerType => {
     switch (action.type) {
-        case 'PACKS/SET-PACK-CARDS': {
-            return {...state, cardsPacks: action.cardPacks}
+        case 'CARDS/SET-CARDS': {
+            return {...state, cards: action.cards}
         }
         default:
             return {...state}
@@ -57,22 +44,26 @@ export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, a
 }
 
 //actions type
-export type MainActionType = setPackCardsACType
+export type MainActionType = setCardsACType
 
-export type setPackCardsACType = ReturnType<typeof setPackCardsAC>
+export type setCardsACType = ReturnType<typeof setCardsAC>
 
 
 //actions
-export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SET-PACK-CARDS', cardPacks} as const)
+export const setCardsAC = (cards: CardsType[]) => ({type: 'CARDS/SET-CARDS', cards} as const)
 
 
 // thunks
-
 export const getCardsTC = (cardsPack_id: string) => {
     return (dispatch: Dispatch) => {
         cardsApi.getCards(cardsPack_id)
             .then((res) => {
-                console.log({...res})
+                dispatch(isAuthAC(true))
+                dispatch(setIsLoginAC(true))
+                dispatch(setCardsAC(res.data.cards))
+            })
+            .finally(() => {
+                dispatch(setInitializedAC(true))
             })
     }
 }

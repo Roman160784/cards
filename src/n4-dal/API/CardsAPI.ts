@@ -86,6 +86,8 @@ export type CardsResponseType = {
     page: number
     pageCount: number
     packUserId: string
+    token: "987a1cf0-ba37-11ec-bb9d-533c30a712e3"
+    tokenDeathTime: 1649761648575
 }
 
 export type CardsType = {
