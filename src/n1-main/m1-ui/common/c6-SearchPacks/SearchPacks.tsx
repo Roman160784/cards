@@ -1,5 +1,5 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
-import {useDebounce} from 'usehooks-ts'
+import React, {ChangeEvent, useState} from 'react';
+import {useDebounce, useUpdateEffect} from 'usehooks-ts'
 import {searchPacksCardsTC} from "../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 import {useDispatch} from "react-redux";
 import classes from './SearchPacks.module.css'
@@ -16,7 +16,8 @@ export const SearchPacks = ({...props}: SearchPacksPropsType) => {
         setValue(e.currentTarget.value)
     }
 
-    useEffect(() => {
+    useUpdateEffect(() => {
+        console.log('searchPacksCardsTC', value)
         dispatch(searchPacksCardsTC(value))
     }, [debouncedValue])
 

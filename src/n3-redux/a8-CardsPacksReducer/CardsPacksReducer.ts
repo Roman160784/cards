@@ -2,6 +2,8 @@ import {Dispatch} from "redux";
 import {AddCardPackType, packCardsAPI, UpdateNameCardPackType} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
 import {setUserErrorAC} from "../a6-ProfileReducer/ProfileReducer";
+import {isAuthAC, setInitializedAC} from "../a7-AppReducer/AppReducer";
+import {setIsLoginAC} from "../a2-loginReducer/loginReducer";
 
 
 
@@ -33,6 +35,7 @@ export type CardsPacksReducerType = {
     pageCount: number
     token: string | null
     tokenDeathTime: number | null
+    error: string | null
 }
 
 //state
@@ -44,7 +47,8 @@ const initialState: CardsPacksReducerType = {
     page: 1,
     pageCount: 0,
     token: null,
-    tokenDeathTime: null
+    tokenDeathTime: null,
+    error: null
 }
 
 //reducer
@@ -53,19 +57,24 @@ export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, a
         case 'PACKS/SET-PACK-CARDS': {
             return {...state, cardsPacks: action.cardPacks}
         }
+        case 'PACKS/SET-PACK-CARDS-ERROR': {
+            return {...state, error: action.error}
+        }
         default:
             return {...state}
     }
 }
 
 //actions type
-export type MainActionType = setPackCardsACType
+export type MainActionType = setPackCardsACType | setPackCardsErrorACType
 
 export type setPackCardsACType = ReturnType<typeof setPackCardsAC>
-
+export type setPackCardsErrorACType = ReturnType<typeof setPackCardsErrorAC>
 
 //actions
 export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SET-PACK-CARDS', cardPacks} as const)
+export const setPackCardsErrorAC = (error: string | null) => ({type: 'PACKS/SET-PACK-CARDS-ERROR', error} as const)
+
 
 
 // thunks
@@ -74,13 +83,18 @@ export const fetchPackCardsTC = () => {
     return (dispatch: Dispatch) => {
         return packCardsAPI.getPackOfCards()
             .then((res) => {
+                dispatch(isAuthAC(true))
+                dispatch(setIsLoginAC(true))
                 dispatch(setPackCardsAC(res.data.cardPacks))
             })
             .catch((e: AxiosError) => {
-                dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
                 setTimeout(() => {
-                    dispatch(setUserErrorAC(null))
+                    dispatch(setPackCardsErrorAC(null))
                 }, 3000)
+            })
+            .finally(() => {
+                dispatch(setInitializedAC(true))
             })
     }
 }
@@ -90,9 +104,9 @@ export const addPackofCardsTC = (cardsPack: AddCardPackType) => (dispatch: any) 
                 dispatch(fetchPackCardsTC())
             })
             .catch((e: AxiosError) => {
-                dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
                 setTimeout(() => {
-                    dispatch(setUserErrorAC(null))
+                    dispatch(setPackCardsErrorAC(null))
                 }, 3000)
             })
 }
@@ -102,9 +116,9 @@ export const removePackOfCardsTC = (id: string) => (dispatch: any) => {
             dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
-            dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+            dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
             setTimeout(() => {
-                dispatch(setUserErrorAC(null))
+                dispatch(setPackCardsErrorAC(null))
             }, 3000)
         })
 }
@@ -115,9 +129,9 @@ export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (d
             dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
-            dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+            dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
             setTimeout(() => {
-                dispatch(setUserErrorAC(null))
+                dispatch(setPackCardsErrorAC(null))
             }, 3000)
         })
 }
@@ -129,9 +143,9 @@ export const searchPacksCardsTC = (value?: string) => {
                 dispatch(setPackCardsAC(res.data.cardPacks))
             })
             .catch((e: AxiosError) => {
-                dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
                 setTimeout(() => {
-                    dispatch(setUserErrorAC(null))
+                    dispatch(setPackCardsErrorAC(null))
                 }, 3000)
             })
     }

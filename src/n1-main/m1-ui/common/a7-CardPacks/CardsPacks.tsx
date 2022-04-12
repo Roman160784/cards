@@ -3,19 +3,24 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {
     addPackofCardsTC,
-    CardsPacksType, fetchPackCardsTC,
-    removePackOfCardsTC, updateNamePackOfCardsTC
-} from "../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
+    CardsPacksType,
+    fetchPackCardsTC, removePackOfCardsTC, updateNamePackOfCardsTC
+} from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
 import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
 import {Modal} from "./Modal/Modal";
 import classes from './../a7-CardPacks/CardsPacks.module.css'
 
 
+
+
+
 export const CardsPacks = () => {
     let dispatch = useDispatch()
 
     const cardsPacks = useSelector<RootReducerType, CardsPacksType[]>(state => state.cardsPacks.cardsPacks)
+    const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
+
     const [isOpened, setOpened] = useState<boolean>(false)
 
     useEffect(() => {
@@ -79,6 +84,7 @@ export const CardsPacks = () => {
                 }
 
             </div>
+            {error && <div className={classes.errors}>{error}</div>}
         </div>
     )
 

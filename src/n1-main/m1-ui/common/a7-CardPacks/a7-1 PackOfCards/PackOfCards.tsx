@@ -1,7 +1,10 @@
 import React, {useCallback, useState} from 'react';
 import {Modal} from "../Modal/Modal";
 import classes from './PackOfCards.module.css'
-
+import {useDispatch, useSelector} from "react-redux";
+import {getCardsTC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
+import {useNavigate} from "react-router-dom";
+import {pathEnum} from "../../../routes/a0-Main/Main";
 
 type PropsType = {
     packId: string
@@ -21,6 +24,10 @@ export const PackOfCards = ({
                             }: PropsType) => {
 
     const [isOpened, setOpened] = useState<boolean>(false)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+
     const removePackHandler = useCallback(() => {
         removePackOfCards(packId)
     }, [])
@@ -30,28 +37,43 @@ export const PackOfCards = ({
     const openModalHandler = useCallback(() => {
         setOpened(true)
     }, [])
+
     const closeModalHandler = useCallback(() => {
         setOpened(false)
     }, [])
 
 
+    const learnClickHandler = () => {
+        dispatch(getCardsTC(packId))
+        return navigate(pathEnum.cards)
+    }
+
     return (
-        <div className={classes.boxCards}>
-            <div className={classes.blockText}>{name}</div>
-            <div className={classes.blockText}>{cardsCount}</div>
-            <div  className={classes.blockText}>{path}</div>
-            <div className={classes.blockText}>{updated}</div>
-            <div className={classes.contentBtn}>
-                <button className={classes.btn}>learn</button>
-                <button className={classes.btn} onClick={openModalHandler}>edit</button>
-                <button className={classes.btn} onClick={removePackHandler}>delete</button>
+        <div>
+            <div>{name}</div>
+            <div>{cardsCount}</div>
+            <div>{path}</div>
+            <div>{updated}</div>
+            <button onClick={openModalHandler}>edit</button>
+            <button onClick={learnClickHandler}>learn</button>
+            <button onClick={removePackHandler}>delete</button>
+            <div className={classes.boxCards}>
+                <div className={classes.blockText}>{name}</div>
+                <div className={classes.blockText}>{cardsCount}</div>
+                <div className={classes.blockText}>{path}</div>
+                <div className={classes.blockText}>{updated}</div>
+                <div className={classes.contentBtn}>
+                    <button className={classes.btn}>learn</button>
+                    <button className={classes.btn} onClick={openModalHandler}>edit</button>
+                    <button className={classes.btn} onClick={removePackHandler}>delete</button>
+                </div>
+                <Modal
+                    addItem={(title: string) => updatePackNameHandler(title)}
+                    title={title}
+                    isOpened={isOpened}
+                    onModalClose={closeModalHandler}
+                />
             </div>
-            <Modal
-                addItem={(title: string) => updatePackNameHandler(title)}
-                title={title}
-                isOpened={isOpened}
-                onModalClose={closeModalHandler}
-            />
         </div>
     );
 };
