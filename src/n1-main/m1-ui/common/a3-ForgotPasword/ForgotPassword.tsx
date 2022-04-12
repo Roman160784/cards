@@ -45,25 +45,27 @@ export const ForgotPassword = () => {
     const emailForSending = formik.values.email
     const from = `for person, f ${emailForSending}`
     // make the redirection to new page in order to cofirm new password on your email(Max) "sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—"
-    if(notification === "sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—") {
-        return <Navigate to={pathEnum.checkEmail} />
+    if (notification === "sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—") {
+        return <Navigate to={pathEnum.checkEmail}/>
     }
 
     return (
-        <form onSubmit={formik.handleSubmit} className={classes.restoreForm}>
-            <h1 className={classes.header}>Forgot your password?</h1>
-            <div>
-                {formik.touched.email && formik.errors.email ?
-                    <div className={classes.errors}>{formik.errors.email}</div> :
-                    <div className={classes.errors}>{errorServerMessage}</div>}
-                <input className={classes.inputRestore} placeholder={'Email'}
-                       {...formik.getFieldProps('email')}
-                />
-                <div className={classes.notification}>{notification}</div>
-            </div>
-            <button type="submit" className={classes.buttonSend}>Send Instructions</button>
-            <div className={classes.linkRemember}>Did you remember yor password?</div>
-            <NavLink to={'/'} className={classes.loggingIn}>Try logging in</NavLink>
-        </form>
+        <div className={classes.blockForgotPassword}>
+            <form onSubmit={formik.handleSubmit} className={classes.restoreForm}>
+                <h1 className={classes.header}>Forgot your password?</h1>
+                <div>
+                    {formik.touched.email && formik.errors.email ?
+                        <div className={classes.errors}>{formik.errors.email}</div> :
+                        <div className={classes.errors}>{errorServerMessage}</div>}
+                    <input className={classes.inputRestore} placeholder={'Email'}
+                           {...formik.getFieldProps('email')}
+                    />
+                    <div className={classes.notification}>{notification}</div>
+                </div>
+                <button type="submit" className={classes.buttonSend}>Send Instructions</button>
+                <div className={classes.linkRemember}>Did you remember yor password?</div>
+                <NavLink to={'/'} className={classes.loggingIn}>Try logging in</NavLink>
+            </form>
+        </div>
     )
 }

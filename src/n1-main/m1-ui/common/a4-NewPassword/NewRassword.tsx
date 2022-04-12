@@ -45,7 +45,7 @@ export const NewPassword = () => {
     }
 
     return (
-        <div>
+        <div className={classes.blockNewPassword}>
             <form onSubmit={formik.handleSubmit} className={classes.newPasswordForm}>
                 <h1 className={classes.header}>Create new password</h1>
                 <div>

@@ -1,5 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {Modal} from "../Modal/Modal";
+import classes from './PackOfCards.module.css'
 
 
 type PropsType = {
@@ -17,13 +18,13 @@ export const PackOfCards = ({
                                 packId, name, cardsCount, updateNamePackOfCards,
                                 removePackOfCards, path, updated,
                                 title
-}: PropsType) => {
+                            }: PropsType) => {
 
     const [isOpened, setOpened] = useState<boolean>(false)
     const removePackHandler = useCallback(() => {
         removePackOfCards(packId)
     }, [])
-    const updatePackNameHandler = useCallback((name: string) =>{
+    const updatePackNameHandler = useCallback((name: string) => {
         updateNamePackOfCards(packId, name)
     }, [])
     const openModalHandler = useCallback(() => {
@@ -35,14 +36,16 @@ export const PackOfCards = ({
 
 
     return (
-        <div>
-            <div>{name}</div>
-            <div>{cardsCount}</div>
-            <div>{path}</div>
-            <div>{updated}</div>
-            <button>learn</button>
-            <button onClick={openModalHandler}>edit</button>
-            <button onClick={removePackHandler}>delete</button>
+        <div className={classes.boxCards}>
+            <div className={classes.blockText}>{name}</div>
+            <div className={classes.blockText}>{cardsCount}</div>
+            <div  className={classes.blockText}>{path}</div>
+            <div className={classes.blockText}>{updated}</div>
+            <div className={classes.contentBtn}>
+                <button className={classes.btn}>learn</button>
+                <button className={classes.btn} onClick={openModalHandler}>edit</button>
+                <button className={classes.btn} onClick={removePackHandler}>delete</button>
+            </div>
             <Modal
                 addItem={(title: string) => updatePackNameHandler(title)}
                 title={title}
