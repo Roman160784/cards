@@ -4,8 +4,6 @@ import {setIsLoginAC} from "../a2-loginReducer/loginReducer";
 import {isAuthAC, setInitializedAC} from "../a7-AppReducer/AppReducer";
 
 
-
-
 //types
 export type CardsReducerType = {
     cards: CardsType[]
@@ -58,24 +56,32 @@ export const getCardsTC = (cardsPack_id: string) => {
     return (dispatch: Dispatch) => {
         cardsApi.getCards(cardsPack_id)
             .then((res) => {
-                dispatch(isAuthAC(true))
-                dispatch(setIsLoginAC(true))
                 dispatch(setCardsAC(res.data.cards))
-            })
-            .finally(() => {
-                dispatch(setInitializedAC(true))
             })
     }
 }
-export const removeCardTC = (cardId: string) => {
+export const removeCardTC = (cardsPack_id: string, cardId: string) => {
     return (dispatch: any) => {
         cardsApi.removeCard(cardId)
             .then((res) => {
-                dispatch(isAuthAC(true))
-                dispatch(setIsLoginAC(true))
+                dispatch(getCardsTC(cardsPack_id))
             })
-            .finally(() => {
-                dispatch(setInitializedAC(true))
+    }
+}
+export const createCardTC = (cardsPack_id: string) => {
+    return (dispatch: any) => {
+        cardsApi.createCard(cardsPack_id)
+            .then((res) => {
+                dispatch(getCardsTC(cardsPack_id))
+            })
+    }
+}
+
+export const updateNameCard = (cardsPack_id: string, cardId: string) => {
+    return (dispatch: any) => {
+        cardsApi.updateNameCard(cardId)
+            .then((res) => {
+                dispatch(getCardsTC(cardsPack_id))
             })
     }
 }

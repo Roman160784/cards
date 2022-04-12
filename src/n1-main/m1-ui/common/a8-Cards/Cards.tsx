@@ -1,37 +1,43 @@
 import React from 'react';
-import { useSelector} from "react-redux";
-import {RootReducerType} from "../../../../n3-redux/a1-store/store";
+import {useDispatch, useSelector,} from "react-redux";
+import {createCardTC, removeCardTC, updateNameCard} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
+
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
-import {Card} from "./Card/Card";
+import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 
 
 export const Cards = () => {
 
     const cards = useSelector<RootReducerType, CardsType[]>(state => state.cards.cards)
+    const dispatch = useDispatch()
+    const createCardHandler = () => {
 
+    }
     return (
         <div>
             <div>
-                <button>ADD</button>
+                <button onClick={createCardHandler}>Add new card</button>
             </div>
-            <div>
-                {
-                    cards.map(card => {
-                        return (
-                            <div key={card._id}>
-                                <Card
-                                    id={card._id}
-                                    question={card.question}
-                                    answer={card.answer}
-                                    grade={card.grade}
-                                    updated={card.updated}
-                                />
-                            </div>
-                        )
-                    })
-                }
-            </div>
-    </div>
-
+            {
+                cards.map(card => {
+                    const removeCardHandler = () => {
+                        dispatch(removeCardTC(card.cardsPack_id, card._id))
+                    }
+                    const updateNameCardHandler = () => {
+                        dispatch(updateNameCard(card.cardsPack_id, card._id))
+                    }
+                    return (
+                        <div key={card._id}>
+                            <span>{card.question}</span>
+                            <span>{card.answer}</span>
+                            <span>{card.grade}</span>
+                            <span>{card.updated}</span>
+                            <button onClick={removeCardHandler}>del</button>
+                            <button onClick={updateNameCardHandler}>update</button>
+                        </div>
+                    )
+                })
+            }
+        </div>
     )
 }

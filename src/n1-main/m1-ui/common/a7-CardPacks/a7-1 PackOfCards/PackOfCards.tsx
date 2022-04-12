@@ -27,7 +27,6 @@ export const PackOfCards = ({
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-
     const removePackHandler = useCallback(() => {
         removePackOfCards(packId)
     }, [])
@@ -43,8 +42,7 @@ export const PackOfCards = ({
     }, [])
 
 
-    const learnClickHandler = (packId: string) => {
-        debugger;
+    const learnClickHandler = () => {
         dispatch(getCardsTC(packId))
         return navigate(pathEnum.cards)
     }
@@ -56,7 +54,7 @@ export const PackOfCards = ({
             <div>{path}</div>
             <div>{updated}</div>
             <button onClick={openModalHandler}>edit</button>
-            <button onClick={() =>{learnClickHandler(packId)}}>learn</button>
+            <button onClick={learnClickHandler}>learn</button>
             <button onClick={removePackHandler}>delete</button>
             <Modal
                 addItem={(title: string) => updatePackNameHandler(title)}

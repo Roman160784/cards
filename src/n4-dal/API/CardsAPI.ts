@@ -59,25 +59,30 @@ export const packCardsAPI = {
     addPackOfCards(cardsPack: AddCardPackType) {
         return instance.post<AddCardPackType, AxiosResponse<AddPackOfCardsResponseType>>('cards/pack', {cardsPack: {name: cardsPack.name}})
     },
-    removePackOfCards(id: string){
+    removePackOfCards(id: string) {
         return instance.delete(`/cards/pack?id=${id}`)
     },
-    updateNamePackOfCards(cardsPack: UpdateNameCardPackType){
+    updateNamePackOfCards(cardsPack: UpdateNameCardPackType) {
         return instance.put('/cards/pack', {cardsPack})
     },
-    searchPacs(packName?: string){
+    searchPacs(packName?: string) {
         return instance.get<CardPacksResponseType>(`/cards/pack?packName=${packName}`)
     }
 }
 
 export const cardsApi = {
-    getCards(cardsPack_id: string){
+    getCards(cardsPack_id: string) {
         return instance.get<CardsResponseType>(`/cards/card?cardsPack_id=${cardsPack_id}`)
     },
-    removeCard(id: string){
-      return instance.delete(`/cards/card?id=${id}`)
+    removeCard(id: string) {
+        return instance.delete(`/cards/card?id=${id}`)
     },
-
+    createCard(cardsPack_id: string) {
+        return instance.post<CardType>('/cards/card', {cardsPack_id})
+    },
+    updateNameCard(_id: string) {
+        return instance.put('/cards/card', {_id})
+    }
 }
 // types
 
@@ -91,6 +96,17 @@ export type CardsResponseType = {
     packUserId: string
     token: string
     tokenDeathTime: number
+}
+export type CardType = {
+    cardsPack_id: string
+    question: string
+    answer: string
+    grade: number
+    shots: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
 }
 
 export type CardsType = {
