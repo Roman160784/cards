@@ -67,6 +67,9 @@ export const packCardsAPI = {
     },
     searchPacs(packName?: string) {
         return instance.get<CardPacksResponseType>(`/cards/pack?packName=${packName}`)
+    },
+    getUsersPacks(user_id: string) {
+        return instance.get<CardPacksResponseType>('/cards/pack', {params:{user_id}})
     }
 }
 

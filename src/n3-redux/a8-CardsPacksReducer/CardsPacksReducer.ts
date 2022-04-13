@@ -4,6 +4,7 @@ import {AxiosError} from "axios";
 import {setUserErrorAC} from "../a6-ProfileReducer/ProfileReducer";
 import {isAuthAC, setInitializedAC} from "../a7-AppReducer/AppReducer";
 import {setIsLoginAC} from "../a2-loginReducer/loginReducer";
+import {RootReducerType} from "../a1-store/store";
 
 
 
@@ -137,6 +138,25 @@ export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (d
 export const searchPacksCardsTC = (value?: string) => {
     return (dispatch: Dispatch) => {
         return packCardsAPI.searchPacs(value)
+            .then((res) => {
+                dispatch(setPackCardsAC(res.data.cardPacks))
+            })
+            .catch((e: AxiosError) => {
+                dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
+                setTimeout(() => {
+                    dispatch(setPackCardsErrorAC(null))
+                }, 3000)
+            })
+    }
+}
+
+export const getUsersPacksTC = () => {
+    return (dispatch: Dispatch, getState: () => RootReducerType) => {
+        const allState = getState()
+        const profile = allState.profile
+        const user = profile.user
+        const user_id = user._id
+        return packCardsAPI.getUsersPacks(user_id)
             .then((res) => {
                 dispatch(setPackCardsAC(res.data.cardPacks))
             })

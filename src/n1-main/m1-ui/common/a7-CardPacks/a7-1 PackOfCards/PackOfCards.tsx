@@ -8,7 +8,6 @@ import {pathEnum} from "../../../routes/a0-Main/Main";
 
 type PropsType = {
     packId: string
-    userId: string
     title: string
     name: string
     cardsCount: number
@@ -16,13 +15,13 @@ type PropsType = {
     path: string
     removePackOfCards: (packId: string) => void
     updateNamePackOfCards: (packId: string, name: string) => void
-    allPacksHandler: (userId: string) => void
+
 }
 
 export const PackOfCards = ({
                                 packId, name, cardsCount, updateNamePackOfCards,
                                 removePackOfCards, path, updated,
-                                title, userId, allPacksHandler
+                                title,
                             }: PropsType) => {
 
     const [isOpened, setOpened] = useState<boolean>(false)

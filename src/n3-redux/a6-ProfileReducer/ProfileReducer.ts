@@ -2,7 +2,6 @@ import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import { profileAPI} from "../../n4-dal/API/CardsAPI"
 
-
 // types 
 export type userType = {
     avatar?: string
