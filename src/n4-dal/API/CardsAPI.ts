@@ -84,7 +84,7 @@ export const cardsApi = {
         return instance.put('/cards/card', {card:{_id}})
     },
     searchCards(cardsPack_id: string, cardAnswer: string) {
-        return instance.get<CardsResponseType>(`/cards/card?cardAnswer=english=${cardAnswer}&cardsPack_id=${cardsPack_id}`)
+        return instance.get<CardsResponseType>(`/cards/card`, {params: {cardAnswer, cardsPack_id}})
     }
 }
 // types

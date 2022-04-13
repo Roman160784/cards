@@ -56,7 +56,7 @@ export const CardsPacks = () => {
                 <button onClick={openModalHandler} className={classes.btnHandler}>Add new pack</button>
             </div>
             <div>
-                {/*<button className={classes.btnHandler} onClick={()=>{allPacksHandler(userId)}}>All</button>*/}
+                <button className={classes.btnHandler} >All</button>
                 <button className={classes.btnHandler}>My</button>
             </div>
             <div className={classes.boxCardsPack}>

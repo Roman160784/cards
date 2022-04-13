@@ -44,7 +44,7 @@ export const setLoginAC = (data: LoginType) =>
 export const setIsLoginAC = (isLogin: boolean) =>
     ({type: 'LOGIN/SET-IS-LOGIN', isLogin} as const)
 
-export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
+export const loginTC = (data: LoginType) => (dispatch: Dispatch,) => {
     authLoginAPI.login(data)
         .then((res) => {
             if (res.data) {
