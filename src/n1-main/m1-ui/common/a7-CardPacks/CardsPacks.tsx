@@ -52,12 +52,12 @@ export const CardsPacks = () => {
     return (
         <div className={classes.blockCards}>
             <div className={classes.boxSearchButton}>
+                <div>
+                    <button className={classes.btnHandler} onClick={allPacksHandler} >All</button>
+                    <button className={classes.btnHandler} onClick={MyPacksHandler}>My</button>
+                </div>
                 <SearchPacks/>
                 <button onClick={openModalHandler} className={classes.btnHandler}>Add new pack</button>
-            </div>
-            <div>
-                <button className={classes.btnHandler} onClick={allPacksHandler} >All</button>
-                <button className={classes.btnHandler} onClick={MyPacksHandler}>My</button>
             </div>
             <div className={classes.boxCardsPack}>
                 <div className={classes.blockNameCards}>
