@@ -16,11 +16,16 @@ import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
 import {Modal} from "./Modal/Modal";
 import classes from './../a7-CardPacks/CardsPacks.module.css'
 import {Paginator} from "./Paginator/Paginator";
-
+import {Box, Slider} from "@mui/material";
 
 export const CardsPacks = () => {
     const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
-    const {pageSize, page, cardPacksTotalCount, cardsPacks} = useSelector<RootReducerType,CardsPacksReducerType>(state => state.cardsPacks)
+    const {
+        pageSize,
+        page,
+        cardPacksTotalCount,
+        cardsPacks
+    } = useSelector<RootReducerType, CardsPacksReducerType>(state => state.cardsPacks)
     let dispatch = useDispatch()
 
     const [isOpened, setOpened] = useState<boolean>(false)
@@ -60,6 +65,11 @@ export const CardsPacks = () => {
         dispatch(sortMaxCardsInPackAC())
     }
 
+    const [value, setValue] = useState([20, 80]);
+
+    const handleChange = (event: any, newValue: any) => {
+        setValue(newValue);
+    };
 
     return (
         <div className={classes.blockCards}>
@@ -67,18 +77,30 @@ export const CardsPacks = () => {
                 <SearchPacks/>
                 <button onClick={openModalHandler} className={classes.btnHandler}>Add new pack</button>
             </div>
-            <div>
-                <button className={classes.btnHandler} onClick={allPacksHandler}>All</button>
-                <button className={classes.btnHandler} onClick={MyPacksHandler}>My</button>
+            <div className={classes.boxButtonAndSlider}>
+                <div>
+                    <button className={classes.btnHandler} onClick={allPacksHandler}>All</button>
+                    <button className={classes.btnHandler} onClick={MyPacksHandler}>My</button>
+                </div>
+                <div>
+                    <Box sx={{width: 300, marginRight: "10px", textAlign: 'center'}}>
+                        <Slider
+                            value={value}
+                            onChange={handleChange}
+                            valueLabelDisplay="auto"
+                        />
+                    </Box>
+                </div>
             </div>
             <div className={classes.boxCardsPack}>
                 <div className={classes.blockNameCards}>
                     <span>Name</span>
-                    <span>Cards Count</span>
-                    <span onClick={sortPacksMinCardstHandler}>sortMin</span>
-                    <span onClick={sortPacksMaxCardstHandler}>sortMax</span>
+                    <span>Cards Count<span>
+                        <i className={classes.up} onClick={sortPacksMinCardstHandler}></i>
+                        <i className={classes.down} onClick={sortPacksMaxCardstHandler}></i>
+                    </span>
+                    </span>
                     <span>Updated</span>
-                    <span>url</span>
                     <span>Actions</span>
                 </div>
                 <Modal
