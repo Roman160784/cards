@@ -4,7 +4,12 @@ import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {
     addPackofCardsTC,
     CardsPacksType,
-    fetchPackCardsTC, getUsersPacksTC, removePackOfCardsTC, updateNamePackOfCardsTC
+    fetchPackCardsTC,
+    getUsersPacksTC,
+    removePackOfCardsTC,
+    sortMaxCardsInPackAC,
+    sortMinCardsInPackAC,
+    updateNamePackOfCardsTC
 } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
 import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
@@ -48,6 +53,13 @@ export const CardsPacks = () => {
         dispatch((getUsersPacksTC()))
     }
 
+    const sortPacksMinCardstHandler = () => {
+        dispatch(sortMinCardsInPackAC())
+    }
+    const sortPacksMaxCardstHandler = () => {
+        dispatch(sortMaxCardsInPackAC())
+    }
+
 
     return (
         <div className={classes.blockCards}>
@@ -63,6 +75,8 @@ export const CardsPacks = () => {
                 <div className={classes.blockNameCards}>
                     <span>Name</span>
                     <span>Cards Count</span>
+                    <span onClick={sortPacksMinCardstHandler}>sortMin</span>
+                    <span onClick={sortPacksMaxCardstHandler}>sortMax</span>
                     <span>Updated</span>
                     <span>url</span>
                     <span>Actions</span>

@@ -17,7 +17,6 @@ export const SearchPacks = ({...props}: SearchPacksPropsType) => {
     }
 
     useUpdateEffect(() => {
-        console.log('searchPacksCardsTC', value)
         dispatch(searchPacksCardsTC(value))
     }, [debouncedValue])
 

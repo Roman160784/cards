@@ -53,8 +53,8 @@ export const passwordAPI = {
 }
 
 export const packCardsAPI = {
-    getPackOfCards() {
-        return instance.get<CardPacksResponseType>('/cards/pack')
+    getPackOfCards(pageCount: number= 10) {
+        return instance.get<CardPacksResponseType>(`/cards/pack/`, {params: {pageCount}})
     },
     addPackOfCards(cardsPack: AddCardPackType) {
         return instance.post<AddCardPackType, AxiosResponse<AddPackOfCardsResponseType>>('cards/pack', {cardsPack: {name: cardsPack.name}})
@@ -65,7 +65,7 @@ export const packCardsAPI = {
     updateNamePackOfCards(cardsPack: UpdateNameCardPackType) {
         return instance.put('/cards/pack', {cardsPack})
     },
-    searchPacs(packName?: string) {
+    searchPacks(packName?: string) {
         return instance.get<CardPacksResponseType>(`/cards/pack?packName=${packName}`)
     },
     getUsersPacks(user_id: string) {
@@ -74,8 +74,8 @@ export const packCardsAPI = {
 }
 
 export const cardsApi = {
-    getCards(cardsPack_id: string) {
-        return instance.get<CardsResponseType>(`/cards/card?cardsPack_id=${cardsPack_id}`)
+    getCards(cardsPack_id: string, pageCount: number = 6) {
+        return instance.get<CardsResponseType>(`/cards/card`, {params:{cardsPack_id, pageCount}} )
     },
     removeCard(id: string) {
         return instance.delete(`/cards/card?id=${id}`)

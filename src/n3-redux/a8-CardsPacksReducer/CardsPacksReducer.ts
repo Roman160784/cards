@@ -59,20 +59,33 @@ export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, a
         case 'PACKS/SET-PACK-CARDS-ERROR': {
             return {...state, error: action.error}
         }
+        case 'PACKS/SOTR-MIN-PACK-CARDS' : {
+            const sort = state.cardsPacks.sort((a, b) => a.cardsCount - b.cardsCount)
+            return {...state, cardsPacks: [...sort]}
+        }
+        case 'PACKS/SOTR-MAX-PACK-CARDS' : {
+            const sort = state.cardsPacks.sort((a, b) => b.cardsCount - a.cardsCount)
+            return {...state, cardsPacks: [...sort]}
+        }
+
         default:
             return {...state}
     }
 }
 
 //actions type
-export type MainActionType = setPackCardsACType | setPackCardsErrorACType
+export type MainActionType = setPackCardsACType | setPackCardsErrorACType | sortMinCardsInPackACType | sortMaxCardsInPackACType
 
 export type setPackCardsACType = ReturnType<typeof setPackCardsAC>
 export type setPackCardsErrorACType = ReturnType<typeof setPackCardsErrorAC>
+export type sortMinCardsInPackACType = ReturnType<typeof sortMinCardsInPackAC>
+export type sortMaxCardsInPackACType = ReturnType<typeof sortMaxCardsInPackAC>
 
 //actions
 export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SET-PACK-CARDS', cardPacks} as const)
 export const setPackCardsErrorAC = (error: string | null) => ({type: 'PACKS/SET-PACK-CARDS-ERROR', error} as const)
+export const sortMinCardsInPackAC = () => ({type: 'PACKS/SOTR-MIN-PACK-CARDS'} as const)
+export const sortMaxCardsInPackAC = () => ({type: 'PACKS/SOTR-MAX-PACK-CARDS'} as const)
 
 
 
@@ -135,7 +148,7 @@ export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (d
 
 export const searchPacksCardsTC = (value?: string) => {
     return (dispatch: Dispatch) => {
-        return packCardsAPI.searchPacs(value)
+        return packCardsAPI.searchPacks(value)
             .then((res) => {
                 dispatch(setPackCardsAC(res.data.cardPacks))
             })
