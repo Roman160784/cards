@@ -2,14 +2,19 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {
-    addPackofCardsTC, CardsPacksReducerType,
-    fetchPackCardsTC, getUsersPacksTC, removePackOfCardsTC, updateNamePackOfCardsTC
+    addPackofCardsTC,
+    CardsPacksReducerType,
+    fetchPackCardsTC,
+    getUsersPacksTC,
+    removePackOfCardsTC,
+    sortMaxCardsInPackAC,
+    sortMinCardsInPackAC,
+    updateNamePackOfCardsTC
 } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
 import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
 import {Modal} from "./Modal/Modal";
 import classes from './../a7-CardPacks/CardsPacks.module.css'
-import {Paginator} from "./Paginator/Paginator";
 
 
 export const CardsPacks = () => {
@@ -47,6 +52,13 @@ export const CardsPacks = () => {
         dispatch((getUsersPacksTC()))
     }
 
+    const sortPacksMinCardstHandler = () => {
+        dispatch(sortMinCardsInPackAC())
+    }
+    const sortPacksMaxCardstHandler = () => {
+        dispatch(sortMaxCardsInPackAC())
+    }
+
 
     return (
         <div className={classes.blockCards}>
@@ -62,6 +74,8 @@ export const CardsPacks = () => {
                 <div className={classes.blockNameCards}>
                     <span>Name</span>
                     <span>Cards Count</span>
+                    <span onClick={sortPacksMinCardstHandler}>sortMin</span>
+                    <span onClick={sortPacksMaxCardstHandler}>sortMax</span>
                     <span>Updated</span>
                     <span>url</span>
                     <span>Actions</span>
@@ -98,3 +112,4 @@ export const CardsPacks = () => {
     )
 
 }
+

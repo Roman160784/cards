@@ -1,10 +1,9 @@
 import {Dispatch} from "redux";
 import {AddCardPackType, packCardsAPI, UpdateNameCardPackType} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
-import {setUserErrorAC} from "../a6-ProfileReducer/ProfileReducer";
-import {isAuthAC, setInitializedAC} from "../a7-AppReducer/AppReducer";
-import {setIsLoginAC} from "../a2-loginReducer/loginReducer";
+import { setInitializedAC} from "../a7-AppReducer/AppReducer";
 import {RootReducerType} from "../a1-store/store";
+
 
 
 //types
@@ -68,6 +67,15 @@ export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, a
         case "PACKS/SET-TOTAL-COUNT": {
             return {...state, cardPacksTotalCount: action.cardPacksTotalCount}
         }
+        case 'PACKS/SOTR-MIN-PACK-CARDS' : {
+            const sort = state.cardsPacks.sort((a, b) => a.cardsCount - b.cardsCount)
+            return {...state, cardsPacks: [...sort]}
+        }
+        case 'PACKS/SOTR-MAX-PACK-CARDS' : {
+            const sort = state.cardsPacks.sort((a, b) => b.cardsCount - a.cardsCount)
+            return {...state, cardsPacks: [...sort]}
+        }
+
         default:
             return {...state}
     }
@@ -79,15 +87,22 @@ export type MainActionType =
     | setPackCardsErrorACType
     | SetCurrentPageActionType
     | SetTotalCountActionType
+    | sortMinCardsInPackACType
+    | sortMaxCardsInPackACType
 
 export type setPackCardsACType = ReturnType<typeof setPackCardsAC>
 export type setPackCardsErrorACType = ReturnType<typeof setPackCardsErrorAC>
 export type SetCurrentPageActionType = ReturnType<typeof setCurrentPageAC>
 export type SetTotalCountActionType = ReturnType<typeof setTotalCountAC>
+export type sortMinCardsInPackACType = ReturnType<typeof sortMinCardsInPackAC>
+export type sortMaxCardsInPackACType = ReturnType<typeof sortMaxCardsInPackAC>
 
 //actions
 export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SET-PACK-CARDS', cardPacks} as const)
 export const setPackCardsErrorAC = (error: string | null) => ({type: 'PACKS/SET-PACK-CARDS-ERROR', error} as const)
+export const sortMinCardsInPackAC = () => ({type: 'PACKS/SOTR-MIN-PACK-CARDS'} as const)
+export const sortMaxCardsInPackAC = () => ({type: 'PACKS/SOTR-MAX-PACK-CARDS'} as const)
+
 export const setCurrentPageAC = (page: number) => ({type: "PACKS/SET-CURRENT-PAGE", page} as const)
 export const setTotalCountAC = (cardPacksTotalCount: number) => ({type: "PACKS/SET-TOTAL-COUNT", cardPacksTotalCount} as const)
 
@@ -101,7 +116,6 @@ export const fetchPackCardsTC = (page?: number, pageSize?: number) => {
         dispatch(setCurrentPageAC(page))
         return packCardsAPI.getPackOfCards(page,pageSize)
             .then((res) => {
-                console.log({...res})
                 dispatch(setPackCardsAC(res.data.cardPacks))
                 dispatch(setTotalCountAC(res.data.cardPacksTotalCount))
             })
@@ -156,7 +170,7 @@ export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (d
 
 export const searchPacksCardsTC = (value?: string) => {
     return (dispatch: Dispatch) => {
-        return packCardsAPI.searchPacs(value)
+        return packCardsAPI.searchPacks(value)
             .then((res) => {
                 dispatch(setPackCardsAC(res.data.cardPacks))
             })
