@@ -1,0 +1,20 @@
+.paginatorCards {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn {
+    border: none;
+    background-color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.selectedPage {
+    font-weight: bold;
+}
+
+span {
+    padding-left: 10px;
+}

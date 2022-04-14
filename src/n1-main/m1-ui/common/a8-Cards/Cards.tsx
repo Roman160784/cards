@@ -18,8 +18,8 @@ export const Cards = () => {
     const cardsPack_id = params.id
 
     const createCardHandler = () => {
-        if(cardsPack_id)
-        dispatch(createCardTC(cardsPack_id))
+        if (cardsPack_id)
+            dispatch(createCardTC(cardsPack_id))
     }
 
     return (

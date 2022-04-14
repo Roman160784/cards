@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {
     addPackofCardsTC,
-    CardsPacksType,
+    CardsPacksReducerType,
     fetchPackCardsTC,
     getUsersPacksTC,
     removePackOfCardsTC,
@@ -15,13 +15,13 @@ import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
 import {Modal} from "./Modal/Modal";
 import classes from './../a7-CardPacks/CardsPacks.module.css'
+import {Paginator} from "./Paginator/Paginator";
 
 
 export const CardsPacks = () => {
-    let dispatch = useDispatch()
-
-    const cardsPacks = useSelector<RootReducerType, CardsPacksType[]>(state => state.cardsPacks.cardsPacks)
     const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
+    const {pageSize, page, cardPacksTotalCount, cardsPacks} = useSelector<RootReducerType,CardsPacksReducerType>(state => state.cardsPacks)
+    let dispatch = useDispatch()
 
     const [isOpened, setOpened] = useState<boolean>(false)
 
@@ -64,12 +64,12 @@ export const CardsPacks = () => {
     return (
         <div className={classes.blockCards}>
             <div className={classes.boxSearchButton}>
-                <div>
-                    <button className={classes.btnHandler} onClick={allPacksHandler} >All</button>
-                    <button className={classes.btnHandler} onClick={MyPacksHandler}>My</button>
-                </div>
                 <SearchPacks/>
                 <button onClick={openModalHandler} className={classes.btnHandler}>Add new pack</button>
+            </div>
+            <div>
+                <button className={classes.btnHandler} onClick={allPacksHandler}>All</button>
+                <button className={classes.btnHandler} onClick={MyPacksHandler}>My</button>
             </div>
             <div className={classes.boxCardsPack}>
                 <div className={classes.blockNameCards}>
@@ -107,6 +107,7 @@ export const CardsPacks = () => {
                 }
 
             </div>
+            <Paginator cardPacksTotalCount={cardPacksTotalCount} page={page} pageSize={pageSize}/>
             {error && <div className={classes.errors}>{error}</div>}
         </div>
     )
