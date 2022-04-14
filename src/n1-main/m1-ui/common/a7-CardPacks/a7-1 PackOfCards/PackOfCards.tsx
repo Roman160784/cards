@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getCardsTC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {useNavigate} from "react-router-dom";
 import {pathEnum} from "../../../routes/a0-Main/Main";
+import {Paginator} from "../Paginator/Paginator";
 
 type PropsType = {
     packId: string
@@ -21,7 +22,7 @@ type PropsType = {
 export const PackOfCards = ({
                                 packId, name, cardsCount, updateNamePackOfCards,
                                 removePackOfCards, path, updated,
-                                title,
+                                title
                             }: PropsType) => {
 
     const [isOpened, setOpened] = useState<boolean>(false)

@@ -53,8 +53,8 @@ export const passwordAPI = {
 }
 
 export const packCardsAPI = {
-    getPackOfCards() {
-        return instance.get<CardPacksResponseType>('/cards/pack')
+    getPackOfCards(page?: number, pageCount?: number) {
+        return instance.get<CardPacksResponseType>(`/cards/pack`, {params: {page, pageCount}})
     },
     addPackOfCards(cardsPack: AddCardPackType) {
         return instance.post<AddCardPackType, AxiosResponse<AddPackOfCardsResponseType>>('cards/pack', {cardsPack: {name: cardsPack.name}})
