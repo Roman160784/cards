@@ -7,7 +7,7 @@ export type SearchPacksPropsType = {
     cardsPack_id: string
 }
 
-export const SearchPacks = ({cardsPack_id, ...props}: SearchPacksPropsType) => {
+export const SearchCards = ({cardsPack_id, ...props}: SearchPacksPropsType) => {
 
     const dispatch = useDispatch()
     const [value, setValue] = useState('')

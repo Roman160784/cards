@@ -5,7 +5,7 @@ import classes from "../a1-Login/Login.module.css";
 import {useParams} from "react-router-dom";
 import {createCardTC, removeCardTC, updateNameCardTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
-import {SearchPacks} from "../c6-SearchPacks/SearchCards";
+import {SearchCards} from "../c6-SearchPacks/SearchCards";
 
 
 export const Cards = () => {
@@ -24,7 +24,7 @@ export const Cards = () => {
 
     return (
         <div>
-            <SearchPacks cardsPack_id={cardsPack_id ? cardsPack_id : ''}/>
+            <SearchCards cardsPack_id={cardsPack_id ? cardsPack_id : ''}/>
             <div>
                 <span>question     </span>
                 <span>answer       </span>
