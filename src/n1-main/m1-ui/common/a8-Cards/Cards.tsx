@@ -4,7 +4,7 @@ import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {useParams} from "react-router-dom";
 import {createCardTC, removeCardTC, updateNameCardTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
-import {SearchPacks} from "../c6-SearchPacks/SearchCards";
+import {SearchCards} from "../c6-SearchPacks/SearchCards";
 import classes from './Cards.module.css'
 
 
@@ -23,7 +23,7 @@ export const Cards = () => {
 
     return (
         <div className={classes.boxCard}>
-            <SearchPacks cardsPack_id={cardsPack_id ? cardsPack_id : ''}/>
+            <SearchCards cardsPack_id={cardsPack_id ? cardsPack_id : ''}/>
             <div className={classes.blockCard}>
                 <span>  Question</span>
                 <span>Answer</span>

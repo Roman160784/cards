@@ -18,8 +18,8 @@ export type LoginReducerType = {
 
 const initialState: LoginReducerType = {
     data: {
-        email: "",
-        password: "",
+        email: 'ctraining1111@gmail.com',
+        password: "111111111",
     },
     isLogin: false,
 }
