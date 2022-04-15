@@ -18,6 +18,10 @@ import classes from './../a7-CardPacks/CardsPacks.module.css'
 import {Paginator} from "./Paginator/Paginator";
 import {Box, Slider} from "@mui/material";
 
+function SearchCards() {
+    return null;
+}
+
 export const CardsPacks = () => {
     const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
     const {
@@ -74,7 +78,7 @@ export const CardsPacks = () => {
     return (
         <div className={classes.blockCards}>
             <div className={classes.boxSearchButton}>
-                <SearchPacks/>
+                <SearchCards/>
                 <button onClick={openModalHandler} className={classes.btnHandler}>Add new pack</button>
             </div>
             <div className={classes.boxButtonAndSlider}>
