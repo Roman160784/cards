@@ -23,7 +23,7 @@ export const SearchPacks = ({...props}: SearchPacksPropsType) => {
 
     return (
         <div>
-            <input type="text" value={value}
+            <input type="search" value={value}
                    onChange={onChangeHandler}
                    className={classes.searchInput}
                    placeholder={'Search...'}

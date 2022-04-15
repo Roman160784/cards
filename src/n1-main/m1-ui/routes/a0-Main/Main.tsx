@@ -1,11 +1,11 @@
-import { Navigate, Route, Routes } from "react-router-dom"
-import { Login } from "../../common/a1-Login/Login"
-import { Registration } from "../../common/a2-Registration/Registration"
-import { ForgotPassword } from "../../common/a3-ForgotPasword/ForgotPassword"
-import { NewPassword } from "../../common/a4-NewPassword/NewRassword"
-import { Profile } from "../../common/a5-Profile/Profile"
-import { TestComponent } from "../../common/a6-test/test"
-import { Nav } from "../a1-Navlink/Navlink"
+import {Navigate, Route, Routes} from "react-router-dom"
+import {Login} from "../../common/a1-Login/Login"
+import {Registration} from "../../common/a2-Registration/Registration"
+import {ForgotPassword} from "../../common/a3-ForgotPasword/ForgotPassword"
+import {NewPassword} from "../../common/a4-NewPassword/NewRassword"
+import {Profile} from "../../common/a5-Profile/Profile"
+import {TestComponent} from "../../common/a6-test/test"
+import {Nav} from "../a1-Navlink/Navlink"
 import classes from "./Main.module.css"
 import React from "react";
 import {CheckEmail} from "../../common/a4-NewPassword/CheckEmail";
@@ -15,7 +15,7 @@ import {Cards} from "../../common/a8-Cards/Cards";
 
 export enum pathEnum {
     main = '/',
-    checkEmail ='/checkEmail',
+    checkEmail = '/checkEmail',
     login = '/login',
     registration = '/registration',
     forgotPassword = '/forgotPassword',
@@ -47,8 +47,8 @@ export const Main = () => {
                         <Route path={pathEnum.test} element={<TestComponent/>}/>
                         <Route path={pathEnum.packs} element={<CardsPacks/>}/>
                         <Route path={pathEnum.cards} element={<Cards/>}/>
-                        <Route path={pathEnum.error404}
-                               element={<h1 style={{textAlign: 'center', color: 'red'}}>404: PAGE NOT FOUND</h1>}/>
+                        <Route path={pathEnum.error404} element=
+                            {<h1 style={{textAlign: 'center', fontSize: '50px'}}>404: OOPS.. PAGE NOT FOUND</h1>}/>
                         <Route path={pathEnum.empty} element={<Navigate to={pathEnum.error404}/>}/>
                     </Routes>
                 </div>

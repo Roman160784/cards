@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import {useDebounce, useUpdateEffect} from 'usehooks-ts'
 import {useDispatch} from "react-redux";
 import {searchCardsTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
+import classes from './SearchPacks.module.css'
 
 export type SearchPacksPropsType = {
     cardsPack_id: string
@@ -24,8 +25,12 @@ export const SearchCards = ({cardsPack_id, ...props}: SearchPacksPropsType) => {
 
     return (
         <div>
-            <input type="text" value={value} onChange={onChangeHandler}/>
-            <span>Search</span>
+            <input type="search"
+                   placeholder={'Search...'}
+                   value={value}
+                   onChange={onChangeHandler}
+                   className={classes.fieldSearch}
+            />
         </div>
     )
 }

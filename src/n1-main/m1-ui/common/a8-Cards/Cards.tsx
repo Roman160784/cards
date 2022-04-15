@@ -1,15 +1,14 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
-import classes from "../a1-Login/Login.module.css";
 import {useParams} from "react-router-dom";
 import {createCardTC, removeCardTC, updateNameCardTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {SearchCards} from "../c6-SearchPacks/SearchCards";
+import classes from './Cards.module.css'
 
 
 export const Cards = () => {
-
     const cards = useSelector<RootReducerType, CardsType[]>(state => state.cards.cards)
     const error = useSelector<RootReducerType, string | null>(state => state.cards.error)
     const dispatch = useDispatch()
@@ -23,15 +22,15 @@ export const Cards = () => {
     }
 
     return (
-        <div>
+        <div className={classes.boxCard}>
             <SearchCards cardsPack_id={cardsPack_id ? cardsPack_id : ''}/>
-            <div>
-                <span>question     </span>
-                <span>answer       </span>
-                <span>Grade        </span>
-                <span>updated      </span>
-                <span>url          </span>
-                <button onClick={createCardHandler}>Add new card</button>
+            <div className={classes.blockCard}>
+                <span>  Question</span>
+                <span>Answer</span>
+                <span>Grade</span>
+                <span>Updated</span>
+                <span>Url</span>
+                <button onClick={createCardHandler} className={classes.buttonAddCard}>Add new card</button>
             </div>
 
             {

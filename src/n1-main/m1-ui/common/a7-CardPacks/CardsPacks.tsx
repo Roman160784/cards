@@ -20,6 +20,10 @@ import {useDebounce, useUpdateEffect} from "usehooks-ts";
 
 
 
+function SearchCards() {
+    return null;
+}
+
 export const CardsPacks = () => {
     const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
     const {
@@ -87,7 +91,7 @@ export const CardsPacks = () => {
     return (
         <div className={classes.blockCards}>
             <div className={classes.boxSearchButton}>
-                <SearchPacks/>
+                <SearchCards/>
                 <button onClick={openModalHandler} className={classes.btnHandler}>Add new pack</button>
             </div>
             <div className={classes.boxButtonAndSlider}>
