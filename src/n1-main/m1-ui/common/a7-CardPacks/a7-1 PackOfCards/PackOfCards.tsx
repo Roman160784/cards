@@ -6,6 +6,7 @@ import {getCardsTC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {useNavigate} from "react-router-dom";
 import {pathEnum} from "../../../routes/a0-Main/Main";
 import {Paginator} from "../Paginator/Paginator";
+import {SearchPacks} from "../../c6-SearchPacks/SearchPacks";
 
 type PropsType = {
     packId: string
