@@ -1,6 +1,14 @@
 .searchInput {
-    width: 300px;
+    width: 600px;
     padding: 5px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+
+.fieldSearch {
+    max-width: 900px;
+    width: 100%;
+    padding: 8px;
     border-radius: 5px;
     border: 1px solid lightgray;
 }

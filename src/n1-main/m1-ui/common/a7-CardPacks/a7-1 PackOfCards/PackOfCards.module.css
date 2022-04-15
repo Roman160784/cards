@@ -1,11 +1,11 @@
 .boxCards {
     display: flex;
     text-align: center;
-    padding: 15px;
+    padding: 10px;
 }
 
 .blockText {
-    width: 150px;
+    width: 200px;
 }
 
 .contentBtn {

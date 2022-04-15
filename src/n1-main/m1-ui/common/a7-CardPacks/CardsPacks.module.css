@@ -61,3 +61,7 @@ i {
     transform-origin: bottom left;
 }
 
+.errors {
+    color: red;
+}
+
