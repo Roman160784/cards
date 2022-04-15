@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {AddCardPackType, packCardsAPI, UpdateNameCardPackType} from "../../n4-dal/API/CardsAPI";
+import {AddCardPackType, getPackOfCardArgsType, packCardsAPI, UpdateNameCardPackType} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
 import { setInitializedAC} from "../a7-AppReducer/AppReducer";
 import {RootReducerType} from "../a1-store/store";
@@ -35,7 +35,6 @@ export type CardsPacksReducerType = {
     token: string | null
     tokenDeathTime: number | null
     error: string | null
-    pageSize: number
 }
 
 //state
@@ -45,11 +44,10 @@ const initialState: CardsPacksReducerType = {
     maxCardsCount: 0,
     minCardsCount: 0,
     page: 1,
-    pageCount: 0,
+    pageCount: 10,
     token: null,
     tokenDeathTime: null,
     error: null,
-    pageSize: 6,
 }
 
 //reducer
@@ -67,14 +65,6 @@ export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, a
         case "PACKS/SET-TOTAL-COUNT": {
             return {...state, cardPacksTotalCount: action.cardPacksTotalCount}
         }
-        case 'PACKS/SOTR-MIN-PACK-CARDS' : {
-            const sort = state.cardsPacks.sort((a, b) => a.cardsCount - b.cardsCount)
-            return {...state, cardsPacks: [...sort]}
-        }
-        case 'PACKS/SOTR-MAX-PACK-CARDS' : {
-            const sort = state.cardsPacks.sort((a, b) => b.cardsCount - a.cardsCount)
-            return {...state, cardsPacks: [...sort]}
-        }
 
         default:
             return {...state}
@@ -87,34 +77,28 @@ export type MainActionType =
     | setPackCardsErrorACType
     | SetCurrentPageActionType
     | SetTotalCountActionType
-    | sortMinCardsInPackACType
-    | sortMaxCardsInPackACType
+
 
 export type setPackCardsACType = ReturnType<typeof setPackCardsAC>
 export type setPackCardsErrorACType = ReturnType<typeof setPackCardsErrorAC>
 export type SetCurrentPageActionType = ReturnType<typeof setCurrentPageAC>
 export type SetTotalCountActionType = ReturnType<typeof setTotalCountAC>
-export type sortMinCardsInPackACType = ReturnType<typeof sortMinCardsInPackAC>
-export type sortMaxCardsInPackACType = ReturnType<typeof sortMaxCardsInPackAC>
+
 
 //actions
 export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SET-PACK-CARDS', cardPacks} as const)
 export const setPackCardsErrorAC = (error: string | null) => ({type: 'PACKS/SET-PACK-CARDS-ERROR', error} as const)
-export const sortMinCardsInPackAC = () => ({type: 'PACKS/SOTR-MIN-PACK-CARDS'} as const)
-export const sortMaxCardsInPackAC = () => ({type: 'PACKS/SOTR-MAX-PACK-CARDS'} as const)
-
 export const setCurrentPageAC = (page: number) => ({type: "PACKS/SET-CURRENT-PAGE", page} as const)
 export const setTotalCountAC = (cardPacksTotalCount: number) => ({type: "PACKS/SET-TOTAL-COUNT", cardPacksTotalCount} as const)
 
 
 // thunks
 
-export const fetchPackCardsTC = (page?: number, pageSize?: number) => {
-
+export const fetchPackCardsTC = (args?: getPackOfCardArgsType ) => {
     return (dispatch: Dispatch) => {
-        if(page)
-        dispatch(setCurrentPageAC(page))
-        return packCardsAPI.getPackOfCards(page,pageSize)
+        if(args?.page)
+        dispatch(setCurrentPageAC(args.page))
+        return packCardsAPI.getPackOfCards(args || {})
             .then((res) => {
                 dispatch(setPackCardsAC(res.data.cardPacks))
                 dispatch(setTotalCountAC(res.data.cardPacksTotalCount))
@@ -183,13 +167,13 @@ export const searchPacksCardsTC = (value?: string) => {
     }
 }
 
-export const getUsersPacksTC = () => {
+export const getUsersPacksTC = (pageCount?: number) => {
     return (dispatch: Dispatch, getState: () => RootReducerType) => {
         const allState = getState()
         const profile = allState.profile
         const user = profile.user
         const user_id = user._id
-        return packCardsAPI.getUsersPacks(user_id)
+        return packCardsAPI.getUsersPacks( user_id, pageCount,)
             .then((res) => {
                 dispatch(setPackCardsAC(res.data.cardPacks))
             })

@@ -30,13 +30,14 @@ export const PackOfCards = ({
     const navigate = useNavigate()
 
 
-
     const removePackHandler = useCallback(() => {
         removePackOfCards(packId)
     }, [])
+
     const updatePackNameHandler = useCallback((name: string) => {
         updateNamePackOfCards(packId, name)
     }, [])
+
     const openModalHandler = useCallback(() => {
         setOpened(true)
     }, [])
@@ -55,7 +56,7 @@ export const PackOfCards = ({
         <div className={classes.boxCards}>
             <div className={classes.blockText}>{name}</div>
             <div className={classes.blockText}>{cardsCount}</div>
-            <div className={classes.blockText}>{path}</div>
+            {/*<div className={classes.blockText}>{path}</div>*/}
             <div className={classes.blockText}>{updated}</div>
             <div className={classes.contentBtn}>
                 <button className={classes.btn} onClick={openModalHandler}>edit</button>

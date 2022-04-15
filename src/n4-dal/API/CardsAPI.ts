@@ -52,9 +52,13 @@ export const passwordAPI = {
     }
 }
 
+export type getPackOfCardArgsType = {
+    min?: number, max?: number, sortPacks?: string, page?: number, pageCount?: number
+}
 export const packCardsAPI = {
-    getPackOfCards(page?: number, pageCount?: number) {
-        return instance.get<CardPacksResponseType>(`/cards/pack`, {params: {page, pageCount}})
+    getPackOfCards(args : getPackOfCardArgsType) {
+        console.log({...args})
+        return instance.get<CardPacksResponseType>(`/cards/pack`, {params: {...args}})
     },
     addPackOfCards(cardsPack: AddCardPackType) {
         return instance.post<AddCardPackType, AxiosResponse<AddPackOfCardsResponseType>>('cards/pack', {cardsPack: {name: cardsPack.name}})
@@ -68,14 +72,14 @@ export const packCardsAPI = {
     searchPacks(packName?: string) {
         return instance.get<CardPacksResponseType>(`/cards/pack?packName=${packName}`)
     },
-    getUsersPacks(user_id: string) {
-        return instance.get<CardPacksResponseType>('/cards/pack', {params:{user_id}})
+    getUsersPacks( user_id: string, pageCount?: number,) {
+        return instance.get<CardPacksResponseType>('/cards/pack', {params:{pageCount, user_id}})
     }
 }
 
 export const cardsApi = {
-    getCards(cardsPack_id: string, pageCount: number = 6) {
-        return instance.get<CardsResponseType>(`/cards/card`, {params:{cardsPack_id, pageCount}} )
+    getCards(cardsPack_id: string,) {
+        return instance.get<CardsResponseType>(`/cards/card`, {params:{cardsPack_id,}} )
     },
     removeCard(id: string) {
         return instance.delete(`/cards/card?id=${id}`)

@@ -7,8 +7,6 @@ import {
     fetchPackCardsTC,
     getUsersPacksTC,
     removePackOfCardsTC,
-    sortMaxCardsInPackAC,
-    sortMinCardsInPackAC,
     updateNamePackOfCardsTC
 } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
 import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
@@ -17,28 +15,38 @@ import {Modal} from "./Modal/Modal";
 import classes from './../a7-CardPacks/CardsPacks.module.css'
 import {Paginator} from "./Paginator/Paginator";
 import {Box, Slider} from "@mui/material";
+import {useDebounce, useUpdateEffect} from "usehooks-ts";
+
+
+
 
 export const CardsPacks = () => {
     const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
     const {
-        pageSize,
+        pageCount,
         page,
         cardPacksTotalCount,
-        cardsPacks
+        cardsPacks,
     } = useSelector<RootReducerType, CardsPacksReducerType>(state => state.cardsPacks)
-    let dispatch = useDispatch()
+
+    const dispatch = useDispatch()
 
     const [isOpened, setOpened] = useState<boolean>(false)
+    const [value, setValue] = useState([0, 30]);
+    const debouncedValue = useDebounce<number[]>(value, 1000)
 
     useEffect(() => {
         dispatch(fetchPackCardsTC())
     }, [])
+
     const openModalHandler = useCallback(() => {
         setOpened(true)
     }, [])
+
     const closeModalHandler = useCallback(() => {
         setOpened(false)
     }, [])
+
     const addPack = (name: string) => {
         dispatch(addPackofCardsTC({name}))
     }
@@ -51,21 +59,26 @@ export const CardsPacks = () => {
         dispatch(updateNamePackOfCardsTC({_id: packId, name}));
     }, [dispatch])
 
+    // for sort
     const allPacksHandler = () => {
-        dispatch((fetchPackCardsTC()))
+        dispatch((fetchPackCardsTC({pageCount})))
     }
     const MyPacksHandler = () => {
-        dispatch((getUsersPacksTC()))
+        dispatch((getUsersPacksTC(pageCount)))
     }
 
     const sortPacksMinCardstHandler = () => {
-        dispatch(sortMinCardsInPackAC())
+        dispatch(fetchPackCardsTC({sortPacks: '1cardsCount', pageCount}))
     }
     const sortPacksMaxCardstHandler = () => {
-        dispatch(sortMaxCardsInPackAC())
+        dispatch(fetchPackCardsTC({sortPacks: '0cardsCount', pageCount}))
     }
 
-    const [value, setValue] = useState([20, 80]);
+    //for Slider
+    useUpdateEffect(() => {
+        dispatch(fetchPackCardsTC({min: value[0], max: value[1], pageCount}))
+    }, [debouncedValue])
+
 
     const handleChange = (event: any, newValue: any) => {
         setValue(newValue);
@@ -129,7 +142,7 @@ export const CardsPacks = () => {
                 }
 
             </div>
-            <Paginator cardPacksTotalCount={cardPacksTotalCount} page={page} pageSize={pageSize}/>
+            <Paginator cardPacksTotalCount={cardPacksTotalCount} page={page} value={value} pageCount={pageCount}/>
             {error && <div className={classes.errors}>{error}</div>}
         </div>
     )
