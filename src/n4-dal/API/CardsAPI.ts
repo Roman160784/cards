@@ -8,7 +8,7 @@ import {CardsPacksType} from "../../n3-redux/a8-CardsPacksReducer/CardsPacksRedu
 // baseURL   http://localhost:7542/2.0/
 
 export const instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0/',
+    baseURL: 'http://localhost:7542/2.0/',
     withCredentials: true,
 })
 
@@ -57,8 +57,7 @@ export type getPackOfCardArgsType = {
 }
 export const packCardsAPI = {
     getPackOfCards(args : getPackOfCardArgsType) {
-        console.log({...args})
-        return instance.get<CardPacksResponseType>(`/cards/pack`, {params: {...args}})
+        return instance.get<CardPacksResponseType>(`/cards/pack`, {params: args})
     },
     addPackOfCards(cardsPack: AddCardPackType) {
         return instance.post<AddCardPackType, AxiosResponse<AddPackOfCardsResponseType>>('cards/pack', {cardsPack: {name: cardsPack.name}})

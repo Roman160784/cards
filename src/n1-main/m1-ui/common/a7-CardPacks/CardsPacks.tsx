@@ -15,6 +15,7 @@ import classes from './../a7-CardPacks/CardsPacks.module.css'
 import {Paginator} from "./Paginator/Paginator";
 import {Box, Slider} from "@mui/material";
 import {useDebounce, useUpdateEffect} from "usehooks-ts";
+import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 
 
 

@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {cardsApi, CardsType} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
+import {errorCardsHandler} from "../../Utils/Utils";
 
 
 //types
@@ -65,10 +66,7 @@ export const getCardsTC = (cardsPack_id: string) => {
                 dispatch(setCardsAC(res.data.cards))
             })
             .catch((e: AxiosError) => {
-                dispatch(setCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-                setTimeout(() => {
-                    dispatch(setCardsErrorAC(null))
-                }, 3000)
+                errorCardsHandler(e, dispatch)
             })
     }
 }
@@ -79,10 +77,7 @@ export const removeCardTC = (cardsPack_id: string, cardId: string) => {
                 dispatch(getCardsTC(cardsPack_id))
             })
             .catch((e: AxiosError) => {
-                dispatch(setCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-                setTimeout(() => {
-                    dispatch(setCardsErrorAC(null))
-                }, 3000)
+                errorCardsHandler(e, dispatch)
             })
     }
 }
@@ -94,10 +89,7 @@ export const createCardTC = (cardsPack_id: string ) => {
                 dispatch(getCardsTC(cardsPack_id))
             })
             .catch((e: AxiosError) => {
-                dispatch(setCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-                setTimeout(() => {
-                    dispatch(setCardsErrorAC(null))
-                }, 5000)
+                errorCardsHandler(e, dispatch)
             })
     }
 }
@@ -109,10 +101,7 @@ export const updateNameCardTC = (cardsPack_id: string, cardId: string) => {
                 dispatch(getCardsTC(cardsPack_id))
             })
             .catch((e: AxiosError) => {
-                dispatch(setCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-                setTimeout(() => {
-                    dispatch(setCardsErrorAC(null))
-                }, 3000)
+                errorCardsHandler(e, dispatch)
             })
     }
 }
@@ -124,5 +113,9 @@ export const searchCardsTC = (cardsPack_id: string, cardAnswer: string) => {
                 console.log({...res})
                 dispatch(setCardsAC(res.data.cards))
             })
+            .catch((e: AxiosError) => {
+                errorCardsHandler(e, dispatch)
+            })
     }
 }
+
