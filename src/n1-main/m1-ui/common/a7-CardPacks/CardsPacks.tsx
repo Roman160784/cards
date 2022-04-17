@@ -5,7 +5,6 @@ import {
     addPackofCardsTC,
     CardsPacksReducerType,
     fetchPackCardsTC,
-    getUsersPacksTC,
     removePackOfCardsTC,
     updateNamePackOfCardsTC
 } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
@@ -16,8 +15,6 @@ import {Paginator} from "./Paginator/Paginator";
 import {Box, Slider} from "@mui/material";
 import {useDebounce, useUpdateEffect} from "usehooks-ts";
 import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
-
-
 
 
 function SearchCards() {
@@ -33,11 +30,14 @@ export const CardsPacks = () => {
         cardsPacks,
         currentPackName,
     } = useSelector<RootReducerType, CardsPacksReducerType>(state => state.cardsPacks)
+    const user_id = useSelector<RootReducerType, string>(state => state.profile.user._id)
+
 
     const dispatch = useDispatch()
 
     const [isOpened, setOpened] = useState<boolean>(false)
     const [value, setValue] = useState([0, 30]);
+    const [cardsView, setCardsView] = useState<'my' | 'all'>('all')
     const debouncedValue = useDebounce<number[]>(value, 1000)
 
     useEffect(() => {
@@ -66,10 +66,12 @@ export const CardsPacks = () => {
 
     // for sort
     const allPacksHandler = () => {
+        setCardsView('all')
         dispatch((fetchPackCardsTC({pageCount})))
     }
     const MyPacksHandler = () => {
-        dispatch((getUsersPacksTC(pageCount)))
+        setCardsView('my')
+        dispatch((fetchPackCardsTC({user_id})))
     }
 
     const sortPacksMinCardstHandler = () => {
@@ -93,7 +95,12 @@ export const CardsPacks = () => {
         <div className={classes.blockCards}>
             <div className={classes.boxSearchButton}>
                 <SearchPacks/>
-                <button onClick={openModalHandler} className={classes.btnHandler}>Add new pack</button>
+                <button
+                    onClick={openModalHandler}
+                    className={classes.btnHandler}
+                >
+                    Add new pack
+                </button>
             </div>
             <div className={classes.boxButtonAndSlider}>
                 <div>
@@ -147,7 +154,14 @@ export const CardsPacks = () => {
                 }
 
             </div>
-            <Paginator cardPacksTotalCount={cardPacksTotalCount} page={page} value={value} pageCount={pageCount}/>
+            <Paginator
+                cardPacksTotalCount={cardPacksTotalCount}
+                page={page}
+                value={value}
+                pageCount={pageCount}
+                userId={user_id}
+                cardsView={cardsView}
+            />
             {error && <div className={classes.errors}>{error}</div>}
         </div>
     )

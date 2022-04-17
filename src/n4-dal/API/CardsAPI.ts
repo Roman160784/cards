@@ -53,7 +53,13 @@ export const passwordAPI = {
 }
 
 export type getPackOfCardArgsType = {
-    packName?: string,  min?: number, max?: number, sortPacks?: string, page?: number, pageCount?: number
+    packName?: string
+    min?: number
+    max?: number
+    sortPacks?: string
+    page?: number
+    pageCount?: number
+    user_id?: string
 }
 export const packCardsAPI = {
     getPackOfCards(args : getPackOfCardArgsType) {

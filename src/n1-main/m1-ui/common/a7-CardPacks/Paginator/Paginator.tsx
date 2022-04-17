@@ -9,14 +9,18 @@ export type PaginatorPropsType = {
     page: number
     portionSize?: number
     value: number[]
+    userId: string
+    cardsView: 'my' | 'all'
 }
 
 export const Paginator: React.FC<PaginatorPropsType> = ({
-                                                            cardPacksTotalCount= 0,
+                                                            cardPacksTotalCount = 0,
                                                             pageCount,
                                                             page,
                                                             portionSize = 10,
-                                                            value
+                                                            value,
+                                                            userId,
+                                                            cardsView
                                                         }) => {
 
     const dispatch = useDispatch()
@@ -33,7 +37,22 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
     const rightPortionPageNumber = portionNumber * portionSize
 
     let onPageChanged = (pageNumber: number) => {
-        dispatch(fetchPackCardsTC({page: pageNumber, pageCount: pageCount, min: value[0], max: value[1]}))
+        if (cardsView === 'my') {
+            dispatch(fetchPackCardsTC({
+                page: pageNumber,
+                pageCount: pageCount,
+                min: value[0],
+                max: value[1],
+                user_id: userId
+            }))
+        } else {
+            dispatch(fetchPackCardsTC({
+                page: pageNumber,
+                pageCount: pageCount,
+                min: value[0],
+                max: value[1]
+            }))
+        }
     }
 
     return (
