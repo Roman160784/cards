@@ -2,15 +2,22 @@ import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {useParams} from "react-router-dom";
-import {createCardTC, removeCardTC, updateNameCardTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
+import {
+    CardsReducerType,
+    createCardTC,
+    removeCardTC,
+    updateNameCardTC
+} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {SearchCards} from "../c6-SearchPacks/SearchCards";
 import classes from './Cards.module.css'
+import {CardsPaginator} from "./cardsPaginater";
 
 
 export const Cards = () => {
     const cards = useSelector<RootReducerType, CardsType[]>(state => state.cards.cards)
     const error = useSelector<RootReducerType, string | null>(state => state.cards.error)
+    const {pageCount, page, cardsTotalCount} = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
     const dispatch = useDispatch()
 
     const params = useParams<'id'>()
@@ -53,6 +60,7 @@ export const Cards = () => {
                     )
                 })
             }
+            <CardsPaginator cardsTotalCount={cardsTotalCount} page={page} packId={cardsPack_id} pageCount={pageCount}/>
             {error && <div className={classes.errors}>{error}</div>}
         </div>
     )
