@@ -53,7 +53,7 @@ export const passwordAPI = {
 }
 
 export type getPackOfCardArgsType = {
-    min?: number, max?: number, sortPacks?: string, page?: number, pageCount?: number
+    packName?: string,  min?: number, max?: number, sortPacks?: string, page?: number, pageCount?: number
 }
 export const packCardsAPI = {
     getPackOfCards(args : getPackOfCardArgsType) {
@@ -67,9 +67,6 @@ export const packCardsAPI = {
     },
     updateNamePackOfCards(cardsPack: UpdateNameCardPackType) {
         return instance.put('/cards/pack', {cardsPack})
-    },
-    searchPacks(packName?: string) {
-        return instance.get<CardPacksResponseType>(`/cards/pack?packName=${packName}`)
     },
     getUsersPacks( user_id: string, pageCount?: number,) {
         return instance.get<CardPacksResponseType>('/cards/pack', {params:{pageCount, user_id}})

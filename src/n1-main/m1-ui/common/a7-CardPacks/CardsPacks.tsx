@@ -31,6 +31,7 @@ export const CardsPacks = () => {
         page,
         cardPacksTotalCount,
         cardsPacks,
+        currentPackName,
     } = useSelector<RootReducerType, CardsPacksReducerType>(state => state.cardsPacks)
 
     const dispatch = useDispatch()
