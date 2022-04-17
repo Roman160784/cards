@@ -50,7 +50,7 @@ const initialState: CardsPacksReducerType = {
     token: null,
     tokenDeathTime: null,
     error: null,
-    currentPackName: null
+    currentPackName: null,
 }
 
 //reducer

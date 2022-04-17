@@ -1,27 +1,28 @@
 import React, {useState} from 'react';
 import classes from './Paginator.module.css';
-import {fetchPackCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 import {useDispatch} from "react-redux";
+import {getCardsTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
+import {log} from "util";
 
 export type PaginatorPropsType = {
-    cardPacksTotalCount: number
+    cardsTotalCount: number
     pageCount: number
     page: number
     portionSize?: number
-    value: number[]
+    packId?: string
 }
 
-export const Paginator: React.FC<PaginatorPropsType> = ({
-                                                            cardPacksTotalCount= 0,
-                                                            pageCount,
-                                                            page,
-                                                            portionSize = 10,
-                                                            value
-                                                        }) => {
+export const CardsPaginator: React.FC<PaginatorPropsType> = ({
+                                                                 cardsTotalCount = 0,
+                                                                 pageCount,
+                                                                 page,
+                                                                 portionSize = 10,
+                                                                 packId
+                                                             }) => {
 
     const dispatch = useDispatch()
 
-    let pagesCount = Math.ceil(cardPacksTotalCount / pageCount);
+    let pagesCount = Math.ceil(cardsTotalCount / pageCount);
     let pages = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
@@ -32,11 +33,13 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
     const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
     const rightPortionPageNumber = portionNumber * portionSize
 
-    let onPageChanged = (pageNumber: number) => {
-        dispatch(fetchPackCardsTC({page: pageNumber, pageCount: pageCount, min: value[0], max: value[1]}))
+    const onPageChanged = (pageNumber: number) => {
+        if (packId)
+            dispatch(getCardsTC({cardsPack_id: packId, page: pageNumber, pageCount: pageCount}))
     }
 
     return (
+
         <div className={classes.paginatorCards}>
             {
                 portionNumber > 1 &&
@@ -47,6 +50,7 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
             {pages
                 .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                 .map(p => {
+                    // debugger
                     return <span className={page === p ? classes.selectedPage : classes.select}
                                  onClick={() => {onPageChanged(p)}}>{p}</span> })}
             {
