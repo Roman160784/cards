@@ -49,7 +49,7 @@ export const PackOfCards = ({
 
 
     const learnClickHandler = () => {
-        dispatch(getCardsTC(packId))
+        dispatch(getCardsTC({cardsPack_id: packId}))
         return navigate(`/cards/${packId}`)
     }
 

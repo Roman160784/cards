@@ -17,9 +17,7 @@ import {useDebounce, useUpdateEffect} from "usehooks-ts";
 import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 
 
-function SearchCards() {
-    return null;
-}
+
 
 export const CardsPacks = () => {
     const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
@@ -28,7 +26,6 @@ export const CardsPacks = () => {
         page,
         cardPacksTotalCount,
         cardsPacks,
-        currentPackName,
     } = useSelector<RootReducerType, CardsPacksReducerType>(state => state.cardsPacks)
     const user_id = useSelector<RootReducerType, string>(state => state.profile.user._id)
 

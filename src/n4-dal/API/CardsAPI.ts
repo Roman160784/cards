@@ -52,6 +52,7 @@ export const passwordAPI = {
     }
 }
 
+//type for getPackOfCards
 export type getPackOfCardArgsType = {
     packName?: string
     min?: number
@@ -61,6 +62,7 @@ export type getPackOfCardArgsType = {
     pageCount?: number
     user_id?: string
 }
+//api
 export const packCardsAPI = {
     getPackOfCards(args : getPackOfCardArgsType) {
         return instance.get<CardPacksResponseType>(`/cards/pack`, {params: args})
@@ -79,9 +81,12 @@ export const packCardsAPI = {
     }
 }
 
+//type for get cards payload
+export type getCardsPayloadType = {cardsPack_id: string, cardAnswer?: string, cardQuestion?: string, min?: number, max?:number, sortCards?: string, page?:number, pageCount?: number}
+//api
 export const cardsApi = {
-    getCards(cardsPack_id: string,) {
-        return instance.get<CardsResponseType>(`/cards/card`, {params:{cardsPack_id,}} )
+    getCards(payload: getCardsPayloadType) {
+        return instance.get<CardsResponseType>(`/cards/card`, {params: payload} )
     },
     removeCard(id: string) {
         return instance.delete(`/cards/card?id=${id}`)
@@ -92,9 +97,6 @@ export const cardsApi = {
     updateNameCard(_id: string) {
         return instance.put('/cards/card', {card:{_id}})
     },
-    searchCards(cardsPack_id: string, cardAnswer: string) {
-        return instance.get<CardsResponseType>(`/cards/card`, {params: {cardAnswer, cardsPack_id}})
-    }
 }
 // types
 
