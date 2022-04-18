@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import classes from './Paginator.module.css';
 import {useDispatch} from "react-redux";
-import {getCardsTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
+import {getCardsTC, setCurrentPageCardsAC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {log} from "util";
 
 export type PaginatorPropsType = {
@@ -9,15 +9,13 @@ export type PaginatorPropsType = {
     pageCount: number
     page: number
     portionSize?: number
-    packId?: string
 }
 
 export const CardsPaginator: React.FC<PaginatorPropsType> = ({
                                                                  cardsTotalCount = 0,
                                                                  pageCount,
                                                                  page,
-                                                                 portionSize = 10,
-                                                                 packId
+                                                                 portionSize = 10
                                                              }) => {
 
     const dispatch = useDispatch()
@@ -34,8 +32,7 @@ export const CardsPaginator: React.FC<PaginatorPropsType> = ({
     const rightPortionPageNumber = portionNumber * portionSize
 
     const onPageChanged = (pageNumber: number) => {
-        if (packId)
-            dispatch(getCardsTC({cardsPack_id: packId, page: pageNumber, pageCount: pageCount}))
+        dispatch(setCurrentPageCardsAC(pageNumber))
     }
 
     return (

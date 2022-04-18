@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Modal} from "../Modal/Modal";
 import classes from './PackOfCards.module.css'
 import {useDispatch} from "react-redux";
@@ -30,11 +30,8 @@ export const PackOfCards = ({
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-
-
     const removePackHandler = useCallback(() => {
         removePackOfCards(packId)
-
     }, [])
 
     const updatePackNameHandler = useCallback((name: string) => {
@@ -51,13 +48,12 @@ export const PackOfCards = ({
 
 
     const learnClickHandler = () => {
-        dispatch(getCardsTC({cardsPack_id: packId}))
         return navigate(`/cards/${packId}`)
     }
 
     return (
         <div className={classes.boxCards}>
-            <div className={classes.blockText}>{name}</div>
+            <div className={classes.blockText} onClick={learnClickHandler}>{name}</div>
             <div className={classes.blockText}>{cardsCount}</div>
             {/*<div className={classes.blockText}>{path}</div>*/}
             <div className={classes.blockText}>{updated}</div>

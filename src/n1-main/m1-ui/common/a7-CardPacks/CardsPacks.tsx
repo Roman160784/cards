@@ -50,15 +50,15 @@ export const CardsPacks = () => {
     }, [])
 
     const addPack = (name: string) => {
-        dispatch(addPackofCardsTC({name}, user_id))
+        dispatch(addPackofCardsTC({name}))
     }
 
     const removePackOfCards = useCallback((packId: string) => {
-        dispatch(removePackOfCardsTC(packId, user_id));
+        dispatch(removePackOfCardsTC(packId));
     }, [dispatch])
 
     const updateNamePackOfCards = useCallback((packId: string, name: string) => {
-        dispatch(updateNamePackOfCardsTC({_id: packId, name}, user_id));
+        dispatch(updateNamePackOfCardsTC({_id: packId, name}));
     }, [dispatch])
 
     // for sort

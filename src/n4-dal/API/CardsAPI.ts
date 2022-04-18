@@ -77,12 +77,24 @@ export const packCardsAPI = {
     }
 }
 
+
+
 //type for get cards payload
-export type getCardsPayloadType = {cardsPack_id: string, cardAnswer?: string, cardQuestion?: string, min?: number, max?:number, sortCards?: string, page?:number, pageCount?: number}
+export type getCardsPayloadType = {
+    cardsPack_id: string
+    cardAnswer?: string
+    cardQuestion?: string
+    min?: number
+    max?:number
+    sortCards?: string
+    page?:number
+    pageCount?: number
+}
 //api
 export const cardsApi = {
     getCards(payload: getCardsPayloadType) {
-        return instance.get<CardsResponseType>(`/cards/card`, {params: payload} )
+        return instance.get<CardsResponseType>
+        (`/cards/card`, {params: payload})
     },
     removeCard(id: string) {
         return instance.delete(`/cards/card?id=${id}`)

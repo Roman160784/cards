@@ -1,7 +1,11 @@
 import React, {ChangeEvent, useState} from 'react';
 import {useDebounce, useUpdateEffect} from 'usehooks-ts'
 import {useDispatch} from "react-redux";
-import {getCardsTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
+import {
+    getCardsTC,
+    searchCardsAnswerAC, searchCardsQuestionAC,
+    setCurrentPageCardsAC
+} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import classes from './SearchPacks.module.css'
 
 export type SearchPacksPropsType = {
@@ -12,12 +16,12 @@ export const SearchCards = ({cardsPack_id, ...props}: SearchPacksPropsType) => {
 
     const dispatch = useDispatch()
     const [answer, setAnswer] = useState<string>('')
-    const [value, setValue] = useState('')
-    const debouncedValue = useDebounce<string>(value, 1000)
-    const debouncedAnswer = useDebounce<string>(answer, 1000)
+    const [question, setQuestion] = useState('')
+    const debouncedValue = useDebounce<string>(question, 1500)
+    const debouncedAnswer = useDebounce<string>(answer, 1500)
 
     const onChangeQuestionHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.currentTarget.value)
+        setQuestion(e.currentTarget.value)
     }
 
     const onChangeAnswerHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,11 +29,13 @@ export const SearchCards = ({cardsPack_id, ...props}: SearchPacksPropsType) => {
     }
 
     useUpdateEffect(() => {
-        dispatch(getCardsTC({cardsPack_id: cardsPack_id, cardQuestion: value, page: 1}))
+        dispatch(searchCardsAnswerAC(answer))
+        dispatch(setCurrentPageCardsAC(1))
     }, [debouncedValue])
 
     useUpdateEffect(() => {
-        dispatch(getCardsTC({cardsPack_id: cardsPack_id, cardAnswer: answer, page: 1}))
+        dispatch(searchCardsQuestionAC(question))
+        dispatch(setCurrentPageCardsAC(1))
     }, [debouncedAnswer])
 
 
@@ -38,7 +44,7 @@ export const SearchCards = ({cardsPack_id, ...props}: SearchPacksPropsType) => {
             <div>
             <input type="search"
                    placeholder={'Search... question'}
-                   value={value}
+                   value={question}
                    onChange={onChangeQuestionHandler}
                    className={classes.fieldSearch}
             />

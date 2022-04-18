@@ -43,12 +43,12 @@ export const Nav = () => {
                     Packs
                 </NavLink>
             </div>
-            <div>
-                <NavLink to={pathEnum.cards}
-                         className={({isActive}) => `${isActive ? classes.active : classes.link}`}>
-                    Cards
-                </NavLink>
-            </div>
+            {/*<div>*/}
+            {/*    <NavLink to={pathEnum.cards}*/}
+            {/*             className={({isActive}) => `${isActive ? classes.active : classes.link}`}>*/}
+            {/*        Cards*/}
+            {/*    </NavLink>*/}
+            {/*</div>*/}
             <div>
                 <NavLink to={pathEnum.test}
                          className={({isActive}) => `${isActive ? classes.active : classes.link}`}>

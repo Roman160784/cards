@@ -1,32 +1,44 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {useParams} from "react-router-dom";
 import {
     CardsReducerType,
-    createCardTC,
-    removeCardTC,
+    createCardTC, getCardsTC,
+    removeCardTC, setCardsPackIdAC,
     updateNameCardTC
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {SearchCards} from "../c6-SearchPacks/SearchCards";
 import classes from './Cards.module.css'
 import {CardsPaginator} from "./cardsPaginater";
+import {addPackofCardsTC} from "../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 
 
 export const Cards = () => {
+
     const cards = useSelector<RootReducerType, CardsType[]>(state => state.cards.cards)
     const error = useSelector<RootReducerType, string | null>(state => state.cards.error)
-    const {pageCount, page, cardsTotalCount} = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
+    const {pageCount, page, cardsTotalCount, max, min, sortCards} = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
     const dispatch = useDispatch()
 
     const params = useParams<'id'>()
     const cardsPack_id = params.id
 
+    useEffect(() => {
+        if(cardsPack_id) {
+            dispatch(setCardsPackIdAC(cardsPack_id))
+            dispatch(getCardsTC())
+        }
+    }, [cardsPack_id, pageCount, page, max, min, sortCards])
+
     const createCardHandler = () => {
-        if (cardsPack_id)
+        if(cardsPack_id){
+            dispatch(setCardsPackIdAC(cardsPack_id))
             dispatch(createCardTC(cardsPack_id))
+        }
     }
+
 
     return (
         <div className={classes.boxCard}>
@@ -43,10 +55,12 @@ export const Cards = () => {
             {
                 cards.map(card => {
                     const removeCardHandler = () => {
-                        dispatch(removeCardTC(card.cardsPack_id, card._id))
+                        dispatch(setCardsPackIdAC(card.cardsPack_id))
+                        dispatch(removeCardTC(card._id))
                     }
                     const updateNameCardHandler = () => {
-                        dispatch(updateNameCardTC(card.cardsPack_id, card._id))
+                        dispatch(setCardsPackIdAC(card.cardsPack_id))
+                        dispatch(updateNameCardTC(card._id))
                     }
                     return (
                         <div key={card._id}>
@@ -60,7 +74,7 @@ export const Cards = () => {
                     )
                 })
             }
-            <CardsPaginator cardsTotalCount={cardsTotalCount} page={page} packId={cardsPack_id} pageCount={pageCount}/>
+            <CardsPaginator cardsTotalCount={cardsTotalCount} page={page} pageCount={pageCount}/>
             {error && <div className={classes.errors}>{error}</div>}
         </div>
     )

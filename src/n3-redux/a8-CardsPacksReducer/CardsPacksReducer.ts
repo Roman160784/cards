@@ -140,7 +140,7 @@ export const fetchPackCardsTC = () => {
             })
     }
 }
-export const addPackofCardsTC = (cardsPack: AddCardPackType, userId: string) => (dispatch: any) => {
+export const addPackofCardsTC = (cardsPack: AddCardPackType) => (dispatch: any) => {
     packCardsAPI.addPackOfCards(cardsPack)
         .then((res) => {
             dispatch(fetchPackCardsTC())
@@ -149,7 +149,7 @@ export const addPackofCardsTC = (cardsPack: AddCardPackType, userId: string) => 
             errorPackCardsHandler(e, dispatch)
         })
 }
-export const removePackOfCardsTC = (id: string, userId: string) => (dispatch: any) => {
+export const removePackOfCardsTC = (id: string) => (dispatch: any) => {
     packCardsAPI.removePackOfCards(id)
         .then((res) => {
             dispatch(fetchPackCardsTC())
@@ -159,7 +159,7 @@ export const removePackOfCardsTC = (id: string, userId: string) => (dispatch: an
         })
 }
 
-export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType, userId: string) => (dispatch: any) => {
+export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (dispatch: any) => {
     packCardsAPI.updateNamePackOfCards(cardsPack)
         .then((res) => {
             dispatch(fetchPackCardsTC())
