@@ -25,7 +25,6 @@ export type CardsPacksReducerType = {
     tokenDeathTime: number | null
     error: string | null
     currentPackName: null | string
-    newCardsPack: NewCardPackResponseType | {},
     myCards: 'my' | 'all'
     sortPacks: string
 }
@@ -42,7 +41,6 @@ const initialState: CardsPacksReducerType = {
     tokenDeathTime: null,
     error: null,
     currentPackName: null,
-    newCardsPack: {},
     myCards: 'all',
     sortPacks: '',
 }
