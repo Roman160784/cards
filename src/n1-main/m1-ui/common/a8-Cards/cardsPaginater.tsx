@@ -50,7 +50,6 @@ export const CardsPaginator: React.FC<PaginatorPropsType> = ({
             {pages
                 .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                 .map(p => {
-                    // debugger
                     return <span className={page === p ? classes.selectedPage : classes.select}
                                  onClick={() => {onPageChanged(p)}}>{p}</span> })}
             {

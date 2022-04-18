@@ -1,7 +1,6 @@
 import {Dispatch} from "redux";
 import {
     AddCardPackType, CardsPacksType,
-    getPackOfCardArgsType,
     NewCardPackResponseType,
     packCardsAPI,
     UpdateNameCardPackType
@@ -28,6 +27,7 @@ export type CardsPacksReducerType = {
     currentPackName: null | string
     newCardsPack: NewCardPackResponseType | {},
     myCards: 'my' | 'all'
+    sortPacks: string
 }
 
 //state
@@ -43,7 +43,8 @@ const initialState: CardsPacksReducerType = {
     error: null,
     currentPackName: null,
     newCardsPack: {},
-    myCards: 'all'
+    myCards: 'all',
+    sortPacks: '',
 }
 
 //reducer
@@ -62,7 +63,16 @@ export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, a
             return {...state, cardPacksTotalCount: action.cardPacksTotalCount}
         }
         case 'PACKS/SEARCH-PACKS-NAME' : {
-            return {...state, currentPackName: action.currentName}
+            return {...state, currentPackName: action.currentPackName}
+        }
+        case 'PACKS/SORT-PACKS' : {
+            return {...state, sortPacks: action.sortPacks}
+        }
+        case 'PACKS/SET-MIN-MAX-CARDS-IN-PACKS' : {
+            return {...state, minCardsCount: action.min, maxCardsCount: action.max}
+        }
+        case 'PACKS/SORT-MY-ALL-PACKS' : {
+            return {...state, myCards: action.value}
         }
 
         default:
@@ -77,7 +87,9 @@ export type MainActionType =
     | SetCurrentPageActionType
     | SetTotalCountActionType
     | searchPacksACType
-
+    | sortPacksACType
+    | setMinMaxCarsInPacksACType
+    | sortAllMyPacksACType
 
 
 
@@ -86,40 +98,38 @@ export type setPackCardsErrorACType = ReturnType<typeof setPackCardsErrorAC>
 export type SetCurrentPageActionType = ReturnType<typeof setCurrentPageAC>
 export type SetTotalCountActionType = ReturnType<typeof setTotalCountAC>
 export type searchPacksACType = ReturnType<typeof searchPacksAC>
-
-
+export type sortPacksACType = ReturnType<typeof sortPacksAC>
+export type setMinMaxCarsInPacksACType = ReturnType<typeof setMinMaxCarsInPacksAC>
+export type sortAllMyPacksACType = ReturnType<typeof sortAllMyPacksAC>
 
 
 //actions
 export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SET-PACK-CARDS', cardPacks} as const)
-
 export const setPackCardsErrorAC = (error: string | null) => ({type: 'PACKS/SET-PACK-CARDS-ERROR', error} as const)
 export const setCurrentPageAC = (page: number) => ({type: 'PACKS/SET-CURRENT-PAGE', page} as const)
-export const setTotalCountAC = (cardPacksTotalCount: number) => ({
-    type: 'PACKS/SET-TOTAL-COUNT',
-    cardPacksTotalCount
-} as const)
-export const searchPacksAC = (currentName: string) => ({type: 'PACKS/SEARCH-PACKS-NAME', currentName} as const)
-
-
+export const setTotalCountAC = (cardPacksTotalCount: number) => ({type: 'PACKS/SET-TOTAL-COUNT', cardPacksTotalCount} as const)
+export const searchPacksAC = (currentPackName: string) => ({type: 'PACKS/SEARCH-PACKS-NAME', currentPackName,} as const)
+export const sortPacksAC = (sortPacks: string) => ({type: 'PACKS/SORT-PACKS', sortPacks} as const)
+export const setMinMaxCarsInPacksAC = (min: number, max: number) => ({type: 'PACKS/SET-MIN-MAX-CARDS-IN-PACKS', min, max} as const)
+export const sortAllMyPacksAC = (value : 'my' | 'all') => ({type: 'PACKS/SORT-MY-ALL-PACKS', value} as const)
 
 // thunks
 
-export const fetchPackCardsTC = (args?: getPackOfCardArgsType) => {
-
+export const fetchPackCardsTC = () => {
     return (dispatch: Dispatch, getState: () => RootReducerType) => {
 
-        if (args?.packName !== undefined)
-            dispatch(searchPacksAC(args.packName))
+        const state = getState().cardsPacks
+        const payload = {
+            packName: state.currentPackName || '',
+            min: state.minCardsCount || 0,
+            max: state.maxCardsCount || 100,
+            sortPacks: state.sortPacks,
+            page: state.page || 1,
+            pageCount: state.pageCount || 10,
+            user_id: state.myCards === "my" ? getState().profile.user._id : ''
+        }
 
-        if (args?.page)
-            dispatch(setCurrentPageAC(args.page))
-
-        const state = getState()
-        const currentPackName = state.cardsPacks.currentPackName
-        const payload = currentPackName ? {...args, packName: currentPackName,} : args
-
-        return packCardsAPI.getPackOfCards({...payload, pageCount: 10} || {})
+        return packCardsAPI.getPackOfCards(payload)
             .then((res) => {
                 dispatch(setPackCardsAC(res.data.cardPacks))
                 dispatch(setTotalCountAC(res.data.cardPacksTotalCount))
@@ -135,7 +145,7 @@ export const fetchPackCardsTC = (args?: getPackOfCardArgsType) => {
 export const addPackofCardsTC = (cardsPack: AddCardPackType, userId: string) => (dispatch: any) => {
     packCardsAPI.addPackOfCards(cardsPack)
         .then((res) => {
-            dispatch(fetchPackCardsTC({user_id: userId}))
+            dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
             errorPackCardsHandler(e, dispatch)
@@ -144,7 +154,7 @@ export const addPackofCardsTC = (cardsPack: AddCardPackType, userId: string) => 
 export const removePackOfCardsTC = (id: string, userId: string) => (dispatch: any) => {
     packCardsAPI.removePackOfCards(id)
         .then((res) => {
-            dispatch(fetchPackCardsTC({user_id: userId}))
+            dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
             errorPackCardsHandler(e, dispatch)
@@ -154,7 +164,7 @@ export const removePackOfCardsTC = (id: string, userId: string) => (dispatch: an
 export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType, userId: string) => (dispatch: any) => {
     packCardsAPI.updateNamePackOfCards(cardsPack)
         .then((res) => {
-            dispatch(fetchPackCardsTC({user_id: userId}))
+            dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
             errorPackCardsHandler(e, dispatch)

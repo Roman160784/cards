@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import classes from './Paginator.module.css';
-import {fetchPackCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 import {useDispatch} from "react-redux";
+import {setCurrentPageAC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 
 export type PaginatorPropsType = {
     cardPacksTotalCount: number
@@ -36,23 +36,8 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
     const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
     const rightPortionPageNumber = portionNumber * portionSize
 
-    let onPageChanged = (pageNumber: number) => {
-        if (cardsView === 'my') {
-            dispatch(fetchPackCardsTC({
-                page: pageNumber,
-                pageCount: pageCount,
-                min: value[0],
-                max: value[1],
-                user_id: userId
-            }))
-        } else {
-            dispatch(fetchPackCardsTC({
-                page: pageNumber,
-                pageCount: pageCount,
-                min: value[0],
-                max: value[1]
-            }))
-        }
+     let onPageChanged = (pageNumber: number) => {
+        dispatch(setCurrentPageAC(pageNumber))
     }
 
     return (

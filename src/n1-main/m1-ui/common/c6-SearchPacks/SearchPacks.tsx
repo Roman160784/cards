@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import {useDebounce, useUpdateEffect} from 'usehooks-ts'
-import { fetchPackCardsTC} from "../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
+import {searchPacksAC, setCurrentPageAC} from "../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 import {useDispatch } from "react-redux";
 import classes from './SearchPacks.module.css'
 
@@ -20,7 +20,8 @@ export const SearchPacks = ({...props}: SearchPacksPropsType) => {
 
     //
     useUpdateEffect(() => {
-        dispatch(fetchPackCardsTC({packName: value, page: 1}))
+        dispatch(searchPacksAC(value))
+        dispatch(setCurrentPageAC(1))
     }, [debouncedValue])
 
 

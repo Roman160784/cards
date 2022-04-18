@@ -5,7 +5,7 @@ import {
     addPackofCardsTC,
     CardsPacksReducerType,
     fetchPackCardsTC,
-    removePackOfCardsTC,
+    removePackOfCardsTC, setMinMaxCarsInPacksAC, sortAllMyPacksAC, sortPacksAC,
     updateNamePackOfCardsTC
 } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
 import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
@@ -22,11 +22,9 @@ import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 export const CardsPacks = () => {
     const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
     const {
-        pageCount,
-        page,
-        cardPacksTotalCount,
-        cardsPacks,
+        pageCount, page, cardPacksTotalCount, cardsPacks, currentPackName, myCards, maxCardsCount, minCardsCount, sortPacks,
     } = useSelector<RootReducerType, CardsPacksReducerType>(state => state.cardsPacks)
+
     const user_id = useSelector<RootReducerType, string>(state => state.profile.user._id)
 
 
@@ -39,7 +37,9 @@ export const CardsPacks = () => {
 
     useEffect(() => {
         dispatch(fetchPackCardsTC())
-    }, [])
+    }, [pageCount, page, currentPackName, myCards, maxCardsCount, minCardsCount, sortPacks])
+
+
 
     const openModalHandler = useCallback(() => {
         setOpened(true)
@@ -64,23 +64,23 @@ export const CardsPacks = () => {
     // for sort
     const allPacksHandler = () => {
         setCardsView('all')
-        dispatch((fetchPackCardsTC({pageCount})))
+        dispatch(sortAllMyPacksAC('all'))
     }
     const MyPacksHandler = () => {
         setCardsView('my')
-        dispatch((fetchPackCardsTC({user_id})))
+        dispatch(sortAllMyPacksAC('my'))
     }
 
     const sortPacksMinCardstHandler = () => {
-        dispatch(fetchPackCardsTC({sortPacks: '1cardsCount', pageCount}))
+        dispatch(sortPacksAC('1cardsCount'))
     }
     const sortPacksMaxCardstHandler = () => {
-        dispatch(fetchPackCardsTC({sortPacks: '0cardsCount', pageCount}))
+        dispatch(sortPacksAC('0cardsCount'))
     }
 
     //for Slider
     useUpdateEffect(() => {
-        dispatch(fetchPackCardsTC({min: value[0], max: value[1], pageCount}))
+        dispatch((setMinMaxCarsInPacksAC(value[0], value[1])))
     }, [debouncedValue])
 
 

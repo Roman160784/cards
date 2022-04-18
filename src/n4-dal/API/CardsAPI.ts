@@ -93,8 +93,23 @@ export const cardsApi = {
     updateNameCard(_id: string) {
         return instance.put('/cards/card', {card:{_id}})
     },
+    updateCardsGrade(grade: number, card_id: string) {
+        return instance.put<CardsGradeResponseType>('cards/grade', {params:{grade, card_id}})
+    }
 }
+
+
 // types
+
+export type CardsGradeResponseType = {
+    _id: string
+    cardsPack_id: string
+    card_id: string
+    user_id: string
+    grade: number
+    shots: number
+}
+
 export type NewCardPackResponseType = {
     cardsCount: number
     created: Date

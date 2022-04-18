@@ -141,5 +141,15 @@ export const updateNameCardTC = (cardsPack_id: string, cardId: string) => {
     }
 }
 
+export const uptdateCardsGradeTC = (grade: number, card_id: string) => {
+    return (dispatch: Dispatch) => {
+        cardsApi.updateCardsGrade(grade, card_id)
+            .then((res) => {
 
+            })
+            .catch((e:AxiosError) => {
+                errorCardsHandler(e, dispatch)
+            })
+    }
+}
 
