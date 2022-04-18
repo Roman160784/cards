@@ -1,7 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {userType} from "../../n3-redux/a3-RegistrationReducer/RegistrationReducer";
 import {LoginType} from "../../n3-redux/a2-loginReducer/loginReducer";
-import {CardsPacksType} from "../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 
 
 // baseURL for herocu https://neko-back.herokuapp.com/2.0/
@@ -68,16 +67,13 @@ export const packCardsAPI = {
         return instance.get<CardPacksResponseType>(`/cards/pack`, {params: args})
     },
     addPackOfCards(cardsPack: AddCardPackType) {
-        return instance.post<AddCardPackType, AxiosResponse<AddPackOfCardsResponseType>>('cards/pack', {cardsPack: {name: cardsPack.name}})
+        return instance.post<AddCardPackType, AxiosResponse<NewCardPackResponseType>>('cards/pack', {cardsPack: {name: cardsPack.name}})
     },
     removePackOfCards(id: string) {
         return instance.delete(`/cards/pack?id=${id}`)
     },
     updateNamePackOfCards(cardsPack: UpdateNameCardPackType) {
         return instance.put('/cards/pack', {cardsPack})
-    },
-    getUsersPacks( user_id: string, pageCount?: number,) {
-        return instance.get<CardPacksResponseType>('/cards/pack', {params:{pageCount, user_id}})
     }
 }
 
@@ -99,6 +95,24 @@ export const cardsApi = {
     },
 }
 // types
+export type NewCardPackResponseType = {
+    cardsCount: number
+    created: Date
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: Date
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
+}
+
 
 export type CardsResponseType = {
     cards: CardsType[]
@@ -134,6 +148,23 @@ export type CardsType = {
     updated: string
     _id: string
 }
+export type CardsPacksType = {
+    cardsCount: number
+    created: Date
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: Date
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
+}
 
 export type CardPacksResponseType = {
     cardPacks: CardsPacksType[]
@@ -152,24 +183,6 @@ export type AddCardPackType = {
 export type UpdateNameCardPackType = {
     _id: string
     name: string
-}
-
-export type AddPackOfCardsResponseType = {
-    cardsCount: number
-    created: Date
-    grade: number
-    more_id: string
-    name: string
-    path: string
-    private: boolean
-    rating: number
-    shots: number
-    type: string
-    updated: Date
-    user_id: string
-    user_name: string
-    __v: number
-    _id: string
 }
 
 export type PasswordType = {

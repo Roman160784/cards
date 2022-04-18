@@ -50,15 +50,15 @@ export const CardsPacks = () => {
     }, [])
 
     const addPack = (name: string) => {
-        dispatch(addPackofCardsTC({name}))
+        dispatch(addPackofCardsTC({name}, user_id))
     }
 
     const removePackOfCards = useCallback((packId: string) => {
-        dispatch(removePackOfCardsTC(packId));
+        dispatch(removePackOfCardsTC(packId, user_id));
     }, [dispatch])
 
     const updateNamePackOfCards = useCallback((packId: string, name: string) => {
-        dispatch(updateNamePackOfCardsTC({_id: packId, name}));
+        dispatch(updateNamePackOfCardsTC({_id: packId, name}, user_id));
     }, [dispatch])
 
     // for sort
@@ -94,7 +94,8 @@ export const CardsPacks = () => {
                 <SearchPacks/>
                 <button
                     onClick={openModalHandler}
-                    className={classes.btnHandler}
+                    className={cardsView === 'all' ? classes.btnDisabled : classes.btnHandler}
+                    disabled={cardsView === 'all'}
                 >
                     Add new pack
                 </button>
@@ -136,7 +137,9 @@ export const CardsPacks = () => {
                         return (
                             <div key={pack._id}>
                                 <PackOfCards
+                                    userId={user_id}
                                     packId={pack._id}
+                                    cardPackUserId={pack.user_id}
                                     name={pack.name}
                                     cardsCount={pack.cardsCount}
                                     updated={pack.updated}
