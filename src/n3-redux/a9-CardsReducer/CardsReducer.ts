@@ -71,6 +71,9 @@ export const CardsReducer = (state: CardsReducerType = initialState, action: Mai
         case "CARDS/SET-CARDSPACK-ID": {
             return {...state, cardsPack_id: action.cardsPack_id}
         }
+        case 'CARDS/SET-GRADE' : {
+            return {...state, cards : state.cards.map(c => c._id === action.id ? {...c, grade: action.grade} : c) }
+        }
         default:
             return {...state}
     }
@@ -98,10 +101,19 @@ export type searchCardsQuestionACType = ReturnType<typeof searchCardsQuestionAC>
 export type sortCardsACType = ReturnType<typeof sortCardsAC>
 export type setMinMaxCardsInCardsACType = ReturnType<typeof setMinMaxCardsInCardsAC>
 export type setCardsPackIdACType = ReturnType<typeof setCardsPackIdAC>
+export type setCardsPageACType = ReturnType<typeof setCardsPageAC>
+export type setCurrentAnswerACType = ReturnType<typeof setCurrentAnswerAC>
+export type setCurrentQuastionACType = ReturnType<typeof setCurrentQuastionAC>
+export type setSelectedACType = ReturnType<typeof setSelectedAC>
 
 //actions
 export const setCardsAC = (cards: CardsType[]) => ({type: 'CARDS/SET-CARDS', cards} as const)
 export const setCardsErrorAC = (error: string | null) => ({type: 'CARDS/SET-CARDS-ERROR', error} as const)
+export const setCardsTotalCountAC = (cardsTotalCount: number) => ({type: 'CARDS/SET-CARDS-TOTAL-COUNT', cardsTotalCount} as const)
+export const setCardsPageAC = (page: number) => ({type: 'CARDS/SET-CARDS-PAGE', page} as const)
+export const setCurrentAnswerAC = (currentAnswer: string) => ({type: 'CARDS/SET-CURRENT-ANSWER', currentAnswer} as const )
+export const setCurrentQuastionAC = (currentQuestion: string) => ({type: 'CARDS/SET-CURRENT-QUESTION', currentQuestion} as const )
+export const setSelectedAC = (id: string, grade: number) => ({type: 'CARDS/SET-GRADE', id, grade} as const)
 export const setCardsTotalCountAC = (cardsTotalCount: number) => ({
     type: 'CARDS/SET-CARDS-TOTAL-COUNT',
     cardsTotalCount
@@ -145,6 +157,7 @@ export const getCardsTC = () => {
             .then((res) => {
                 dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
                 dispatch(setCardsAC(res.data.cards))
+
             })
             .catch((e: AxiosError) => {
                 errorCardsHandler(e, dispatch)

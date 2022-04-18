@@ -4,6 +4,7 @@ import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {useParams} from "react-router-dom";
 import {
     CardsReducerType,
+    setSelectedAC,
     createCardTC, getCardsTC,
     removeCardTC, setCardsPackIdAC,
     updateNameCardTC
@@ -12,11 +13,11 @@ import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {SearchCards} from "../c6-SearchPacks/SearchCards";
 import classes from './Cards.module.css'
 import {CardsPaginator} from "./cardsPaginater";
+import {Statrs} from "../c7-Stars/Stars";
 import {addPackofCardsTC} from "../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 
 
 export const Cards = () => {
-
     const cards = useSelector<RootReducerType, CardsType[]>(state => state.cards.cards)
     const error = useSelector<RootReducerType, string | null>(state => state.cards.error)
     const {pageCount, page, cardsTotalCount, max, min, sortCards} = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
@@ -37,6 +38,11 @@ export const Cards = () => {
             dispatch(setCardsPackIdAC(cardsPack_id))
             dispatch(createCardTC(cardsPack_id))
         }
+    }
+
+
+    const getCardsGrateHandler = (id:string,value: number ) => {
+        dispatch(setSelectedAC(id, value))
     }
 
 
@@ -66,7 +72,11 @@ export const Cards = () => {
                         <div key={card._id}>
                             <span>{card.question}</span>
                             <span>{card.answer}</span>
-                            <span>{card.grade}</span>
+                            <Statrs  selected={card.grade > 0} callBack={getCardsGrateHandler} id={card._id} value={1}/>
+                            <Statrs  selected={card.grade > 1} callBack={getCardsGrateHandler} id={card._id} value={2}/>
+                            <Statrs  selected={card.grade > 2} callBack={getCardsGrateHandler} id={card._id} value={3}/>
+                            <Statrs  selected={card.grade > 3} callBack={getCardsGrateHandler} id={card._id} value={4}/>
+                            <Statrs  selected={card.grade > 4} callBack={getCardsGrateHandler} id={card._id} value={5}/>
                             <span>{card.updated}</span>
                             <button onClick={removeCardHandler}>del</button>
                             <button onClick={updateNameCardHandler}>update</button>
