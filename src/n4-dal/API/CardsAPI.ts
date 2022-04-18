@@ -82,8 +82,8 @@ export const packCardsAPI = {
 //type for get cards payload
 export type getCardsPayloadType = {
     cardsPack_id: string
-    cardAnswer?: string
-    cardQuestion?: string
+    cardAnswer: string
+    cardQuestion: string
     min?: number
     max?:number
     sortCards?: string

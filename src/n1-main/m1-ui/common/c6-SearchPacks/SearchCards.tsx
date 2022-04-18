@@ -2,7 +2,6 @@ import React, {ChangeEvent, useState} from 'react';
 import {useDebounce, useUpdateEffect} from 'usehooks-ts'
 import {useDispatch} from "react-redux";
 import {
-    getCardsTC,
     searchCardsAnswerAC, searchCardsQuestionAC,
     setCurrentPageCardsAC
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
@@ -17,7 +16,7 @@ export const SearchCards = ({cardsPack_id, ...props}: SearchPacksPropsType) => {
     const dispatch = useDispatch()
     const [answer, setAnswer] = useState<string>('')
     const [question, setQuestion] = useState('')
-    const debouncedValue = useDebounce<string>(question, 1500)
+    const debouncedQuestion = useDebounce<string>(question, 1500)
     const debouncedAnswer = useDebounce<string>(answer, 1500)
 
     const onChangeQuestionHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,18 +24,19 @@ export const SearchCards = ({cardsPack_id, ...props}: SearchPacksPropsType) => {
     }
 
     const onChangeAnswerHandler = (e: ChangeEvent<HTMLInputElement>) => {
+
         setAnswer(e.currentTarget.value)
     }
 
     useUpdateEffect(() => {
         dispatch(searchCardsAnswerAC(answer))
         dispatch(setCurrentPageCardsAC(1))
-    }, [debouncedValue])
+    }, [debouncedAnswer])
 
     useUpdateEffect(() => {
         dispatch(searchCardsQuestionAC(question))
         dispatch(setCurrentPageCardsAC(1))
-    }, [debouncedAnswer])
+    }, [debouncedQuestion])
 
 
     return (

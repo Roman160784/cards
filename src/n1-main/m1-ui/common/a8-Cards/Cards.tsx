@@ -20,7 +20,7 @@ import {addPackofCardsTC} from "../../../../n3-redux/a8-CardsPacksReducer/CardsP
 export const Cards = () => {
     const cards = useSelector<RootReducerType, CardsType[]>(state => state.cards.cards)
     const error = useSelector<RootReducerType, string | null>(state => state.cards.error)
-    const {pageCount, page, cardsTotalCount, max, min, sortCards} = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
+    const {pageCount, page, cardsTotalCount, max, min, sortCards, currentAnswer, currentQuestion} = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
     const dispatch = useDispatch()
 
     const params = useParams<'id'>()
@@ -31,7 +31,7 @@ export const Cards = () => {
             dispatch(setCardsPackIdAC(cardsPack_id))
             dispatch(getCardsTC())
         }
-    }, [cardsPack_id, pageCount, page, max, min, sortCards])
+    }, [cardsPack_id, pageCount, page, max, min, sortCards, currentQuestion, currentAnswer])
 
     const createCardHandler = () => {
         if(cardsPack_id){
