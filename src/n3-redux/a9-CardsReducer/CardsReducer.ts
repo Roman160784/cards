@@ -2,6 +2,7 @@ import {Dispatch} from "redux";
 import {cardsApi, CardsType, getCardsPayloadType} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
 import {errorCardsHandler} from "../../Utils/Utils";
+import {RootReducerType} from "../a1-store/store";
 
 
 //types
@@ -18,6 +19,7 @@ export type CardsReducerType = {
     error: string | null
     currentAnswer : null | string
     currentQuastion : null | string
+
 }
 
 //state
@@ -57,13 +59,16 @@ export const CardsReducer = (state: CardsReducerType = initialState, action: Mai
         case 'CARDS/SET-CURRENT-QUESTION' : {
             return {...state, currentQuastion: action.currentQuestion}
         }
+        case 'CARDS/SET-GRADE' : {
+            return {...state, cards : state.cards.map(c => c._id === action.id ? {...c, grade: action.grade} : c) }
+        }
         default:
             return {...state}
     }
 }
 
 //actions type
-export type MainActionType = setCardsACType | setCardsErrorACType | setCardsTotalCountACType | setCardsPageACType | setCurrentAnswerACType | setCurrentQuastionACType
+export type MainActionType = setCardsACType | setCardsErrorACType | setCardsTotalCountACType | setCardsPageACType | setCurrentAnswerACType | setCurrentQuastionACType | setSelectedACType
 
 export type setCardsACType = ReturnType<typeof setCardsAC>
 export type setCardsErrorACType = ReturnType<typeof setCardsErrorAC>
@@ -71,6 +76,7 @@ export type setCardsTotalCountACType = ReturnType<typeof setCardsTotalCountAC>
 export type setCardsPageACType = ReturnType<typeof setCardsPageAC>
 export type setCurrentAnswerACType = ReturnType<typeof setCurrentAnswerAC>
 export type setCurrentQuastionACType = ReturnType<typeof setCurrentQuastionAC>
+export type setSelectedACType = ReturnType<typeof setSelectedAC>
 
 //actions
 export const setCardsAC = (cards: CardsType[]) => ({type: 'CARDS/SET-CARDS', cards} as const)
@@ -79,10 +85,13 @@ export const setCardsTotalCountAC = (cardsTotalCount: number) => ({type: 'CARDS/
 export const setCardsPageAC = (page: number) => ({type: 'CARDS/SET-CARDS-PAGE', page} as const)
 export const setCurrentAnswerAC = (currentAnswer: string) => ({type: 'CARDS/SET-CURRENT-ANSWER', currentAnswer} as const )
 export const setCurrentQuastionAC = (currentQuestion: string) => ({type: 'CARDS/SET-CURRENT-QUESTION', currentQuestion} as const )
+export const setSelectedAC = (id: string, grade: number) => ({type: 'CARDS/SET-GRADE', id, grade} as const)
 
 // thunks
+
 export const getCardsTC = (payload: getCardsPayloadType) => {
     return (dispatch: Dispatch) => {
+
 
         if(payload.page)
         dispatch(setCardsPageAC(payload.page))

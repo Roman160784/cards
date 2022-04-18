@@ -1,0 +1,68 @@
+
+.stars {
+    display: inline-block;
+}
+.star {
+    color: gray;
+    font-size: 25px;
+}
+
+.starSelect {
+    color: green;
+    font-size: 25px;
+}
+
+/*.simpleRating{*/
+/*    position: relative;*/
+/*    font-size: 25px;*/
+/*    display: inline-block;*/
+/*}*/
+
+/*.simpleRating::before{*/
+/*    content: '★★★★★';*/
+/*    display: block;*/
+/*}*/
+/*.simpleRatingItems{*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    display: flex;*/
+/*    flex-direction: row-reverse;*/
+/*    overflow: hidden;*/
+/*}*/
+/*.ratingItem{*/
+/*    position: absolute;*/
+/*    width: 0%;*/
+/*    height: 0%;*/
+/*    opacity: 0;*/
+/*    visibility: hidden;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*}*/
+
+/*.ratingLabel{*/
+/*    flex: 0 0 20%;*/
+/*    height: 100%;*/
+/*    cursor: pointer;*/
+/*    color: ghostwhite;*/
+/*}*/
+
+/*.ratingLabel::before{*/
+/*    content: '★';*/
+/*    display: block;*/
+/*   transition: color 0.3s ease 0s;*/
+/*}*/
+
+/*.ratingItem:checked,*/
+/*.ratingItem:checked ~ .ratingLabel{*/
+/*    color: #ffd300;*/
+/*}*/
+
+/*.ratingLabel:hover,*/
+/*.ratingLabel:hover ~ .ratingLabel,*/
+/*.ratingLabel:checked ~ .ratingLabel:hover{*/
+/*    color: #ffef9f;*/
+/*}*/
+

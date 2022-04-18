@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import classes from './Paginator.module.css';
 import {useDispatch} from "react-redux";
 import {getCardsTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
-import {log} from "util";
+
 
 export type PaginatorPropsType = {
     cardsTotalCount: number

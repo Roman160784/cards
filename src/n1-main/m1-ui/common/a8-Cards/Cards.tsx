@@ -6,19 +6,23 @@ import {
     CardsReducerType,
     createCardTC,
     removeCardTC,
+    setSelectedAC,
     updateNameCardTC
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {SearchCards} from "../c6-SearchPacks/SearchCards";
-import classes from './Cards.module.css'
+import classes from './Cards.module.css';
 import {CardsPaginator} from "./cardsPaginater";
+import {Statrs} from "../c7-Stars/Stars";
 
 
 export const Cards = () => {
     const cards = useSelector<RootReducerType, CardsType[]>(state => state.cards.cards)
     const error = useSelector<RootReducerType, string | null>(state => state.cards.error)
-    const {pageCount, page, cardsTotalCount} = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
+    const { pageCount, page, cardsTotalCount} = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
     const dispatch = useDispatch()
+
+
 
     const params = useParams<'id'>()
     const cardsPack_id = params.id
@@ -27,6 +31,11 @@ export const Cards = () => {
         if (cardsPack_id)
             dispatch(createCardTC(cardsPack_id))
     }
+
+    const getCardsGrateHandler = (id:string,value: number ) => {
+        dispatch(setSelectedAC(id, value))
+    }
+
 
     return (
         <div className={classes.boxCard}>
@@ -52,7 +61,11 @@ export const Cards = () => {
                         <div key={card._id}>
                             <span>{card.question}</span>
                             <span>{card.answer}</span>
-                            <span>{card.grade}</span>
+                            <Statrs  selected={card.grade > 0} callBack={getCardsGrateHandler} id={card._id} value={1}/>
+                            <Statrs  selected={card.grade > 1} callBack={getCardsGrateHandler} id={card._id} value={2}/>
+                            <Statrs  selected={card.grade > 2} callBack={getCardsGrateHandler} id={card._id} value={3}/>
+                            <Statrs  selected={card.grade > 3} callBack={getCardsGrateHandler} id={card._id} value={4}/>
+                            <Statrs  selected={card.grade > 4} callBack={getCardsGrateHandler} id={card._id} value={5}/>
                             <span>{card.updated}</span>
                             <button onClick={removeCardHandler}>del</button>
                             <button onClick={updateNameCardHandler}>update</button>
