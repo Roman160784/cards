@@ -154,7 +154,6 @@ export const CardsPacks = () => {
                                     cardsCount={pack.cardsCount}
                                     updated={pack.updated}
                                     path={pack.path}
-                                    title={'Edit the name of pack'}
                                     removePackOfCards={removePackOfCards}
                                 />
                             </div>
