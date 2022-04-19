@@ -1,65 +1,69 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {
     addPackofCardsTC,
     CardsPacksReducerType,
     fetchPackCardsTC,
-    removePackOfCardsTC, setMinMaxCarsInPacksAC, sortAllMyPacksAC, sortPacksAC,
-    updateNamePackOfCardsTC
+    removePackOfCardsTC, setCurrentPageAC, setMinMaxCarsInPacksAC, sortAllMyPacksAC, sortPacksAC,
 } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
 import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
-import {Modal} from "./Modal/Modal";
 import classes from './../a7-CardPacks/CardsPacks.module.css'
 import {Paginator} from "./Paginator/Paginator";
 import {Box, Slider} from "@mui/material";
 import {useDebounce, useUpdateEffect} from "usehooks-ts";
 import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
+import {Modal} from "../../../../Utils/Modal/Modal";
 
 
 
 
 export const CardsPacks = () => {
+
+    const isLogin = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
     const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
     const {
         pageCount, page, cardPacksTotalCount, cardsPacks, currentPackName, myCards, maxCardsCount, minCardsCount, sortPacks,
     } = useSelector<RootReducerType, CardsPacksReducerType>(state => state.cardsPacks)
-
     const user_id = useSelector<RootReducerType, string>(state => state.profile.user._id)
 
 
     const dispatch = useDispatch()
 
-    const [isOpened, setOpened] = useState<boolean>(false)
+    // const [isOpened, setOpened] = useState<boolean>(false)
     const [value, setValue] = useState([0, 30]);
     const [cardsView, setCardsView] = useState<'my' | 'all'>('all')
     const debouncedValue = useDebounce<number[]>(value, 1000)
+
+    // const [show, setShow] = useState(false);
+    // const [answer, setAnswer] = useState('test answer');
+    //
+    const [modalActive, setModalActive] = useState<boolean>(false);
+    const [name, setName] = useState<string>('')
 
     useEffect(() => {
         dispatch(fetchPackCardsTC())
     }, [pageCount, page, currentPackName, myCards, maxCardsCount, minCardsCount, sortPacks])
 
 
-
-    const openModalHandler = useCallback(() => {
-        setOpened(true)
-    }, [])
-
-    const closeModalHandler = useCallback(() => {
-        setOpened(false)
-    }, [])
-
-    const addPack = (name: string) => {
+    
+    const addPack = useCallback((name: string) => {
         dispatch(addPackofCardsTC({name}))
+        setName('')
+        setModalActive(false)
+    }, [dispatch])
+    const onChangeModalHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setName(e.currentTarget.value)
     }
+    const onKeyPressModalHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if(e.key === 'Enter') addPack(name)
+    }
+
 
     const removePackOfCards = useCallback((packId: string) => {
         dispatch(removePackOfCardsTC(packId));
     }, [dispatch])
 
-    const updateNamePackOfCards = useCallback((packId: string, name: string) => {
-        dispatch(updateNamePackOfCardsTC({_id: packId, name}));
-    }, [dispatch])
 
     // for sort
     const allPacksHandler = () => {
@@ -69,6 +73,7 @@ export const CardsPacks = () => {
     const MyPacksHandler = () => {
         setCardsView('my')
         dispatch(sortAllMyPacksAC('my'))
+        dispatch(setCurrentPageAC(1))
     }
 
     const sortPacksMinCardstHandler = () => {
@@ -84,7 +89,7 @@ export const CardsPacks = () => {
     }, [debouncedValue])
 
 
-    const handleChange = (event: any, newValue: any) => {
+    const handleChange = (event: any,  newValue: any) => {
         setValue(newValue);
     };
 
@@ -93,13 +98,27 @@ export const CardsPacks = () => {
             <div className={classes.boxSearchButton}>
                 <SearchPacks/>
                 <button
-                    onClick={openModalHandler}
+                    onClick={() => setModalActive(true)}
                     className={cardsView === 'all' ? classes.btnDisabled : classes.btnHandler}
                     disabled={cardsView === 'all'}
                 >
                     Add new pack
                 </button>
             </div>
+            <Modal active={modalActive} setActive={setModalActive}>
+                <div className={classes.modalTitle}>Add new pack</div>
+                <div className={classes.modalBox}>
+                    <input
+                        value={name}
+                        onKeyPress={onKeyPressModalHandler}
+                        onChange={onChangeModalHandler}
+                        className={classes.modalInput}
+                        placeholder={'Enter your new pack name...'}
+                        autoFocus
+                    />
+                    <button className={classes.modalButton} onClick={() => addPack(name)}>save</button>
+                </div>
+            </Modal>
             <div className={classes.boxButtonAndSlider}>
                 <div>
                     <button className={classes.btnHandler} onClick={allPacksHandler}>All</button>
@@ -126,12 +145,6 @@ export const CardsPacks = () => {
                     <span>Updated</span>
                     <span>Actions</span>
                 </div>
-                <Modal
-                    addItem={(title: string) => addPack(title)}
-                    isOpened={isOpened}
-                    title={'Add new pack of cards'}
-                    onModalClose={closeModalHandler}
-                />
                 {
                     cardsPacks.map(pack => {
                         return (
@@ -144,9 +157,7 @@ export const CardsPacks = () => {
                                     cardsCount={pack.cardsCount}
                                     updated={new Date(pack.updated).toLocaleDateString()}
                                     path={pack.path}
-                                    title={'Edit the name of pack'}
                                     removePackOfCards={removePackOfCards}
-                                    updateNamePackOfCards={updateNamePackOfCards}
                                 />
                             </div>
                         )

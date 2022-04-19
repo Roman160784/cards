@@ -1,50 +1,59 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Modal} from "../Modal/Modal";
+import React, {ChangeEvent, KeyboardEvent, useCallback, useEffect, useState} from 'react';
 import classes from './PackOfCards.module.css'
 import {useDispatch} from "react-redux";
-import {getCardsTC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {useNavigate} from "react-router-dom";
+import {updateNamePackOfCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
+import {Modal} from "../../../../../Utils/Modal/Modal";
+import {callbackify} from "util";
 
 
 type PropsType = {
     packId: string
     userId: string
-    title: string
     name: string
     cardPackUserId: string
     cardsCount: number
     updated: string
     path: string
     removePackOfCards: (packId: string) => void
-    updateNamePackOfCards: (packId: string, name: string) => void
 
 }
 
 export const PackOfCards = ({
-                                packId, name, cardsCount, updateNamePackOfCards,
+                                packId, name, cardsCount,
                                 removePackOfCards, path, updated,
-                                title, userId, cardPackUserId
+                                userId, cardPackUserId
                             }: PropsType) => {
-
-    const [isOpened, setOpened] = useState<boolean>(false)
+    const [modalActive, setModalActive] = useState<boolean>(false);
+    const [modalDeleteActive, setModalDeleteActive] = useState<boolean>(false);
+    const [title, setTitle] = useState<string>('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+
     const removePackHandler = useCallback(() => {
         removePackOfCards(packId)
+        setModalDeleteActive(false)
     }, [])
+    const updateNamePackOfCards = useCallback((title: string) => {
+        dispatch(updateNamePackOfCardsTC({_id: packId, name: title}));
+        setTitle('')
+        setModalActive(false)
+    }, [dispatch, name])
 
-    const updatePackNameHandler = useCallback((name: string) => {
-        updateNamePackOfCards(packId, name)
-    }, [])
-
-    const openModalHandler = useCallback(() => {
-        setOpened(true)
-    }, [])
-
-    const closeModalHandler = useCallback(() => {
-        setOpened(false)
-    }, [])
+    const onChangeModalHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
+    const onKeyPressModalHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') updateNamePackOfCards(title)
+    }
+    const onCloseModalHandler = () => {
+        setModalActive(false)
+        setTitle('')
+    }
+    const onCloseModalDeleteHandler = () => {
+        setModalDeleteActive(false)
+    }
 
 
     const learnClickHandler = () => {
@@ -60,7 +69,7 @@ export const PackOfCards = ({
             <div className={classes.contentBtn}>
                 {cardPackUserId === userId && <button
                     className={classes.btn}
-                    onClick={openModalHandler}
+                    onClick={() => setModalActive(true)}
                 >edit
                 </button>}
                 <button
@@ -70,19 +79,36 @@ export const PackOfCards = ({
                 </button>
                 {cardPackUserId === userId && <button
                     className={classes.btn}
-                    onClick={removePackHandler}
+                    onClick={() => setModalDeleteActive(true)}
                 >delete
                 </button>}
             </div>
-            <div>
-                <Modal
-                    addItem={(title: string) => updatePackNameHandler(title)}
-                    title={title}
-                    isOpened={isOpened}
-                    onModalClose={closeModalHandler}
-
+            <Modal active={modalActive} setActive={setModalActive}>
+                <div className={classes.modalTitle}>Edit your pack name</div>
+                <input
+                    value={title}
+                    onKeyPress={onKeyPressModalHandler}
+                    onChange={onChangeModalHandler}
+                    className={classes.modalInput}
+                    placeholder={'Edit here...'}
+                    autoFocus
                 />
-            </div>
+                <div className={classes.btnModalWrap}>
+                    <button className={classes.modalButtonSave} onClick={() => updateNamePackOfCards(title)}>save</button>
+                    <button className={classes.modalButtonCancel} onClick={onCloseModalHandler}>cancel</button>
+                </div>
+            </Modal>
+            <Modal active={modalDeleteActive} setActive={setModalDeleteActive}>
+                <div className={classes.modalTitle}>Delete Pack</div>
+                <div className={classes.modalDelete}>Do you really want to remove
+                    <span className={classes.modalSpanPackName}>{`Pack Name - ${name}?`}</span>
+                    <br/>
+                    All cards will be excluded from this course.</div>
+                <div className={classes.btnModalWrap}>
+                    <button className={classes.modalButtonCancel} onClick={removePackHandler}>delete</button>
+                    <button className={classes.modalButtonSave} onClick={onCloseModalDeleteHandler}>cancel</button>
+                </div>
+            </Modal>
         </div>
     );
 };
