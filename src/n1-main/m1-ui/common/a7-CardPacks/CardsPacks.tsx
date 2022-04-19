@@ -5,8 +5,7 @@ import {
     addPackofCardsTC,
     CardsPacksReducerType,
     fetchPackCardsTC,
-    getUsersPacksTC,
-    removePackOfCardsTC,
+    removePackOfCardsTC, setMinMaxCarsInPacksAC, sortAllMyPacksAC, sortPacksAC,
     updateNamePackOfCardsTC
 } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
 import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
