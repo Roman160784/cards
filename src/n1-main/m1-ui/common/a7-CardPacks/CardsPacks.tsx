@@ -5,7 +5,7 @@ import {
     addPackofCardsTC,
     CardsPacksReducerType,
     fetchPackCardsTC,
-    removePackOfCardsTC, setMinMaxCarsInPacksAC, sortAllMyPacksAC, sortPacksAC,
+    removePackOfCardsTC, setCurrentPageAC, setMinMaxCarsInPacksAC, sortAllMyPacksAC, sortPacksAC,
 } from '../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer';
 import {PackOfCards} from "./a7-1 PackOfCards/PackOfCards";
 import classes from './../a7-CardPacks/CardsPacks.module.css'
@@ -73,6 +73,7 @@ export const CardsPacks = () => {
     const MyPacksHandler = () => {
         setCardsView('my')
         dispatch(sortAllMyPacksAC('my'))
+        dispatch(setCurrentPageAC(1))
     }
 
     const sortPacksMinCardstHandler = () => {
