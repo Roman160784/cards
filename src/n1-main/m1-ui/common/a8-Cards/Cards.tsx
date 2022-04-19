@@ -169,8 +169,8 @@ export const Cards = () => {
                     }
 
                     const onKeyPressUpdateHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-                        if (e.key === 'Enter' && question.trim() !== '' && answer.trim() !== '') {
-                            updateCard(question, answer)
+                        if (e.key === 'Enter' && questionUpdate.trim() !== '' && answerUpdate.trim() !== '') {
+                            updateCard(questionUpdate, answerUpdate)
                         }
                     }
                     const onCloseModalUpdateHandler = () => {
@@ -179,8 +179,8 @@ export const Cards = () => {
                         setModalUpdateActive(false)
                     }
                     const onClickModalUpdateHandler = () => {
-                        if (question.trim() !== '' && answer.trim() !== '') {
-                            updateCard(question, answer)
+                        if (questionUpdate.trim() !== '' && answerUpdate.trim() !== '') {
+                            updateCard(questionUpdate, answerUpdate)
                         }
                     }
 
