@@ -199,7 +199,7 @@ export const Cards = () => {
                             <button onClick={() => setModalUpdateActive(true)}>update</button>
 
                             <Modal active={modalDeleteActive} setActive={setModalDeleteActive}>
-                                <div className={classes.modalTitle}>Delete Pack</div>
+                                <div className={classes.modalTitle}>Delete Card</div>
                                 <div className={classes.modalDelete}>Do you really want to remove
                                     <span className={classes.modalSpanPackName}>{`Card Question - ${card.question}?`}</span>
                                     <br/>

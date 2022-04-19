@@ -20,13 +20,11 @@ import {Modal} from "../../../../Utils/Modal/Modal";
 
 export const CardsPacks = () => {
 
-    const isLogin = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
     const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
     const {
         pageCount, page, cardPacksTotalCount, cardsPacks, currentPackName, myCards, maxCardsCount, minCardsCount, sortPacks,
     } = useSelector<RootReducerType, CardsPacksReducerType>(state => state.cardsPacks)
     const user_id = useSelector<RootReducerType, string>(state => state.profile.user._id)
-
 
     const dispatch = useDispatch()
 
