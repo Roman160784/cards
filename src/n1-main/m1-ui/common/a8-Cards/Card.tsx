@@ -100,7 +100,7 @@ export const Card = ({_id, question, answer, grade, updated}: PropsType) => {
             <Modal active={modalUpdateActive} setActive={setModalUpdateActive}>
                 <div className={classes.modalTitle}>Card Info</div>
                 <div className={classes.modalInputBox}>
-                    <div>
+                    <div className={classes.modalInputQuestion}>
                         <span className={classes.modalSpan}>Question</span>
                         <input
                             value={questionUpdate}
@@ -111,7 +111,7 @@ export const Card = ({_id, question, answer, grade, updated}: PropsType) => {
                             autoFocus
                         />
                     </div>
-                    <div>
+                    <div className={classes.modalInputAnswer}>
                         <span className={classes.modalSpan}>Answer</span>
                         <input
                             value={answerUpdate}

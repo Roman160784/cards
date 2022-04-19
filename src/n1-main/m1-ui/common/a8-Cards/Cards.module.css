@@ -58,18 +58,27 @@
     margin-top: 22px
 }
 .modalInput {
-    width: 350px;
+    width: 100%;
     margin-top: 5px;
     font-size: 18px;
     padding: 10px;
     border: none;
     border-radius: 10px;
     background: #eee;
-    margin-bottom: 50px
+    margin-bottom: 50px;
+    display: flex;
+
 }
 .modalInput:focus {
     outline-color: #2196f3;
 }
+.modalInputQuestion {
+    width: 80%;
+}
+.modalInputAnswer {
+    width: 80%;
+}
+
 .btnModalWrap {
     display: flex;
     justify-content: space-evenly;
@@ -114,11 +123,14 @@
     color: red;
 }
 .modalInputBox {
-    margin: 20px auto 30px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px
+
 }
 .modalSpan {
     display: flex;
-    margin-left: 40px;
     line-height: 20px;
     font-size: 15px;
     color: dimgray;

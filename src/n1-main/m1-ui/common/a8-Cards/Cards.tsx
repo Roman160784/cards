@@ -108,7 +108,7 @@ export const Cards = () => {
             <Modal active={modalActive} setActive={setModalActive}>
                 <div className={classes.modalTitle}>Card Info</div>
                 <div className={classes.modalInputBox}>
-                    <div>
+                    <div  className={classes.modalInputQuestion}>
                         <span className={classes.modalSpan}>Question</span>
                         <input
                             value={newQuestion}
@@ -119,7 +119,7 @@ export const Cards = () => {
                             autoFocus
                         />
                     </div>
-                    <div>
+                    <div  className={classes.modalInputAnswer}>
                         <span className={classes.modalSpan}>Answer</span>
                         <input
                             value={newAnswer}
