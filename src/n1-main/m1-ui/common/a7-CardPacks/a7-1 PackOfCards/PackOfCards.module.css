@@ -6,6 +6,7 @@
 
 .blockText {
     width: 200px;
+    cursor: pointer;
 }
 
 .contentBtn {

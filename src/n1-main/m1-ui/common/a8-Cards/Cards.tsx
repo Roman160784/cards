@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {useParams} from "react-router-dom";
@@ -15,6 +15,7 @@ import classes from './Cards.module.css'
 import {CardsPaginator} from "./cardsPaginater";
 import {Statrs} from "../c7-Stars/Stars";
 import {addPackofCardsTC} from "../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
+import {Modal1} from "../a7-CardPacks/Modal/Modal1";
 
 
 export const Cards = () => {
@@ -25,6 +26,8 @@ export const Cards = () => {
 
     const params = useParams<'id'>()
     const cardsPack_id = params.id
+    const [modalActive, setModalActive] = useState<boolean>(false);
+    const [name, setName] = useState<string>('')
 
     useEffect(() => {
         if(cardsPack_id) {
@@ -34,10 +37,26 @@ export const Cards = () => {
     }, [cardsPack_id, pageCount, page, max, min, sortCards, currentQuestion, currentAnswer])
 
     const createCardHandler = () => {
+
+    }
+
+    const addCard = useCallback((name: string) => {
         if(cardsPack_id){
             dispatch(setCardsPackIdAC(cardsPack_id))
             dispatch(createCardTC(cardsPack_id))
         }
+        setName('')
+        setModalActive(false)
+    }, [dispatch])
+    const onChangeModalHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setName(e.currentTarget.value)
+    }
+    const onKeyPressModalHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if(e.key === 'Enter') addCard(name)
+    }
+    const onCloseModalHandler = () => {
+        setModalActive(false)
+        setName('')
     }
 
 
@@ -55,9 +74,40 @@ export const Cards = () => {
                 <span>Grade</span>
                 <span>Updated</span>
                 <span>Url</span>
-                <button onClick={createCardHandler} className={classes.buttonAddCard}>Add new card</button>
+                <button onClick={() => setModalActive(true)} className={classes.buttonAddCard}>Add new card</button>
             </div>
+            <Modal1 active={modalActive} setActive={setModalActive}>
+                <div className={classes.modalTitle}>Card Info</div>
+                <div className={classes.modalInputBox}>
+                    <div>
+                        <span className={classes.modalSpan}>Question</span>
+                        <input
+                            value={name}
+                            onKeyPress={onKeyPressModalHandler}
+                            onChange={onChangeModalHandler}
+                            className={classes.modalInput}
+                            placeholder={'Enter your new pack name...'}
+                            autoFocus
+                        />
+                    </div>
+                    <div>
+                        <span className={classes.modalSpan}>Answer</span>
+                        <input
+                            value={name}
+                            onKeyPress={onKeyPressModalHandler}
+                            onChange={onChangeModalHandler}
+                            className={classes.modalInput}
+                            placeholder={'Enter your new pack name...'}
+                            autoFocus
+                        />
+                    </div>
+                </div>
+                <div className={classes.btnModalWrap}>
+                    <button className={classes.modalButtonSave} onClick={() => addCard(name)}>save</button>
+                    <button className={classes.modalButtonCancel} onClick={onCloseModalHandler}>cancel</button>
+                </div>
 
+            </Modal1>
             {
                 cards.map(card => {
                     const removeCardHandler = () => {
