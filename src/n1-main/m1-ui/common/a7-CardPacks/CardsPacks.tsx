@@ -20,28 +20,27 @@ import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 
 
 
-function SearchCards() {
-    return null;
-}
-
 export const CardsPacks = () => {
     const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
     const {
-        pageCount,
-        page,
-        cardPacksTotalCount,
-        cardsPacks,
+        pageCount, page, cardPacksTotalCount, cardsPacks, currentPackName, myCards, maxCardsCount, minCardsCount, sortPacks,
     } = useSelector<RootReducerType, CardsPacksReducerType>(state => state.cardsPacks)
+
+    const user_id = useSelector<RootReducerType, string>(state => state.profile.user._id)
+
 
     const dispatch = useDispatch()
 
     const [isOpened, setOpened] = useState<boolean>(false)
     const [value, setValue] = useState([0, 30]);
+    const [cardsView, setCardsView] = useState<'my' | 'all'>('all')
     const debouncedValue = useDebounce<number[]>(value, 1000)
 
     useEffect(() => {
         dispatch(fetchPackCardsTC())
-    }, [])
+    }, [pageCount, page, currentPackName, myCards, maxCardsCount, minCardsCount, sortPacks])
+
+
 
     const openModalHandler = useCallback(() => {
         setOpened(true)
@@ -65,22 +64,24 @@ export const CardsPacks = () => {
 
     // for sort
     const allPacksHandler = () => {
-        dispatch((fetchPackCardsTC({pageCount})))
+        setCardsView('all')
+        dispatch(sortAllMyPacksAC('all'))
     }
     const MyPacksHandler = () => {
-        dispatch((getUsersPacksTC(pageCount)))
+        setCardsView('my')
+        dispatch(sortAllMyPacksAC('my'))
     }
 
     const sortPacksMinCardstHandler = () => {
-        dispatch(fetchPackCardsTC({sortPacks: '1cardsCount', pageCount}))
+        dispatch(sortPacksAC('1cardsCount'))
     }
     const sortPacksMaxCardstHandler = () => {
-        dispatch(fetchPackCardsTC({sortPacks: '0cardsCount', pageCount}))
+        dispatch(sortPacksAC('0cardsCount'))
     }
 
     //for Slider
     useUpdateEffect(() => {
-        dispatch(fetchPackCardsTC({min: value[0], max: value[1], pageCount}))
+        dispatch((setMinMaxCarsInPacksAC(value[0], value[1])))
     }, [debouncedValue])
 
 
@@ -92,7 +93,13 @@ export const CardsPacks = () => {
         <div className={classes.blockCards}>
             <div className={classes.boxSearchButton}>
                 <SearchPacks/>
-                <button onClick={openModalHandler} className={classes.btnHandler}>Add new pack</button>
+                <button
+                    onClick={openModalHandler}
+                    className={cardsView === 'all' ? classes.btnDisabled : classes.btnHandler}
+                    disabled={cardsView === 'all'}
+                >
+                    Add new pack
+                </button>
             </div>
             <div className={classes.boxButtonAndSlider}>
                 <div>
@@ -131,7 +138,9 @@ export const CardsPacks = () => {
                         return (
                             <div key={pack._id}>
                                 <PackOfCards
+                                    userId={user_id}
                                     packId={pack._id}
+                                    cardPackUserId={pack.user_id}
                                     name={pack.name}
                                     cardsCount={pack.cardsCount}
                                     updated={pack.updated}
@@ -146,7 +155,14 @@ export const CardsPacks = () => {
                 }
 
             </div>
-            <Paginator cardPacksTotalCount={cardPacksTotalCount} page={page} value={value} pageCount={pageCount}/>
+            <Paginator
+                cardPacksTotalCount={cardPacksTotalCount}
+                page={page}
+                value={value}
+                pageCount={pageCount}
+                userId={user_id}
+                cardsView={cardsView}
+            />
             {error && <div className={classes.errors}>{error}</div>}
         </div>
     )

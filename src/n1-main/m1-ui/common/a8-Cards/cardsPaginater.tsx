@@ -1,31 +1,26 @@
 import React, {useState} from 'react';
 import classes from './Paginator.module.css';
 import {useDispatch} from "react-redux";
-import {setCurrentPageAC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
+import {setCurrentPageCardsAC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
+
 
 export type PaginatorPropsType = {
-    cardPacksTotalCount: number
+    cardsTotalCount: number
     pageCount: number
     page: number
     portionSize?: number
-    value: number[]
-    userId: string
-    cardsView: 'my' | 'all'
 }
 
-export const Paginator: React.FC<PaginatorPropsType> = ({
-                                                            cardPacksTotalCount = 0,
-                                                            pageCount,
-                                                            page,
-                                                            portionSize = 10,
-                                                            value,
-                                                            userId,
-                                                            cardsView
-                                                        }) => {
+export const CardsPaginator: React.FC<PaginatorPropsType> = ({
+                                                                 cardsTotalCount = 0,
+                                                                 pageCount,
+                                                                 page,
+                                                                 portionSize = 10
+                                                             }) => {
 
     const dispatch = useDispatch()
 
-    let pagesCount = Math.ceil(cardPacksTotalCount / pageCount);
+    let pagesCount = Math.ceil(cardsTotalCount / pageCount);
     let pages = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
@@ -36,11 +31,12 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
     const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
     const rightPortionPageNumber = portionNumber * portionSize
 
-     let onPageChanged = (pageNumber: number) => {
-        dispatch(setCurrentPageAC(pageNumber))
+    const onPageChanged = (pageNumber: number) => {
+        dispatch(setCurrentPageCardsAC(pageNumber))
     }
 
     return (
+
         <div className={classes.paginatorCards}>
             {
                 portionNumber > 1 &&

@@ -1,29 +1,18 @@
 import {Dispatch} from "redux";
-import {AddCardPackType, getPackOfCardArgsType, packCardsAPI, UpdateNameCardPackType} from "../../n4-dal/API/CardsAPI";
+import {
+    AddCardPackType, CardsPacksType,
+    NewCardPackResponseType,
+    packCardsAPI,
+    UpdateNameCardPackType
+} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
-import { setInitializedAC} from "../a7-AppReducer/AppReducer";
+import {setInitializedAC} from "../a7-AppReducer/AppReducer";
 import {RootReducerType} from "../a1-store/store";
-
+import {errorPackCardsHandler} from "../../Utils/Utils";
 
 
 //types
-export type CardsPacksType = {
-    cardsCount: number
-    created: Date
-    grade: number
-    more_id: string
-    name: string
-    path: string
-    private: boolean
-    rating: number
-    shots: number
-    type: string
-    updated: Date
-    user_id: string
-    user_name: string
-    __v: number
-    _id: string
-}
+
 
 export type CardsPacksReducerType = {
     cardsPacks: CardsPacksType[]
@@ -35,6 +24,9 @@ export type CardsPacksReducerType = {
     token: string | null
     tokenDeathTime: number | null
     error: string | null
+    currentPackName: null | string
+    myCards: 'my' | 'all'
+    sortPacks: string
 }
 
 //state
@@ -48,6 +40,9 @@ const initialState: CardsPacksReducerType = {
     token: null,
     tokenDeathTime: null,
     error: null,
+    currentPackName: null,
+    myCards: 'all',
+    sortPacks: '',
 }
 
 //reducer
@@ -59,11 +54,23 @@ export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, a
         case 'PACKS/SET-PACK-CARDS-ERROR': {
             return {...state, error: action.error}
         }
-        case "PACKS/SET-CURRENT-PAGE": {
+        case 'PACKS/SET-CURRENT-PAGE': {
             return {...state, page: action.page}
         }
-        case "PACKS/SET-TOTAL-COUNT": {
+        case 'PACKS/SET-TOTAL-COUNT': {
             return {...state, cardPacksTotalCount: action.cardPacksTotalCount}
+        }
+        case 'PACKS/SEARCH-PACKS-NAME' : {
+            return {...state, currentPackName: action.currentPackName}
+        }
+        case 'PACKS/SORT-PACKS' : {
+            return {...state, sortPacks: action.sortPacks}
+        }
+        case 'PACKS/SET-MIN-MAX-CARDS-IN-PACKS' : {
+            return {...state, minCardsCount: action.min, maxCardsCount: action.max}
+        }
+        case 'PACKS/SORT-MY-ALL-PACKS' : {
+            return {...state, myCards: action.value}
         }
 
         default:
@@ -77,37 +84,56 @@ export type MainActionType =
     | setPackCardsErrorACType
     | SetCurrentPageActionType
     | SetTotalCountActionType
+    | searchPacksACType
+    | sortPacksACType
+    | setMinMaxCarsInPacksACType
+    | sortAllMyPacksACType
+
 
 
 export type setPackCardsACType = ReturnType<typeof setPackCardsAC>
 export type setPackCardsErrorACType = ReturnType<typeof setPackCardsErrorAC>
 export type SetCurrentPageActionType = ReturnType<typeof setCurrentPageAC>
 export type SetTotalCountActionType = ReturnType<typeof setTotalCountAC>
+export type searchPacksACType = ReturnType<typeof searchPacksAC>
+export type sortPacksACType = ReturnType<typeof sortPacksAC>
+export type setMinMaxCarsInPacksACType = ReturnType<typeof setMinMaxCarsInPacksAC>
+export type sortAllMyPacksACType = ReturnType<typeof sortAllMyPacksAC>
 
 
 //actions
 export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SET-PACK-CARDS', cardPacks} as const)
 export const setPackCardsErrorAC = (error: string | null) => ({type: 'PACKS/SET-PACK-CARDS-ERROR', error} as const)
-export const setCurrentPageAC = (page: number) => ({type: "PACKS/SET-CURRENT-PAGE", page} as const)
-export const setTotalCountAC = (cardPacksTotalCount: number) => ({type: "PACKS/SET-TOTAL-COUNT", cardPacksTotalCount} as const)
-
+export const setCurrentPageAC = (page: number) => ({type: 'PACKS/SET-CURRENT-PAGE', page} as const)
+export const setTotalCountAC = (cardPacksTotalCount: number) => ({type: 'PACKS/SET-TOTAL-COUNT', cardPacksTotalCount} as const)
+export const searchPacksAC = (currentPackName: string) => ({type: 'PACKS/SEARCH-PACKS-NAME', currentPackName,} as const)
+export const sortPacksAC = (sortPacks: string) => ({type: 'PACKS/SORT-PACKS', sortPacks} as const)
+export const setMinMaxCarsInPacksAC = (min: number, max: number) => ({type: 'PACKS/SET-MIN-MAX-CARDS-IN-PACKS', min, max} as const)
+export const sortAllMyPacksAC = (value : 'my' | 'all') => ({type: 'PACKS/SORT-MY-ALL-PACKS', value} as const)
 
 // thunks
 
-export const fetchPackCardsTC = (args?: getPackOfCardArgsType ) => {
-    return (dispatch: Dispatch) => {
-        if(args?.page)
-        dispatch(setCurrentPageAC(args.page))
-        return packCardsAPI.getPackOfCards(args || {})
+export const fetchPackCardsTC = () => {
+    return (dispatch: Dispatch, getState: () => RootReducerType) => {
+
+        const state = getState().cardsPacks
+        const payload = {
+            packName: state.currentPackName || '',
+            min: state.minCardsCount || 0,
+            max: state.maxCardsCount || 100,
+            sortPacks: state.sortPacks,
+            page: state.page || 1,
+            pageCount: state.pageCount || 10,
+            user_id: state.myCards === "my" ? getState().profile.user._id : ''
+        }
+
+        return packCardsAPI.getPackOfCards(payload)
             .then((res) => {
                 dispatch(setPackCardsAC(res.data.cardPacks))
                 dispatch(setTotalCountAC(res.data.cardPacksTotalCount))
             })
             .catch((e: AxiosError) => {
-                dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-                setTimeout(() => {
-                    dispatch(setPackCardsErrorAC(null))
-                }, 3000)
+                errorPackCardsHandler(e, dispatch)
             })
             .finally(() => {
                 dispatch(setInitializedAC(true))
@@ -120,10 +146,7 @@ export const addPackofCardsTC = (cardsPack: AddCardPackType) => (dispatch: any) 
             dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
-            dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-            setTimeout(() => {
-                dispatch(setPackCardsErrorAC(null))
-            }, 3000)
+            errorPackCardsHandler(e, dispatch)
         })
 }
 export const removePackOfCardsTC = (id: string) => (dispatch: any) => {
@@ -132,10 +155,7 @@ export const removePackOfCardsTC = (id: string) => (dispatch: any) => {
             dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
-            dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-            setTimeout(() => {
-                dispatch(setPackCardsErrorAC(null))
-            }, 3000)
+            errorPackCardsHandler(e, dispatch)
         })
 }
 
@@ -145,43 +165,20 @@ export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (d
             dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
-            dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-            setTimeout(() => {
-                dispatch(setPackCardsErrorAC(null))
-            }, 3000)
+            errorPackCardsHandler(e, dispatch)
         })
 }
 
-export const searchPacksCardsTC = (value?: string) => {
-    return (dispatch: Dispatch) => {
-        return packCardsAPI.searchPacks(value)
-            .then((res) => {
-                dispatch(setPackCardsAC(res.data.cardPacks))
-            })
-            .catch((e: AxiosError) => {
-                dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-                setTimeout(() => {
-                    dispatch(setPackCardsErrorAC(null))
-                }, 3000)
-            })
-    }
-}
+// export const getUsersPacksTC = (pageCount?: number) => {
+//     return (dispatch: Dispatch, getState: () => RootReducerType) => {
+//
+//         return packCardsAPI.getUsersPacks( user_id, pageCount,)
+//             .then((res) => {
+//                 dispatch(setPackCardsAC(res.data.cardPacks))
+//             })
+//             .catch((e: AxiosError) => {
+//                 errorPackCardsHandler(e, dispatch)
+//             })
+//     }
+// }
 
-export const getUsersPacksTC = (pageCount?: number) => {
-    return (dispatch: Dispatch, getState: () => RootReducerType) => {
-        const allState = getState()
-        const profile = allState.profile
-        const user = profile.user
-        const user_id = user._id
-        return packCardsAPI.getUsersPacks( user_id, pageCount,)
-            .then((res) => {
-                dispatch(setPackCardsAC(res.data.cardPacks))
-            })
-            .catch((e: AxiosError) => {
-                dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-                setTimeout(() => {
-                    dispatch(setPackCardsErrorAC(null))
-                }, 3000)
-            })
-    }
-}

@@ -22,7 +22,6 @@ export const NewRasswordReducer = (state: NewRasswordReducerRducerType = initial
         }
     }
 
-
     return state
 }
 
@@ -54,5 +53,4 @@ export const setNewPasswordTC = (data: SetPasswordType) => {
                 }, 3000)
             } )
     }
-
 }

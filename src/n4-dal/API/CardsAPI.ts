@@ -1,7 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {userType} from "../../n3-redux/a3-RegistrationReducer/RegistrationReducer";
 import {LoginType} from "../../n3-redux/a2-loginReducer/loginReducer";
-import {CardsPacksType} from "../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 
 
 // baseURL for herocu https://neko-back.herokuapp.com/2.0/
@@ -52,34 +51,50 @@ export const passwordAPI = {
     }
 }
 
+//type for getPackOfCards
 export type getPackOfCardArgsType = {
-    min?: number, max?: number, sortPacks?: string, page?: number, pageCount?: number
+    packName?: string
+    min?: number
+    max?: number
+    sortPacks?: string
+    page?: number
+    pageCount?: number
+    user_id?: string
 }
+//api
 export const packCardsAPI = {
     getPackOfCards(args : getPackOfCardArgsType) {
-        console.log({...args})
-        return instance.get<CardPacksResponseType>(`/cards/pack`, {params: {...args}})
+        return instance.get<CardPacksResponseType>(`/cards/pack`, {params: args})
     },
     addPackOfCards(cardsPack: AddCardPackType) {
-        return instance.post<AddCardPackType, AxiosResponse<AddPackOfCardsResponseType>>('cards/pack', {cardsPack: {name: cardsPack.name}})
+        return instance.post<AddCardPackType, AxiosResponse<NewCardPackResponseType>>('cards/pack', {cardsPack: {name: cardsPack.name}})
     },
     removePackOfCards(id: string) {
         return instance.delete(`/cards/pack?id=${id}`)
     },
     updateNamePackOfCards(cardsPack: UpdateNameCardPackType) {
         return instance.put('/cards/pack', {cardsPack})
-    },
-    searchPacks(packName?: string) {
-        return instance.get<CardPacksResponseType>(`/cards/pack?packName=${packName}`)
-    },
-    getUsersPacks( user_id: string, pageCount?: number,) {
-        return instance.get<CardPacksResponseType>('/cards/pack', {params:{pageCount, user_id}})
     }
 }
 
+
+
+//type for get cards payload
+export type getCardsPayloadType = {
+    cardsPack_id: string
+    cardAnswer: string
+    cardQuestion: string
+    min?: number
+    max?:number
+    sortCards?: string
+    page?:number
+    pageCount?: number
+}
+//api
 export const cardsApi = {
-    getCards(cardsPack_id: string,) {
-        return instance.get<CardsResponseType>(`/cards/card`, {params:{cardsPack_id,}} )
+    getCards(payload: getCardsPayloadType) {
+        return instance.get<CardsResponseType>
+        (`/cards/card`, {params: payload})
     },
     removeCard(id: string) {
         return instance.delete(`/cards/card?id=${id}`)
@@ -90,11 +105,41 @@ export const cardsApi = {
     updateNameCard(_id: string) {
         return instance.put('/cards/card', {card:{_id}})
     },
-    searchCards(cardsPack_id: string, cardAnswer: string) {
-        return instance.get<CardsResponseType>(`/cards/card`, {params: {cardAnswer, cardsPack_id}})
+    updateCardsGrade(grade: number, card_id: string) {
+        return instance.put<CardsGradeResponseType>('cards/grade', {params:{grade, card_id}})
     }
 }
+
+
 // types
+
+export type CardsGradeResponseType = {
+    _id: string
+    cardsPack_id: string
+    card_id: string
+    user_id: string
+    grade: number
+    shots: number
+}
+
+export type NewCardPackResponseType = {
+    cardsCount: number
+    created: Date
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: Date
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
+}
+
 
 export type CardsResponseType = {
     cards: CardsType[]
@@ -130,6 +175,23 @@ export type CardsType = {
     updated: string
     _id: string
 }
+export type CardsPacksType = {
+    cardsCount: number
+    created: Date
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: Date
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
+}
 
 export type CardPacksResponseType = {
     cardPacks: CardsPacksType[]
@@ -148,24 +210,6 @@ export type AddCardPackType = {
 export type UpdateNameCardPackType = {
     _id: string
     name: string
-}
-
-export type AddPackOfCardsResponseType = {
-    cardsCount: number
-    created: Date
-    grade: number
-    more_id: string
-    name: string
-    path: string
-    private: boolean
-    rating: number
-    shots: number
-    type: string
-    updated: Date
-    user_id: string
-    user_name: string
-    __v: number
-    _id: string
 }
 
 export type PasswordType = {

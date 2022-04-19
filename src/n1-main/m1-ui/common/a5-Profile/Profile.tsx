@@ -21,9 +21,7 @@ export const Profile = () => {
     const logoutHandler = useCallback(() => {
         dispatch(logoutTC())
     }, [])
-    // const handlerData = useCallback(() => {
-    //     dispatch(fetchPackCardsTC())
-    // }, [])
+
 
     if (!isLoggedIn) {
         return <Navigate to={pathEnum.login}/>

@@ -3,6 +3,7 @@ import {AxiosError} from "axios"
 import {authLoginAPI, authLogoutAPI} from "../../n4-dal/API/CardsAPI";
 import {setUserAC} from "../a6-ProfileReducer/ProfileReducer";
 import {setAppErrorAC} from "../a7-AppReducer/AppReducer";
+import {loginErrorHandler} from "../../Utils/Utils";
 
 
 export type LoginType = {
@@ -54,10 +55,7 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch,) => {
             }
         })
         .catch((e: AxiosError) => {
-            dispatch(setAppErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-            setTimeout(() => {
-                dispatch(setAppErrorAC(null))
-            }, 3000)
+            loginErrorHandler(e, dispatch)
         })
 }
 
@@ -69,9 +67,6 @@ export const logoutTC = () => (dispatch: Dispatch) => {
             }
         })
         .catch((e: AxiosError)=> {
-            dispatch(setAppErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-            setTimeout(() => {
-                dispatch(setAppErrorAC(null))
-            }, 3000)
+            loginErrorHandler(e, dispatch)
         })
 }
