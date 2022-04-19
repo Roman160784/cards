@@ -12,7 +12,7 @@ export const SearchCards = ({cardsPack_id, ...props}: SearchPacksPropsType) => {
 
     const dispatch = useDispatch()
     const [value, setValue] = useState('')
-    const debouncedValue = useDebounce<string>(value, 500)
+    const debouncedValue = useDebounce<string>(value, 1500)
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)

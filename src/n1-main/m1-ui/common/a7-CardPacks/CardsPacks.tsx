@@ -15,6 +15,7 @@ import classes from './../a7-CardPacks/CardsPacks.module.css'
 import {Paginator} from "./Paginator/Paginator";
 import {Box, Slider} from "@mui/material";
 import {useDebounce, useUpdateEffect} from "usehooks-ts";
+import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 
 
 
@@ -90,7 +91,7 @@ export const CardsPacks = () => {
     return (
         <div className={classes.blockCards}>
             <div className={classes.boxSearchButton}>
-                <SearchCards/>
+                <SearchPacks/>
                 <button onClick={openModalHandler} className={classes.btnHandler}>Add new pack</button>
             </div>
             <div className={classes.boxButtonAndSlider}>

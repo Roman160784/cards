@@ -49,11 +49,10 @@ export const Modal = ({addItem, isOpened, title, onModalClose}: PropsType) => {
     }
 
     return (
-        <div className={`${classes.wrapperModal} ${isOpened ? classes.open : classes.close}`}>
-            <div className={classes.modalBody}>
+        <div className={`${classes.wrapperModal} ${isOpened ? classes.open : classes.close}`} onClick={onModalClose}>
+            <div className={classes.modalBody} onClick={e => e.stopPropagation()}>
                 <div className={classes.modalClose} onClick={onModalClose}>x</div>
                 <h2>{title}</h2>
-                <br/>
                 <input
                     value={value}
                     onChange={onChangeHandler}
@@ -63,6 +62,7 @@ export const Modal = ({addItem, isOpened, title, onModalClose}: PropsType) => {
                     className={classes.inputName}
                 />
                 {error && <div className={classes.error}>{error}</div>}
+                <button className={classes.btnSave} onClick={addPackHandler}>Save</button>
             </div>
         </div>
     )
