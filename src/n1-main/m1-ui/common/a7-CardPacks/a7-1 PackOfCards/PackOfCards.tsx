@@ -3,7 +3,7 @@ import classes from './PackOfCards.module.css'
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {updateNamePackOfCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
-import {Modal1} from "../Modal/Modal1";
+import {Modal} from "../../../../../Utils/Modal/Modal";
 import {callbackify} from "util";
 
 
@@ -33,6 +33,7 @@ export const PackOfCards = ({
 
     const removePackHandler = useCallback(() => {
         removePackOfCards(packId)
+        setModalDeleteActive(false)
     }, [])
     const updateNamePackOfCards = useCallback((title: string) => {
         dispatch(updateNamePackOfCardsTC({_id: packId, name: title}));
@@ -82,7 +83,7 @@ export const PackOfCards = ({
                 >delete
                 </button>}
             </div>
-            <Modal1 active={modalActive} setActive={setModalActive}>
+            <Modal active={modalActive} setActive={setModalActive}>
                 <div className={classes.modalTitle}>Edit your pack name</div>
                 <input
                     value={title}
@@ -96,8 +97,8 @@ export const PackOfCards = ({
                     <button className={classes.modalButtonSave} onClick={() => updateNamePackOfCards(title)}>save</button>
                     <button className={classes.modalButtonCancel} onClick={onCloseModalHandler}>cancel</button>
                 </div>
-            </Modal1>
-            <Modal1 active={modalDeleteActive} setActive={setModalDeleteActive}>
+            </Modal>
+            <Modal active={modalDeleteActive} setActive={setModalDeleteActive}>
                 <div className={classes.modalTitle}>Delete Pack</div>
                 <div className={classes.modalDelete}>Do you really want to remove
                     <span className={classes.modalSpanPackName}>{`Pack Name - ${name}?`}</span>
@@ -107,7 +108,7 @@ export const PackOfCards = ({
                     <button className={classes.modalButtonCancel} onClick={removePackHandler}>delete</button>
                     <button className={classes.modalButtonSave} onClick={onCloseModalDeleteHandler}>cancel</button>
                 </div>
-            </Modal1>
+            </Modal>
         </div>
     );
 };

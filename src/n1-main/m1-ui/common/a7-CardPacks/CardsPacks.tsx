@@ -13,7 +13,7 @@ import {Paginator} from "./Paginator/Paginator";
 import {Box, Slider} from "@mui/material";
 import {useDebounce, useUpdateEffect} from "usehooks-ts";
 import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
-import {Modal1} from "./Modal/Modal1";
+import {Modal} from "../../../../Utils/Modal/Modal";
 
 
 
@@ -104,18 +104,20 @@ export const CardsPacks = () => {
                     Add new pack
                 </button>
             </div>
-            <Modal1 active={modalActive} setActive={setModalActive}>
+            <Modal active={modalActive} setActive={setModalActive}>
                 <div className={classes.modalTitle}>Add new pack</div>
-                <input
-                    value={name}
-                    onKeyPress={onKeyPressModalHandler}
-                    onChange={onChangeModalHandler}
-                    className={classes.modalInput}
-                    placeholder={'Enter your new pack name...'}
-                    autoFocus
-                />
-                <button className={classes.modalButton} onClick={() => addPack(name)}>save</button>
-            </Modal1>
+                <div className={classes.modalBox}>
+                    <input
+                        value={name}
+                        onKeyPress={onKeyPressModalHandler}
+                        onChange={onChangeModalHandler}
+                        className={classes.modalInput}
+                        placeholder={'Enter your new pack name...'}
+                        autoFocus
+                    />
+                    <button className={classes.modalButton} onClick={() => addPack(name)}>save</button>
+                </div>
+            </Modal>
             <div className={classes.boxButtonAndSlider}>
                 <div>
                     <button className={classes.btnHandler} onClick={allPacksHandler}>All</button>

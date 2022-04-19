@@ -99,8 +99,8 @@ export const cardsApi = {
     removeCard(id: string) {
         return instance.delete(`/cards/card?id=${id}`)
     },
-    createCard(cardsPack_id: string) {
-        return instance.post<CardType>('/cards/card', {card:{cardsPack_id}})
+    createCard(card: CardType) {
+        return instance.post<CardType>('/cards/card', {card})
     },
     updateNameCard(_id: string) {
         return instance.put('/cards/card', {card:{_id}})

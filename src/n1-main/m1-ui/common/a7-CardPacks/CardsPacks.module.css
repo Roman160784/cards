@@ -97,7 +97,6 @@ i {
     border: none;
     border-radius: 10px;
     background: #eee;
-
 }
 .modalInput:focus {
     outline-color: #2196f3;
@@ -121,4 +120,8 @@ i {
     background-color: white;
     color: #4CAF50;
 }
-
+.modalBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

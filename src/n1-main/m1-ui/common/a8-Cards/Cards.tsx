@@ -7,60 +7,84 @@ import {
     setSelectedAC,
     createCardTC, getCardsTC,
     removeCardTC, setCardsPackIdAC,
-    updateNameCardTC
+    updateNameCardTC, setAnswerAC, setQuestionAC
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {SearchCards} from "../c6-SearchPacks/SearchCards";
 import classes from './Cards.module.css'
 import {CardsPaginator} from "./cardsPaginater";
 import {Statrs} from "../c7-Stars/Stars";
-import {addPackofCardsTC} from "../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
-import {Modal1} from "../a7-CardPacks/Modal/Modal1";
+import {Modal} from "../../../../Utils/Modal/Modal";
 
 
 export const Cards = () => {
     const cards = useSelector<RootReducerType, CardsType[]>(state => state.cards.cards)
     const error = useSelector<RootReducerType, string | null>(state => state.cards.error)
-    const {pageCount, page, cardsTotalCount, max, min, sortCards, currentAnswer, currentQuestion} = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
+    const {
+        pageCount,
+        page,
+        cardsTotalCount,
+        max,
+        min,
+        sortCards,
+        currentAnswer,
+        currentQuestion
+    } = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
     const dispatch = useDispatch()
 
     const params = useParams<'id'>()
     const cardsPack_id = params.id
+
     const [modalActive, setModalActive] = useState<boolean>(false);
-    const [name, setName] = useState<string>('')
+    const [modalDeleteActive, setModalDeleteActive] = useState<boolean>(false);
+
+    const [question, setQuestion] = useState<string>('')
+    const [answer, setAnswer] = useState<string>('')
 
     useEffect(() => {
-        if(cardsPack_id) {
+        if (cardsPack_id) {
             dispatch(setCardsPackIdAC(cardsPack_id))
             dispatch(getCardsTC())
         }
     }, [cardsPack_id, pageCount, page, max, min, sortCards, currentQuestion, currentAnswer])
 
-    const createCardHandler = () => {
 
-    }
-
-    const addCard = useCallback((name: string) => {
-        if(cardsPack_id){
+    const addCard = useCallback((question: string, answer: string) => {
+        if (cardsPack_id) {
+            dispatch(setQuestionAC(question))
+            dispatch(setAnswerAC(answer))
             dispatch(setCardsPackIdAC(cardsPack_id))
-            dispatch(createCardTC(cardsPack_id))
+            dispatch(createCardTC())
         }
-        setName('')
+        setQuestion('')
+        setAnswer('')
         setModalActive(false)
     }, [dispatch])
-    const onChangeModalHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setName(e.currentTarget.value)
+    const onChangeQuestionHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setQuestion(e.currentTarget.value)
     }
-    const onKeyPressModalHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if(e.key === 'Enter') addCard(name)
+    const onChangeAnswerHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setAnswer(e.currentTarget.value)
+    }
+
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter' && question.trim() !== '' && answer.trim() !== '') {
+            addCard(question, answer)
+        }
     }
     const onCloseModalHandler = () => {
+        setQuestion('')
+        setAnswer('')
         setModalActive(false)
-        setName('')
+    }
+    const onClickModalHandler = () => {
+        if (question.trim() !== '' && answer.trim() !== '') {
+            addCard(question, answer)
+        }
     }
 
 
-    const getCardsGrateHandler = (id:string,value: number ) => {
+    const getCardsGrateHandler = (id: string, value: number) => {
         dispatch(setSelectedAC(id, value))
     }
 
@@ -76,60 +100,77 @@ export const Cards = () => {
                 <span>Url</span>
                 <button onClick={() => setModalActive(true)} className={classes.buttonAddCard}>Add new card</button>
             </div>
-            <Modal1 active={modalActive} setActive={setModalActive}>
+            <Modal active={modalActive} setActive={setModalActive}>
                 <div className={classes.modalTitle}>Card Info</div>
                 <div className={classes.modalInputBox}>
                     <div>
                         <span className={classes.modalSpan}>Question</span>
                         <input
-                            value={name}
-                            onKeyPress={onKeyPressModalHandler}
-                            onChange={onChangeModalHandler}
+                            value={question}
+                            onKeyPress={onKeyPressHandler}
+                            onChange={onChangeQuestionHandler}
                             className={classes.modalInput}
-                            placeholder={'Enter your new pack name...'}
+                            placeholder={'Enter your question..'}
                             autoFocus
                         />
                     </div>
                     <div>
                         <span className={classes.modalSpan}>Answer</span>
                         <input
-                            value={name}
-                            onKeyPress={onKeyPressModalHandler}
-                            onChange={onChangeModalHandler}
+                            value={answer}
+                            onKeyPress={onKeyPressHandler}
+                            onChange={onChangeAnswerHandler}
                             className={classes.modalInput}
-                            placeholder={'Enter your new pack name...'}
+                            placeholder={'Enter your answer...'}
                             autoFocus
                         />
                     </div>
                 </div>
                 <div className={classes.btnModalWrap}>
-                    <button className={classes.modalButtonSave} onClick={() => addCard(name)}>save</button>
+                    <button className={classes.modalButtonSave} onClick={onClickModalHandler}>save</button>
                     <button className={classes.modalButtonCancel} onClick={onCloseModalHandler}>cancel</button>
                 </div>
 
-            </Modal1>
+            </Modal>
             {
                 cards.map(card => {
                     const removeCardHandler = () => {
                         dispatch(setCardsPackIdAC(card.cardsPack_id))
                         dispatch(removeCardTC(card._id))
+                        setModalDeleteActive(false)
                     }
                     const updateNameCardHandler = () => {
                         dispatch(setCardsPackIdAC(card.cardsPack_id))
                         dispatch(updateNameCardTC(card._id))
                     }
+                    const onCloseModalDeleteHandler = () => {
+                        setModalDeleteActive(false)
+                    }
                     return (
                         <div key={card._id}>
                             <span>{card.question}</span>
                             <span>{card.answer}</span>
-                            <Statrs  selected={card.grade > 0} callBack={getCardsGrateHandler} id={card._id} value={1}/>
-                            <Statrs  selected={card.grade > 1} callBack={getCardsGrateHandler} id={card._id} value={2}/>
-                            <Statrs  selected={card.grade > 2} callBack={getCardsGrateHandler} id={card._id} value={3}/>
-                            <Statrs  selected={card.grade > 3} callBack={getCardsGrateHandler} id={card._id} value={4}/>
-                            <Statrs  selected={card.grade > 4} callBack={getCardsGrateHandler} id={card._id} value={5}/>
+                            <Statrs selected={card.grade > 0} callBack={getCardsGrateHandler} id={card._id} value={1}/>
+                            <Statrs selected={card.grade > 1} callBack={getCardsGrateHandler} id={card._id} value={2}/>
+                            <Statrs selected={card.grade > 2} callBack={getCardsGrateHandler} id={card._id} value={3}/>
+                            <Statrs selected={card.grade > 3} callBack={getCardsGrateHandler} id={card._id} value={4}/>
+                            <Statrs selected={card.grade > 4} callBack={getCardsGrateHandler} id={card._id} value={5}/>
                             <span>{card.updated}</span>
-                            <button onClick={removeCardHandler}>del</button>
+                            <button onClick={() => setModalDeleteActive(true)}>del</button>
                             <button onClick={updateNameCardHandler}>update</button>
+
+
+                            <Modal active={modalDeleteActive} setActive={setModalDeleteActive}>
+                                <div className={classes.modalTitle}>Delete Pack</div>
+                                <div className={classes.modalDelete}>Do you really want to remove
+                                    <span className={classes.modalSpanPackName}>{`Card Question - ${card.question}?`}</span>
+                                    <br/>
+                                    All data will be excluded from this card.</div>
+                                <div className={classes.btnModalWrap}>
+                                    <button className={classes.modalButtonCancel} onClick={removeCardHandler}>delete</button>
+                                    <button className={classes.modalButtonSave} onClick={onCloseModalDeleteHandler}>cancel</button>
+                                </div>
+                            </Modal>
                         </div>
                     )
                 })
