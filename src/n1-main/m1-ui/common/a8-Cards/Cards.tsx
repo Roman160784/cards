@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {
     CardsReducerType,
     setSelectedAC,
@@ -15,6 +15,7 @@ import classes from './Cards.module.css'
 import {CardsPaginator} from "./cardsPaginater";
 import {Statrs} from "../c7-Stars/Stars";
 import {Modal} from "../../../../Utils/Modal/Modal";
+import BackArrow from './Images/BackArrow.svg'
 
 
 export const Cards = () => {
@@ -34,6 +35,7 @@ export const Cards = () => {
 
     const params = useParams<'id'>()
     const cardsPack_id = params.id
+    const navigate = useNavigate()
 
     const [modalActive, setModalActive] = useState<boolean>(false);
     const [modalDeleteActive, setModalDeleteActive] = useState<boolean>(false);
@@ -95,6 +97,9 @@ export const Cards = () => {
 
     return (
         <div className={classes.boxCard}>
+            <div className={classes.backArrow} onClick={() => {navigate('/packs')}}>
+                <img src={BackArrow} alt={'back'} />
+            </div>
             <SearchCards cardsPack_id={cardsPack_id ? cardsPack_id : ''}/>
             <div className={classes.blockCard}>
                 <span>  Question</span>
