@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Modal} from "../Modal/Modal";
 import classes from './PackOfCards.module.css'
 import {useDispatch} from "react-redux";
-import {getCardsTC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {useNavigate} from "react-router-dom";
+import ModalInput from "../Modal/ModalInput";
+import {updateNamePackOfCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 
 
 type PropsType = {
@@ -16,35 +16,30 @@ type PropsType = {
     updated: Date
     path: string
     removePackOfCards: (packId: string) => void
-    updateNamePackOfCards: (packId: string, name: string) => void
 
 }
 
 export const PackOfCards = ({
-                                packId, name, cardsCount, updateNamePackOfCards,
+                                packId, name, cardsCount,
                                 removePackOfCards, path, updated,
                                 title, userId, cardPackUserId
                             }: PropsType) => {
 
-    const [isOpened, setOpened] = useState<boolean>(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const [show, setShow] = useState(false);
+    const [answer, setAnswer] = useState('test answer');
+
+    const [editName, setEditName] = useState('');
 
     const removePackHandler = useCallback(() => {
         removePackOfCards(packId)
     }, [])
+    const updateNamePackOfCards = useCallback(() => {
+        dispatch(updateNamePackOfCardsTC({_id: packId, name: editName}));
+    }, [editName])
 
-    const updatePackNameHandler = useCallback((name: string) => {
-        updateNamePackOfCards(packId, name)
-    }, [])
-
-    const openModalHandler = useCallback(() => {
-        setOpened(true)
-    }, [])
-
-    const closeModalHandler = useCallback(() => {
-        setOpened(false)
-    }, [])
 
 
     const learnClickHandler = () => {
@@ -60,7 +55,7 @@ export const PackOfCards = ({
             <div className={classes.contentBtn}>
                 {cardPackUserId === userId && <button
                     className={classes.btn}
-                    onClick={openModalHandler}
+                    onClick={() => setShow(true)}
                 >edit
                 </button>}
                 <button
@@ -74,15 +69,22 @@ export const PackOfCards = ({
                 >delete
                 </button>}
             </div>
-            <div>
-                <Modal
-                    addItem={(title: string) => updatePackNameHandler(title)}
-                    title={title}
-                    isOpened={isOpened}
-                    onModalClose={closeModalHandler}
+            <ModalInput
+                show={show}
+                close={() => setShow(false)}
 
-                />
-            </div>
+                answer={answer}
+                setAnswer={setAnswer}
+
+                inputData={[[editName, setEditName]]}
+                children={'Edit your pack name'}
+
+                enableBackground={true}
+                backgroundOnClick={() => setShow(false)}
+
+                width={300}
+                height={200}
+            />
         </div>
     );
 };
