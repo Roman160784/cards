@@ -166,7 +166,7 @@ export type CardForCreateType = {
     updated?: string
 }
 export type CardForUpdateType = {
-    cardsPack_id: string
+    cardsPack_id?: string
     _id: string
     question: string
     answer: string

@@ -202,21 +202,8 @@ export const removeCardTC = (cardId: string) => {
     }
 }
 
-export const createCardTC = () => {
-    return (dispatch: Dispatch<any>, getState: () => RootReducerType) => {
-
-        const state = getState().cards
-
-        const card: CardForCreateType = {
-            cardsPack_id: state.cardsPack_id,
-            question: state.question,
-            answer: state.answer,
-            answerImg: state.answerImg,
-            questionImg: state.questionImg,
-            questionVideo: state.questionVideo,
-            answerVideo: state.answerVideo
-        }
-
+export const createCardTC = (card: CardForCreateType) => {
+    return (dispatch: Dispatch<any>) => {
         cardsApi.createCard(card)
             .then(() => {
                 dispatch(getCardsTC())
@@ -227,24 +214,11 @@ export const createCardTC = () => {
     }
 }
 
-export const updateNameCardTC = () => {
-    return (dispatch: any, getState: () => RootReducerType) => {
-
-        const state = getState().cards
-
-        const card: CardForUpdateType = {
-            cardsPack_id: state.cardsPack_id,
-            _id: state._id,
-            question: state.question,
-            answer: state.answer,
-            answerImg: state.answerImg,
-            questionImg: state.questionImg,
-            questionVideo: state.questionVideo,
-            answerVideo: state.answerVideo
-        }
-
+export const updateNameCardTC = (card: CardForUpdateType) => {
+    return (dispatch: any) => {
         cardsApi.updateNameCard(card)
             .then((res) => {
+                console.log(res.data)
                 dispatch(getCardsTC())
             })
             .catch((e: AxiosError) => {
