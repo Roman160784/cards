@@ -29,8 +29,6 @@ export type CardsReducerType = {
     cardsPack_id: string
     question: string
     answer: string
-    grade: number
-    shots: number
     answerImg: string
     questionImg: string
     questionVideo: string
@@ -56,8 +54,6 @@ const initialState: CardsReducerType = {
     cardsPack_id: '',
     question: '',
     answer: '',
-    grade: 0,
-    shots: 0,
     answerImg: '',
     questionImg: '',
     questionVideo: '',
@@ -215,8 +211,6 @@ export const createCardTC = () => {
             cardsPack_id: state.cardsPack_id,
             question: state.question,
             answer: state.answer,
-            grade: state.grade,
-            shots: state.shots,
             answerImg: state.answerImg,
             questionImg: state.questionImg,
             questionVideo: state.questionVideo,
@@ -243,8 +237,6 @@ export const updateNameCardTC = () => {
             _id: state._id,
             question: state.question,
             answer: state.answer,
-            grade: state.grade,
-            shots: state.shots,
             answerImg: state.answerImg,
             questionImg: state.questionImg,
             questionVideo: state.questionVideo,

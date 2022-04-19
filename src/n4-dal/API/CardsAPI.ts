@@ -158,8 +158,6 @@ export type CardForCreateType = {
     cardsPack_id: string
     question: string
     answer: string
-    grade: number
-    shots: number
     answerImg?: string
     questionImg?: string
     questionVideo?: string
@@ -172,8 +170,6 @@ export type CardForUpdateType = {
     _id: string
     question: string
     answer: string
-    grade: number
-    shots: number
     answerImg?: string
     questionImg?: string
     questionVideo?: string

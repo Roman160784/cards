@@ -6,8 +6,7 @@ import {
     CardsReducerType,
     setSelectedAC,
     createCardTC, getCardsTC,
-    removeCardTC, setCardsPackIdAC,
-    updateNameCardTC, uptdateCardsGradeTC
+    removeCardTC, setCardsPackIdAC, uptdateCardsGradeTC,
     updateNameCardTC, setAnswerAC, setQuestionAC, setCardIdAC
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
@@ -199,14 +198,6 @@ export const Cards = () => {
                             <Statrs  selected={card.grade > 4.5} callBack={getCardsGrateHandler} id={card._id} value={5}/>
                             <span>{card.grade.toFixed(2)}</span>
                             <span >{new Date(card.updated).toLocaleDateString()}</span>
-                            <button onClick={removeCardHandler}>del</button>
-                            <button onClick={updateNameCardHandler}>update</button>
-                            <Statrs selected={card.grade > 0} callBack={getCardsGrateHandler} id={card._id} value={1}/>
-                            <Statrs selected={card.grade > 1} callBack={getCardsGrateHandler} id={card._id} value={2}/>
-                            <Statrs selected={card.grade > 2} callBack={getCardsGrateHandler} id={card._id} value={3}/>
-                            <Statrs selected={card.grade > 3} callBack={getCardsGrateHandler} id={card._id} value={4}/>
-                            <Statrs selected={card.grade > 4} callBack={getCardsGrateHandler} id={card._id} value={5}/>
-                            <span>{card.updated}</span>
                             <button onClick={() => setModalDeleteActive(true)}>del</button>
                             <button onClick={() => setModalUpdateActive(true)}>update</button>
 
