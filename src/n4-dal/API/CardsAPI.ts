@@ -99,11 +99,11 @@ export const cardsApi = {
     removeCard(id: string) {
         return instance.delete(`/cards/card?id=${id}`)
     },
-    createCard(card: CardType) {
-        return instance.post<CardType>('/cards/card', {card})
+    createCard(card: CardForCreateType) {
+        return instance.post<CardForCreateType>('/cards/card', {card})
     },
-    updateNameCard(_id: string) {
-        return instance.put('/cards/card', {card:{_id}})
+    updateNameCard(card: CardForUpdateType) {
+        return instance.put('/cards/card', {card})
     },
     updateCardsGrade(grade: number, card_id: string) {
         return instance.put<CardsGradeResponseType>('cards/grade', {params:{grade, card_id}})
@@ -152,7 +152,7 @@ export type CardsResponseType = {
     token: string
     tokenDeathTime: number
 }
-export type CardType = {
+export type CardForCreateType = {
     cardsPack_id: string
     question: string
     answer: string
@@ -162,7 +162,24 @@ export type CardType = {
     questionImg?: string
     questionVideo?: string
     answerVideo?: string
+    created?: string
+    updated?: string
 }
+export type CardForUpdateType = {
+    cardsPack_id: string
+    _id: string
+    question: string
+    answer: string
+    grade: number
+    shots: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
+    created?: string
+    updated?: string
+}
+
 
 export type CardsType = {
     answer: string
