@@ -80,7 +80,7 @@ export const CardsPacks = () => {
 
     //for Slider
     useUpdateEffect(() => {
-        dispatch((setMinMaxCarsInPacksAC(value[0], value[1])))
+        dispatch((setMinMaxCarsInPacksAC(value[0], value[1], page)))
     }, [debouncedValue])
 
 
@@ -142,7 +142,7 @@ export const CardsPacks = () => {
                                     cardPackUserId={pack.user_id}
                                     name={pack.name}
                                     cardsCount={pack.cardsCount}
-                                    updated={pack.updated}
+                                    updated={new Date(pack.updated).toLocaleDateString()}
                                     path={pack.path}
                                     title={'Edit the name of pack'}
                                     removePackOfCards={removePackOfCards}

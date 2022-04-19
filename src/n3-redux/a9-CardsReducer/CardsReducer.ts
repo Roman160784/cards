@@ -144,7 +144,6 @@ export const getCardsTC = () => {
 
         cardsApi.getCards(payload)
             .then((res) => {
-                console.log(res.data)
                 dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
                 dispatch(setCardsAC(res.data.cards))
             })
@@ -155,7 +154,7 @@ export const getCardsTC = () => {
 }
 
 export const removeCardTC = (cardId: string) => {
-    return (dispatch: any) => {
+    return (dispatch: Dispatch<any>) => {
         cardsApi.removeCard(cardId)
             .then(() => {
                 dispatch(getCardsTC())
@@ -166,7 +165,7 @@ export const removeCardTC = (cardId: string) => {
     }
 }
 export const createCardTC = (cardsPack_id: string) => {
-    return (dispatch: any) => {
+    return (dispatch: Dispatch<any>) => {
         cardsApi.createCard(cardsPack_id)
             .then(() => {
                 dispatch(getCardsTC())
@@ -178,7 +177,7 @@ export const createCardTC = (cardsPack_id: string) => {
 }
 
 export const updateNameCardTC = (cardId: string) => {
-    return (dispatch: any) => {
+    return (dispatch: Dispatch<any>) => {
         cardsApi.updateNameCard(cardId)
             .then(() => {
                 dispatch(getCardsTC())
@@ -192,8 +191,8 @@ export const updateNameCardTC = (cardId: string) => {
 export const uptdateCardsGradeTC = (grade: number, card_id: string) => {
     return (dispatch: Dispatch) => {
         cardsApi.updateCardsGrade(grade, card_id)
-            .then(() => {
-
+            .then((res) => {
+                dispatch(setSelectedAC(res.data.updatedGrade.card_id, res.data.updatedGrade.grade))
             })
             .catch((e: AxiosError) => {
                 errorCardsHandler(e, dispatch)

@@ -33,3 +33,7 @@
     background: linear-gradient(315deg, #1cab2d 0%, #b1fbfa 100%);
     color: white;
 }
+
+.gradeResult {
+    color: limegreen
+}

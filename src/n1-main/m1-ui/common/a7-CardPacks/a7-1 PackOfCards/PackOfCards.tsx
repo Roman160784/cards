@@ -13,7 +13,7 @@ type PropsType = {
     name: string
     cardPackUserId: string
     cardsCount: number
-    updated: Date
+    updated: string
     path: string
     removePackOfCards: (packId: string) => void
     updateNamePackOfCards: (packId: string, name: string) => void
