@@ -29,8 +29,6 @@ export type CardsReducerType = {
     cardsPack_id: string
     question: string
     answer: string
-    grade: number
-    shots: number
     answerImg: string
     questionImg: string
     questionVideo: string
@@ -56,8 +54,6 @@ const initialState: CardsReducerType = {
     cardsPack_id: '',
     question: '',
     answer: '',
-    grade: 0,
-    shots: 0,
     answerImg: '',
     questionImg: '',
     questionVideo: '',
@@ -184,6 +180,7 @@ export const getCardsTC = () => {
 
         cardsApi.getCards(payload)
             .then((res) => {
+
                 dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
                 dispatch(setCardsAC(res.data.cards))
             })
@@ -194,7 +191,7 @@ export const getCardsTC = () => {
 }
 
 export const removeCardTC = (cardId: string) => {
-    return (dispatch: any) => {
+    return (dispatch: Dispatch<any>) => {
         cardsApi.removeCard(cardId)
             .then(() => {
                 dispatch(getCardsTC())
@@ -204,8 +201,9 @@ export const removeCardTC = (cardId: string) => {
             })
     }
 }
+
 export const createCardTC = () => {
-    return (dispatch: any, getState: () => RootReducerType) => {
+    return (dispatch: Dispatch<any>, getState: () => RootReducerType) => {
 
         const state = getState().cards
 
@@ -213,8 +211,6 @@ export const createCardTC = () => {
             cardsPack_id: state.cardsPack_id,
             question: state.question,
             answer: state.answer,
-            grade: state.grade,
-            shots: state.shots,
             answerImg: state.answerImg,
             questionImg: state.questionImg,
             questionVideo: state.questionVideo,
@@ -241,8 +237,6 @@ export const updateNameCardTC = () => {
             _id: state._id,
             question: state.question,
             answer: state.answer,
-            grade: state.grade,
-            shots: state.shots,
             answerImg: state.answerImg,
             questionImg: state.questionImg,
             questionVideo: state.questionVideo,
@@ -262,8 +256,8 @@ export const updateNameCardTC = () => {
 export const uptdateCardsGradeTC = (grade: number, card_id: string) => {
     return (dispatch: Dispatch) => {
         cardsApi.updateCardsGrade(grade, card_id)
-            .then(() => {
-
+            .then((res) => {
+                dispatch(setSelectedAC(res.data.updatedGrade.card_id, res.data.updatedGrade.grade))
             })
             .catch((e: AxiosError) => {
                 errorCardsHandler(e, dispatch)

@@ -1,7 +1,6 @@
 import {Dispatch} from "redux";
 import {
     AddCardPackType, CardsPacksType,
-    NewCardPackResponseType,
     packCardsAPI,
     UpdateNameCardPackType
 } from "../../n4-dal/API/CardsAPI";
@@ -67,7 +66,7 @@ export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, a
             return {...state, sortPacks: action.sortPacks}
         }
         case 'PACKS/SET-MIN-MAX-CARDS-IN-PACKS' : {
-            return {...state, minCardsCount: action.min, maxCardsCount: action.max}
+            return {...state, minCardsCount: action.min, maxCardsCount: action.max, page: 1}
         }
         case 'PACKS/SORT-MY-ALL-PACKS' : {
             return {...state, myCards: action.value}
@@ -90,7 +89,7 @@ export type MainActionType =
     | sortAllMyPacksACType
 
 
-
+// actions type
 export type setPackCardsACType = ReturnType<typeof setPackCardsAC>
 export type setPackCardsErrorACType = ReturnType<typeof setPackCardsErrorAC>
 export type SetCurrentPageActionType = ReturnType<typeof setCurrentPageAC>
@@ -100,6 +99,9 @@ export type sortPacksACType = ReturnType<typeof sortPacksAC>
 export type setMinMaxCarsInPacksACType = ReturnType<typeof setMinMaxCarsInPacksAC>
 export type sortAllMyPacksACType = ReturnType<typeof sortAllMyPacksAC>
 
+//thunk types
+
+export type fetchPackCardsTCType = ReturnType<typeof fetchPackCardsTC>
 
 //actions
 export const setPackCardsAC = (cardPacks: CardsPacksType[]) => ({type: 'PACKS/SET-PACK-CARDS', cardPacks} as const)
@@ -108,7 +110,7 @@ export const setCurrentPageAC = (page: number) => ({type: 'PACKS/SET-CURRENT-PAG
 export const setTotalCountAC = (cardPacksTotalCount: number) => ({type: 'PACKS/SET-TOTAL-COUNT', cardPacksTotalCount} as const)
 export const searchPacksAC = (currentPackName: string) => ({type: 'PACKS/SEARCH-PACKS-NAME', currentPackName,} as const)
 export const sortPacksAC = (sortPacks: string) => ({type: 'PACKS/SORT-PACKS', sortPacks} as const)
-export const setMinMaxCarsInPacksAC = (min: number, max: number) => ({type: 'PACKS/SET-MIN-MAX-CARDS-IN-PACKS', min, max} as const)
+export const setMinMaxCarsInPacksAC = (min: number, max: number, page: number) => ({type: 'PACKS/SET-MIN-MAX-CARDS-IN-PACKS', min, max, page} as const)
 export const sortAllMyPacksAC = (value : 'my' | 'all') => ({type: 'PACKS/SORT-MY-ALL-PACKS', value} as const)
 
 // thunks
@@ -140,7 +142,7 @@ export const fetchPackCardsTC = () => {
             })
     }
 }
-export const addPackofCardsTC = (cardsPack: AddCardPackType) => (dispatch: any) => {
+export const addPackofCardsTC = (cardsPack: AddCardPackType) => (dispatch: Dispatch<any>) => {
     packCardsAPI.addPackOfCards(cardsPack)
         .then((res) => {
             dispatch(fetchPackCardsTC())
@@ -149,7 +151,7 @@ export const addPackofCardsTC = (cardsPack: AddCardPackType) => (dispatch: any) 
             errorPackCardsHandler(e, dispatch)
         })
 }
-export const removePackOfCardsTC = (id: string) => (dispatch: any) => {
+export const removePackOfCardsTC = (id: string) => (dispatch: Dispatch<any>) => {
     packCardsAPI.removePackOfCards(id)
         .then((res) => {
             dispatch(fetchPackCardsTC())
@@ -159,7 +161,7 @@ export const removePackOfCardsTC = (id: string) => (dispatch: any) => {
         })
 }
 
-export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (dispatch: any) => {
+export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (dispatch: Dispatch<any>) => {
     packCardsAPI.updateNamePackOfCards(cardsPack)
         .then((res) => {
             dispatch(fetchPackCardsTC())
@@ -169,16 +171,4 @@ export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (d
         })
 }
 
-// export const getUsersPacksTC = (pageCount?: number) => {
-//     return (dispatch: Dispatch, getState: () => RootReducerType) => {
-//
-//         return packCardsAPI.getUsersPacks( user_id, pageCount,)
-//             .then((res) => {
-//                 dispatch(setPackCardsAC(res.data.cardPacks))
-//             })
-//             .catch((e: AxiosError) => {
-//                 errorPackCardsHandler(e, dispatch)
-//             })
-//     }
-// }
 

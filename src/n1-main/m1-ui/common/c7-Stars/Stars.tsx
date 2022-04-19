@@ -1,18 +1,18 @@
-import c from "./Stars.module.css";
+
 import React from "react";
-import {bool} from "yup";
+import c from "./Stars.module.css";
 
 export type StatrsPropsType = {
     id: string
     selected:boolean
     value: 1 | 2 | 3 | 4 | 5
-    callBack: (id: string, value:number) => void
+    callBack: ( value:number, id: string,) => void
 }
 
 export const Statrs = ({id, selected, value, callBack}:StatrsPropsType ) => {
 
     const handlerStar = ()=>{
-        callBack(id, value)
+        callBack( value, id,)
     }
     return  (
         <div className={c.stars}>
