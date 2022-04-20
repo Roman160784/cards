@@ -104,6 +104,7 @@ export const Cards = () => {
                     <span className={classes.textHeader}>Answer</span>
                     <span className={classes.textHeader}>Updated</span>
                     <span className={classes.textHeader}>Grade</span>
+                    <span className={classes.textHeader}>Rating</span>
                     <button onClick={() => setModalActive(true)} className={classes.buttonAddCard}>Add new card</button>
                 </div>
                 <Modal active={modalActive} setActive={setModalActive}>
@@ -141,7 +142,7 @@ export const Cards = () => {
                     cards.map(card => {
 
                         return (
-                            <div key={card._id}>
+                            <div className={classes.contentCards} key={card._id}>
                                 <Card
                                     _id={card._id}
                                     question={card.question}

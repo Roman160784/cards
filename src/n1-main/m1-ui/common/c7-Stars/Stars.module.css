@@ -6,7 +6,8 @@
     color: lightgray;
     font-size: 25px;
     cursor: pointer;
-    padding-left: 10px;
+    padding-left: 5px;
+    width: 100px;
 }
 
 .starSelect {

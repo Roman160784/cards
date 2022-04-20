@@ -15,9 +15,11 @@
 
 .selectedPage {
     font-weight: bold;
-    border: 1px solid limegreen;
-    border-radius: 5px;
-    background-color: limegreen;
-    color: white;
+    color: limegreen;
     text-align: center;
+    cursor: pointer;
+}
+
+.selectedPage span {
+    padding-left: 5px;
 }

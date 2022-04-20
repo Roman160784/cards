@@ -72,17 +72,21 @@ export const Card = ({_id, question, answer, grade, updated}: PropsType) => {
 
     return (
         <>
-            <span>{question}</span>
-            <span>{answer}</span>
+            <span className={classes.textCard}>{question}</span>
+            <span className={classes.textCard}>{answer}</span>
+            <span className={classes.textCard}>{new Date(updated).toLocaleDateString()}</span>
+            <span className={classes.textCard}>{grade.toFixed(2)}</span>
+            <div className={classes.textCard}>
             <Statrs selected={grade > 0} callBack={getCardsGrateHandler} id={_id} value={1}/>
             <Statrs selected={grade > 1.5} callBack={getCardsGrateHandler} id={_id} value={2}/>
             <Statrs selected={grade > 2.5} callBack={getCardsGrateHandler} id={_id} value={3}/>
             <Statrs selected={grade > 3.5} callBack={getCardsGrateHandler} id={_id} value={4}/>
             <Statrs selected={grade > 4.5} callBack={getCardsGrateHandler} id={_id} value={5}/>
-            <span>{grade.toFixed(2)}</span>
-            <span>{new Date(updated).toLocaleDateString()}</span>
-            <button onClick={() => setModalDeleteActive(true)}>del</button>
-            <button onClick={() => setModalUpdateActive(true)}>update</button>
+            </div>
+            <div className={classes.buttonCard}>
+                <button onClick={() => setModalDeleteActive(true)} className={classes.btnDel}>del</button>
+                <button onClick={() => setModalUpdateActive(true)} className={classes.btnUpdate}>update</button>
+            </div>
 
             <Modal active={modalDeleteActive} setActive={setModalDeleteActive}>
                 <div className={classes.modalTitle}>Delete Card</div>
