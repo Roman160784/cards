@@ -16,13 +16,19 @@ import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 import {Modal} from "../../../../Utils/Modal/Modal";
 
 
-
-
 export const CardsPacks = () => {
 
     const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
     const {
-        pageCount, page, cardPacksTotalCount, cardsPacks, currentPackName, myCards, maxCardsCount, minCardsCount, sortPacks,
+        pageCount,
+        page,
+        cardPacksTotalCount,
+        cardsPacks,
+        currentPackName,
+        myCards,
+        maxCardsCount,
+        minCardsCount,
+        sortPacks,
     } = useSelector<RootReducerType, CardsPacksReducerType>(state => state.cardsPacks)
     const user_id = useSelector<RootReducerType, string>(state => state.profile.user._id)
 
@@ -44,7 +50,7 @@ export const CardsPacks = () => {
     }, [pageCount, page, currentPackName, myCards, maxCardsCount, minCardsCount, sortPacks])
 
 
-    
+
     const addPack = useCallback((name: string) => {
         dispatch(addPackofCardsTC({name}))
         setName('')
@@ -79,6 +85,22 @@ export const CardsPacks = () => {
     }
     const sortPacksMaxCardstHandler = () => {
         dispatch(sortPacksAC('0cardsCount'))
+    }
+
+    const SortPackNameMinCards = () => {
+        dispatch(sortPacksAC('1name'))
+    }
+
+    const SortPackNameMaxCards = () => {
+        dispatch(sortPacksAC('0name'))
+    }
+
+    const SortPackUpdatedMinCards = () => {
+        dispatch(sortPacksAC('0updated'))
+    }
+
+    const SortPackUpdatedMaxCards = () => {
+        dispatch(sortPacksAC('1updated'))
     }
 
     //for Slider
@@ -134,13 +156,35 @@ export const CardsPacks = () => {
             </div>
             <div className={classes.boxCardsPack}>
                 <div className={classes.blockNameCards}>
-                    <span>Name</span>
-                    <span>Cards Count<span>
-                        <i className={classes.up} onClick={sortPacksMinCardstHandler}></i>
-                        <i className={classes.down} onClick={sortPacksMaxCardstHandler}></i>
+                    <span>Name<span className={classes.boxArrow}>
+                        <i className={`${classes.arrow} ${classes.arrowUp}`}
+                           onClick={SortPackNameMinCards}>
+                        </i>
+                        <i className={`${classes.arrow} ${classes.arrowDown}`}
+                           onClick={SortPackNameMaxCards}>
+                        </i>
                     </span>
                     </span>
-                    <span>Updated</span>
+                    <span>Cards Count<span className={classes.boxArrow}>
+                        {/*<i className={classes.up} onClick={sortPacksMinCardstHandler}></i>*/}
+                        {/*<i className={classes.down} onClick={sortPacksMaxCardstHandler}></i>*/}
+                        <i className={`${classes.arrow} ${classes.arrowUp}`}
+                           onClick={sortPacksMinCardstHandler}>
+                        </i>
+                        <i className={`${classes.arrow} ${classes.arrowDown}`}
+                           onClick={sortPacksMaxCardstHandler}>
+                        </i>
+                    </span>
+                    </span>
+                    <span>Updated<span className={classes.boxArrow}>
+                        <i className={`${classes.arrow} ${classes.arrowUp}`}
+                           onClick={SortPackUpdatedMinCards}>
+                        </i>
+                        <i className={`${classes.arrow} ${classes.arrowDown}`}
+                           onClick={SortPackUpdatedMaxCards}>
+                        </i>
+                    </span>
+                    </span>
                     <span>Actions</span>
                 </div>
                 {

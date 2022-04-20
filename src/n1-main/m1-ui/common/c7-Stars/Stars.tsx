@@ -18,7 +18,6 @@ export const Statrs = ({id, selected, value, callBack}:StatrsPropsType ) => {
         <div className={c.stars}>
             <span  id={id} onClick={handlerStar} className={c.star}>
                 {selected ? <span id={id} className={c.starSelect}>★</span> : <span id={id}>★</span>} </span>
-
         </div>
     )
 }
