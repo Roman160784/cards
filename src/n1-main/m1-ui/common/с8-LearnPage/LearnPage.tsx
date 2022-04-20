@@ -5,11 +5,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
-import {getCardsTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
+import {getCardsTC, uptdateCardsGradeTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 
 
-const grades = ["I don't know", "forgot", "long thought", "confused", "I know"];
+const grades = ["I don't know", "forgot", "long thought", "confused", "I know it"];
 
 const getCard = (cards: CardsType[]) => {
     const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
@@ -33,7 +33,7 @@ const LearnPage = () => {
     const id = useSelector<RootReducerType, string>(state => state.cards.cardsPack_id)
 
     // const params = useParams<'id'>();
-    // let id = params.id
+    // const cardId = params.id
 
 
     const [card, setCard] = useState<CardsType>({
@@ -49,6 +49,7 @@ const LearnPage = () => {
         created: '',
         updated: '',
     });
+
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -81,6 +82,19 @@ const LearnPage = () => {
         }
     }
 
+    const gradeClickHandler = (g:string) => {
+        if (g === "I don't know") {
+            dispatch(uptdateCardsGradeTC(1, card._id))
+        } else if (g === "forgot") {
+            dispatch(uptdateCardsGradeTC(2, card._id))
+        }else  if (g === "long thought") {
+            dispatch(uptdateCardsGradeTC(3, card._id))
+        }else  if (g === "confused") {
+            dispatch(uptdateCardsGradeTC(4, card._id))
+        }else  if (g === "I know it") {
+            dispatch(uptdateCardsGradeTC(5, card._id))
+        }
+    }
 
     return (
         <div>
@@ -96,8 +110,9 @@ const LearnPage = () => {
                     <div>{card.answer}</div>
 
                     {grades.map((g, i) => (
-                        <button key={'grade-' + i} onClick={() => {
-                        }}>{g}</button>
+                        <button key={'grade-' + i} onClick={() => {gradeClickHandler(g)}}>{g}</button>
+
+
                     ))}
 
                     <div><button onClick={onNext}>next</button></div>
