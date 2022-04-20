@@ -17,6 +17,7 @@
     transition: background 9999999s;
     margin-right: 20px;
 }
+
 .btnDisabled {
     justify-content: center;
     width: 150px;
@@ -47,7 +48,7 @@
 .boxCardsPack {
     border: 1px solid lightgray;
     border-radius: 5px;
-    box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2) ;
+    box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
     margin-top: 20px;
 }
 
@@ -57,25 +58,54 @@
     margin-top: 10px;
 }
 
-i {
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-}
+/*i {*/
+/*    border: solid black;*/
+/*    border-width: 0 3px 3px 0;*/
+/*    display: inline-block;*/
+/*    padding: 3px;*/
+/*}*/
 
-.up {
-    transform: rotate(-135deg);
-    transform-origin: top right;
-}
+/*.up {*/
+/*    transform: rotate(-135deg);*/
+/*    transform-origin: top right;*/
+/*}*/
 
-.down {
-    transform: rotate(45deg);
-    transform-origin: bottom left;
-}
+/*.down {*/
+/*    transform: rotate(45deg);*/
+/*    transform-origin: bottom left;*/
+/*}*/
 
 .errors {
     color: red;
+}
+
+a .arrow {
+    display: inline-block;
+}
+
+.arrow::before {
+    content: "";
+    display: inline-block;
+    border: 10px solid green;
+    border-right-width: 5px;
+    border-left-width: 5px;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    cursor: pointer;
+}
+
+.boxArrow {
+    margin-left: 5px;
+}
+
+.arrowUp::before {
+    border-top-width: 0;
+}
+
+.arrowDown::before {
+    border-bottom-width: 0;
+    /*transform: rotate(45deg);*/
+    /*transform-origin: bottom left;*/
 }
 .modalTitle {
     height: 27px;

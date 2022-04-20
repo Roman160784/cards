@@ -3,8 +3,11 @@
     display: inline-block;
 }
 .star {
-    color: gray;
+    color: lightgray;
     font-size: 25px;
+    cursor: pointer;
+    padding-left: 5px;
+    width: 100px;
 }
 
 .starSelect {
