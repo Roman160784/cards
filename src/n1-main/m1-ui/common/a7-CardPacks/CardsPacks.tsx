@@ -87,6 +87,7 @@ export const CardsPacks = () => {
     }, [debouncedValue])
 
 
+
     const handleChange = (event: any,  newValue: any) => {
         setValue(newValue);
     };

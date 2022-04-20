@@ -25,6 +25,7 @@ export enum pathEnum {
     error404 = '/404',
     empty = '/*',
     packs = '/packs',
+    pack = '/pack',
     cards = '/cards/:id',
 }
 

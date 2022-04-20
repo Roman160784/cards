@@ -9,7 +9,7 @@ import {getCardsTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 
 
-const grades = ['не знал', 'забыл', 'долго думал', 'перепутал', 'знал'];
+const grades = ["I don't know", "forgot", "long thought", "confused", "I know"];
 
 const getCard = (cards: CardsType[]) => {
     const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
@@ -25,11 +25,16 @@ const getCard = (cards: CardsType[]) => {
 }
 
 const LearnPage = () => {
+
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [first, setFirst] = useState<boolean>(true);
     // const [first, setFirst] = useState<boolean>(0);
     const {cards} = useSelector((store: RootReducerType) => store.cards);
-    const {id} = useParams();
+    const id = useSelector<RootReducerType, string>(state => state.cards.cardsPack_id)
+
+    // const params = useParams<'id'>();
+    // let id = params.id
+
 
     const [card, setCard] = useState<CardsType>({
         _id: 'fake',
@@ -48,16 +53,19 @@ const LearnPage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         console.log('LearnContainer useEffect');
-
         if (first) {
+
             dispatch(getCardsTC());
             setFirst(false);
         }
 
+
         console.log('cards', cards)
         if (cards.length > 0) setCard(getCard(cards));
 
+
         return () => {
+
             console.log('LearnContainer useEffect off');
         }
     }, [dispatch, id, cards, first]);

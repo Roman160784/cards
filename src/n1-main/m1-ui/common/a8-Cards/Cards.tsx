@@ -5,14 +5,12 @@ import {useNavigate, useParams} from "react-router-dom";
 import {
     CardsReducerType,
     createCardTC, getCardsTC,
-    removeCardTC, setCardsPackIdAC, uptdateCardsGradeTC,
-    updateNameCardTC, setAnswerAC, setQuestionAC, setCardIdAC
+    setCardsPackIdAC
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {SearchCards} from "../c6-SearchPacks/SearchCards";
 import classes from './Cards.module.css'
 import {CardsPaginator} from "./cardsPaginater";
-import {Statrs} from "../c7-Stars/Stars";
 import {Modal} from "../../../../Utils/Modal/Modal";
 import BackArrow from './Images/BackArrow.svg'
 import {Card} from "./Card";

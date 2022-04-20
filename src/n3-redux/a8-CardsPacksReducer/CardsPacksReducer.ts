@@ -26,6 +26,7 @@ export type CardsPacksReducerType = {
     currentPackName: null | string
     myCards: 'my' | 'all'
     sortPacks: string
+    packId: string
 }
 
 //state
@@ -42,6 +43,7 @@ const initialState: CardsPacksReducerType = {
     currentPackName: null,
     myCards: 'all',
     sortPacks: '',
+    packId: ''
 }
 
 //reducer
@@ -71,6 +73,9 @@ export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, a
         case 'PACKS/SORT-MY-ALL-PACKS' : {
             return {...state, myCards: action.value}
         }
+        case 'PACKS/SET-PACK-ID' : {
+            return {...state, packId: action.packId}
+        }
 
         default:
             return {...state}
@@ -87,6 +92,7 @@ export type MainActionType =
     | sortPacksACType
     | setMinMaxCarsInPacksACType
     | sortAllMyPacksACType
+    | setPackIdACType
 
 
 // actions type
@@ -98,6 +104,8 @@ export type searchPacksACType = ReturnType<typeof searchPacksAC>
 export type sortPacksACType = ReturnType<typeof sortPacksAC>
 export type setMinMaxCarsInPacksACType = ReturnType<typeof setMinMaxCarsInPacksAC>
 export type sortAllMyPacksACType = ReturnType<typeof sortAllMyPacksAC>
+export type setPackIdACType = ReturnType<typeof setPackIdAC>
+
 
 //thunk types
 
@@ -112,7 +120,7 @@ export const searchPacksAC = (currentPackName: string) => ({type: 'PACKS/SEARCH-
 export const sortPacksAC = (sortPacks: string) => ({type: 'PACKS/SORT-PACKS', sortPacks} as const)
 export const setMinMaxCarsInPacksAC = (min: number, max: number, page: number) => ({type: 'PACKS/SET-MIN-MAX-CARDS-IN-PACKS', min, max, page} as const)
 export const sortAllMyPacksAC = (value : 'my' | 'all') => ({type: 'PACKS/SORT-MY-ALL-PACKS', value} as const)
-
+export const setPackIdAC = (packId : string) => ({type: 'PACKS/SET-PACK-ID', packId} as const )
 // thunks
 
 export const fetchPackCardsTC = () => {

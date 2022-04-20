@@ -1,10 +1,11 @@
-import React, {ChangeEvent, KeyboardEvent, useCallback, useEffect, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
 import classes from './PackOfCards.module.css'
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {updateNamePackOfCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
+import {setPackIdAC, updateNamePackOfCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 import {Modal} from "../../../../../Utils/Modal/Modal";
 import LearnPage from "../../с8-LearnPage/LearnPage";
+import {getCardsTC, setCardsPackIdAC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
 
 
 type PropsType = {
@@ -36,6 +37,7 @@ export const PackOfCards = ({
         removePackOfCards(packId)
         setModalDeleteActive(false)
     }, [])
+
     const updateNamePackOfCards = useCallback((title: string) => {
         dispatch(updateNamePackOfCardsTC({_id: packId, name: title}));
         setTitle('')
@@ -55,7 +57,15 @@ export const PackOfCards = ({
     const onCloseModalDeleteHandler = () => {
         setModalDeleteActive(false)
     }
+    const openModalLearn = () => {
+        if(packId) {
+            dispatch(setCardsPackIdAC(packId))
+            dispatch(getCardsTC())
+        }
 
+        // navigate(`/packs/${packId}`)
+        setModalLearnActive(true)
+    }
 
     const learnClickHandler = () => {
         return navigate(`/cards/${packId}`)
@@ -75,7 +85,7 @@ export const PackOfCards = ({
                 </button>}
                 <button
                     className={classes.btn}
-                    onClick={() => setModalLearnActive(true)}
+                    onClick={openModalLearn}
                 >learn
                 </button>
                 {cardPackUserId === userId && <button
