@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {updateNamePackOfCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 import {Modal} from "../../../../../Utils/Modal/Modal";
-import {callbackify} from "util";
+import LearnPage from "../../с8-LearnPage/LearnPage";
 
 
 type PropsType = {
@@ -26,6 +26,7 @@ export const PackOfCards = ({
                             }: PropsType) => {
     const [modalActive, setModalActive] = useState<boolean>(false);
     const [modalDeleteActive, setModalDeleteActive] = useState<boolean>(false);
+    const [modalLearnActive, setModalLearnActive] = useState<boolean>(false);
     const [title, setTitle] = useState<string>('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -74,7 +75,7 @@ export const PackOfCards = ({
                 </button>}
                 <button
                     className={classes.btn}
-                    onClick={learnClickHandler}
+                    onClick={() => setModalLearnActive(true)}
                 >learn
                 </button>
                 {cardPackUserId === userId && <button
@@ -83,6 +84,12 @@ export const PackOfCards = ({
                 >delete
                 </button>}
             </div>
+
+            <Modal active={modalLearnActive} setActive={setModalLearnActive}>
+                <LearnPage />
+                <button className={classes.modalButtonCancel} onClick={() => setModalLearnActive(false)}>cancel</button>
+            </Modal>
+
             <Modal active={modalActive} setActive={setModalActive}>
                 <div className={classes.modalTitle}>Edit your pack name</div>
                 <input
