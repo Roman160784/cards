@@ -1,20 +1,21 @@
-import React, {useEffect} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {
     CardsReducerType,
-    setSelectedAC,
     createCardTC, getCardsTC,
-    removeCardTC, setCardsPackIdAC,
-    updateNameCardTC
+    removeCardTC, setCardsPackIdAC, uptdateCardsGradeTC,
+    updateNameCardTC, setAnswerAC, setQuestionAC, setCardIdAC
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {SearchCards} from "../c6-SearchPacks/SearchCards";
 import classes from './Cards.module.css'
 import {CardsPaginator} from "./cardsPaginater";
 import {Statrs} from "../c7-Stars/Stars";
-import {addPackofCardsTC} from "../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
+import {Modal} from "../../../../Utils/Modal/Modal";
+import BackArrow from './Images/BackArrow.svg'
+import {Card} from "./Card";
 
 
 export const Cards = () => {
@@ -28,87 +29,133 @@ export const Cards = () => {
         min,
         sortCards,
         currentAnswer,
-        currentQuestion
+        currentQuestion,
+        _id,
+        question,
+        answer
     } = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
     const dispatch = useDispatch()
 
     const params = useParams<'id'>()
     const cardsPack_id = params.id
+    const navigate = useNavigate()
+
+    const [modalActive, setModalActive] = useState<boolean>(false);
+
+
+    const [newQuestion, setQuestion] = useState<string>('')
+    const [newAnswer, setAnswer] = useState<string>('')
+
 
     useEffect(() => {
         if (cardsPack_id) {
             dispatch(setCardsPackIdAC(cardsPack_id))
             dispatch(getCardsTC())
         }
-    }, [cardsPack_id, pageCount, page, max, min, sortCards, currentQuestion, currentAnswer])
+    }, [cardsPack_id, pageCount, page, max, min, sortCards, currentQuestion, currentAnswer, _id, question, answer])
 
-    const createCardHandler = () => {
+
+    const addCard = useCallback((question: string, answer: string) => {
         if (cardsPack_id) {
-            dispatch(setCardsPackIdAC(cardsPack_id))
-            dispatch(createCardTC(cardsPack_id))
+            dispatch(createCardTC({
+                question,
+                answer,
+                cardsPack_id
+            }))
+        }
+        setQuestion('')
+        setAnswer('')
+        setModalActive(false)
+    }, [dispatch])
+    const onChangeQuestionHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setQuestion(e.currentTarget.value)
+    }
+    const onChangeAnswerHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setAnswer(e.currentTarget.value)
+    }
+
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter' && newQuestion.trim() !== '' && newAnswer.trim() !== '') {
+            addCard(newQuestion, newAnswer)
+        }
+    }
+    const onCloseModalHandler = () => {
+        setQuestion('')
+        setAnswer('')
+        setModalActive(false)
+    }
+    const onClickModalHandler = () => {
+        if (newQuestion.trim() !== '' && newAnswer.trim() !== '') {
+            addCard(newQuestion, newAnswer)
         }
     }
 
-
-    const getCardsGrateHandler = (id: string, value: number) => {
-        dispatch(setSelectedAC(id, value))
-    }
-
-
     return (
-        <div className={classes.boxCards}>
-            <div className={classes.boxCard}>
-                <SearchCards cardsPack_id={cardsPack_id ? cardsPack_id : ''}/>
-                <div className={classes.boxCards}>
-                    <div className={classes.blockCard}>
-                        <span className={classes.textHeader}>Question</span>
-                        <span className={classes.textHeader}>Answer</span>
-                        <span className={classes.textHeader}>Updated</span>
-                        <span className={classes.textHeader}>Grade</span>
-                        <button onClick={createCardHandler} className={classes.buttonAddCard}>Add new card</button>
-                    </div>
-
-                    {
-                        cards.map(card => {
-                            const removeCardHandler = () => {
-                                dispatch(setCardsPackIdAC(card.cardsPack_id))
-                                dispatch(removeCardTC(card._id))
-                            }
-                            const updateNameCardHandler = () => {
-                                dispatch(setCardsPackIdAC(card.cardsPack_id))
-                                dispatch(updateNameCardTC(card._id))
-                            }
-                            return (
-
-                                <div key={card._id} className={classes.contentCards}>
-                                    <span className={classes.textCard}>{card.question}</span>
-                                    <span className={classes.textCard}>{card.answer}</span>
-                                    <span className={classes.textCard}>{card.updated}</span>
-                                    <div className={classes.textCard}>
-                                        <Statrs selected={card.grade > 0} callBack={getCardsGrateHandler} id={card._id}
-                                                value={1}/>
-                                        <Statrs selected={card.grade > 1} callBack={getCardsGrateHandler} id={card._id}
-                                                value={2}/>
-                                        <Statrs selected={card.grade > 2} callBack={getCardsGrateHandler} id={card._id}
-                                                value={3}/>
-                                        <Statrs selected={card.grade > 3} callBack={getCardsGrateHandler} id={card._id}
-                                                value={4}/>
-                                        <Statrs selected={card.grade > 4} callBack={getCardsGrateHandler} id={card._id}
-                                                value={5}/>
-                                    </div>
-                                    <div className={classes.buttonCard}>
-                                        <button onClick={removeCardHandler} className={classes.btnDel}>del</button>
-                                        <button onClick={updateNameCardHandler} className={classes.btnUpdate}>update
-                                        </button>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
-                    <CardsPaginator cardsTotalCount={cardsTotalCount} page={page} pageCount={pageCount}/>
-                    {error && <div className={classes.errors}>{error}</div>}
-                </div>
+        <div className={classes.boxCard}>
+            <div className={classes.backArrow} onClick={() => {
+                navigate('/packs')
+            }}>
+                <img src={BackArrow} alt={'back'}/>
             </div>
+            <SearchCards cardsPack_id={cardsPack_id ? cardsPack_id : ''}/>
+            <div className={classes.boxCards}>
+                <div className={classes.blockCard}>
+                    <span className={classes.textHeader}>Question</span>
+                    <span className={classes.textHeader}>Answer</span>
+                    <span className={classes.textHeader}>Updated</span>
+                    <span className={classes.textHeader}>Grade</span>
+                    <button onClick={() => setModalActive(true)} className={classes.buttonAddCard}>Add new card</button>
+                </div>
+                <Modal active={modalActive} setActive={setModalActive}>
+                    <div className={classes.modalTitle}>Card Info</div>
+                    <div className={classes.modalInputBox}>
+                        <div className={classes.modalInputQuestion}>
+                            <span className={classes.modalSpan}>Question</span>
+                            <input
+                                value={newQuestion}
+                                onKeyPress={onKeyPressHandler}
+                                onChange={onChangeQuestionHandler}
+                                className={classes.modalInput}
+                                placeholder={'Enter your question..'}
+                                autoFocus
+                            />
+                        </div>
+                        <div className={classes.modalInputAnswer}>
+                            <span className={classes.modalSpan}>Answer</span>
+                            <input
+                                value={newAnswer}
+                                onKeyPress={onKeyPressHandler}
+                                onChange={onChangeAnswerHandler}
+                                className={classes.modalInput}
+                                placeholder={'Enter your answer...'}
+                                autoFocus
+                            />
+                        </div>
+                    </div>
+                    <div className={classes.btnModalWrap}>
+                        <button className={classes.modalButtonSave} onClick={onClickModalHandler}>save</button>
+                        <button className={classes.modalButtonCancel} onClick={onCloseModalHandler}>cancel</button>
+                    </div>
+                </Modal>
+                {
+                    cards.map(card => {
+
+                        return (
+                            <div key={card._id}>
+                                <Card
+                                    _id={card._id}
+                                    question={card.question}
+                                    answer={card.answer}
+                                    grade={card.grade}
+                                    updated={card.updated}
+                                />
+                            </div>
+                        )
+                    })
+                }
+            </div>
+            <CardsPaginator cardsTotalCount={cardsTotalCount} page={page} pageCount={pageCount}/>
+            {error && <div className={classes.errors}>{error}</div>}
         </div>
     )
 }

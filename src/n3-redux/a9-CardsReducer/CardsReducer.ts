@@ -1,5 +1,11 @@
 import {Dispatch} from "redux";
-import {cardsApi, CardsType, getCardsPayloadType} from "../../n4-dal/API/CardsAPI";
+import {
+    CardForCreateType,
+    CardForUpdateType,
+    cardsApi,
+    CardsType,
+    getCardsPayloadType
+} from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
 import {errorCardsHandler} from "../../Utils/Utils";
 import {RootReducerType} from "../a1-store/store";
@@ -21,6 +27,13 @@ export type CardsReducerType = {
     currentQuestion: null | string
     sortCards: string | null
     cardsPack_id: string
+    question: string
+    answer: string
+    answerImg: string
+    questionImg: string
+    questionVideo: string
+    answerVideo: string
+    _id: string
 }
 
 //state
@@ -38,7 +51,14 @@ const initialState: CardsReducerType = {
     currentAnswer: null,
     currentQuestion: null,
     sortCards: null,
-    cardsPack_id: ''
+    cardsPack_id: '',
+    question: '',
+    answer: '',
+    answerImg: '',
+    questionImg: '',
+    questionVideo: '',
+    answerVideo: '',
+    _id: ''
 }
 
 //reducer
@@ -74,6 +94,15 @@ export const CardsReducer = (state: CardsReducerType = initialState, action: Mai
         case 'CARDS/SET-GRADE' : {
             return {...state, cards : state.cards.map(c => c._id === action.id ? {...c, grade: action.grade} : c) }
         }
+        case "CARDS/SET-QUESTION": {
+            return {...state, question: action.question}
+        }
+        case "CARDS/SET-ANSWER": {
+            return {...state, answer: action.answer}
+        }
+        case "CARDS/SET-CARD-ID": {
+            return {...state, _id: action._id}
+        }
         default:
             return {...state}
     }
@@ -91,6 +120,9 @@ export type MainActionType =
     | setMinMaxCardsInCardsACType
     | setCardsPackIdACType
     | setSelectedACType
+    | setAnswerACType
+    | setQuestionACType
+    | setCardIdACType
 
 export type setCardsACType = ReturnType<typeof setCardsAC>
 export type setCardsErrorACType = ReturnType<typeof setCardsErrorAC>
@@ -102,6 +134,9 @@ export type sortCardsACType = ReturnType<typeof sortCardsAC>
 export type setMinMaxCardsInCardsACType = ReturnType<typeof setMinMaxCardsInCardsAC>
 export type setCardsPackIdACType = ReturnType<typeof setCardsPackIdAC>
 export type setSelectedACType = ReturnType<typeof setSelectedAC>
+export type setQuestionACType = ReturnType<typeof setQuestionAC>
+export type setAnswerACType = ReturnType<typeof setAnswerAC>
+export type setCardIdACType = ReturnType<typeof setCardIdAC>
 
 //actions
 export const setCardsAC = (cards: CardsType[]) => ({type: 'CARDS/SET-CARDS', cards} as const)
@@ -124,8 +159,9 @@ export const setMinMaxCardsInCardsAC = (min: number, max: number) => ({
     max
 } as const)
 export const setCardsPackIdAC = (cardsPack_id: string) => ({type: 'CARDS/SET-CARDSPACK-ID', cardsPack_id} as const)
-
-
+export const setQuestionAC = (question: string) => ({type: 'CARDS/SET-QUESTION', question} as const)
+export const setAnswerAC = (answer: string) => ({type: 'CARDS/SET-ANSWER', answer} as const)
+export const setCardIdAC = (_id: string) => ({type: 'CARDS/SET-CARD-ID', _id} as const)
 
 // thunks
 export const getCardsTC = () => {
@@ -144,7 +180,7 @@ export const getCardsTC = () => {
 
         cardsApi.getCards(payload)
             .then((res) => {
-                console.log(res.data)
+
                 dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
                 dispatch(setCardsAC(res.data.cards))
             })
@@ -155,7 +191,7 @@ export const getCardsTC = () => {
 }
 
 export const removeCardTC = (cardId: string) => {
-    return (dispatch: any) => {
+    return (dispatch: Dispatch<any>) => {
         cardsApi.removeCard(cardId)
             .then(() => {
                 dispatch(getCardsTC())
@@ -165,9 +201,10 @@ export const removeCardTC = (cardId: string) => {
             })
     }
 }
-export const createCardTC = (cardsPack_id: string) => {
-    return (dispatch: any) => {
-        cardsApi.createCard(cardsPack_id)
+
+export const createCardTC = (card: CardForCreateType) => {
+    return (dispatch: Dispatch<any>) => {
+        cardsApi.createCard(card)
             .then(() => {
                 dispatch(getCardsTC())
             })
@@ -177,10 +214,11 @@ export const createCardTC = (cardsPack_id: string) => {
     }
 }
 
-export const updateNameCardTC = (cardId: string) => {
+export const updateNameCardTC = (card: CardForUpdateType) => {
     return (dispatch: any) => {
-        cardsApi.updateNameCard(cardId)
-            .then(() => {
+        cardsApi.updateNameCard(card)
+            .then((res) => {
+                console.log(res.data)
                 dispatch(getCardsTC())
             })
             .catch((e: AxiosError) => {
@@ -192,8 +230,8 @@ export const updateNameCardTC = (cardId: string) => {
 export const uptdateCardsGradeTC = (grade: number, card_id: string) => {
     return (dispatch: Dispatch) => {
         cardsApi.updateCardsGrade(grade, card_id)
-            .then(() => {
-
+            .then((res) => {
+                dispatch(setSelectedAC(res.data.updatedGrade.card_id, res.data.updatedGrade.grade))
             })
             .catch((e: AxiosError) => {
                 errorCardsHandler(e, dispatch)

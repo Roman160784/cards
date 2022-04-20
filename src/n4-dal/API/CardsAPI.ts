@@ -99,14 +99,14 @@ export const cardsApi = {
     removeCard(id: string) {
         return instance.delete(`/cards/card?id=${id}`)
     },
-    createCard(cardsPack_id: string) {
-        return instance.post<CardType>('/cards/card', {card:{cardsPack_id}})
+    createCard(card: CardForCreateType) {
+        return instance.post<CardForCreateType>('/cards/card', {card})
     },
-    updateNameCard(_id: string) {
-        return instance.put('/cards/card', {card:{_id}})
+    updateNameCard(card: CardForUpdateType) {
+        return instance.put('/cards/card', {card})
     },
     updateCardsGrade(grade: number, card_id: string) {
-        return instance.put<CardsGradeResponseType>('cards/grade', {params:{grade, card_id}})
+        return instance.put<CardsGradeResponseType>('cards/grade', {grade, card_id})
     }
 }
 
@@ -114,12 +114,14 @@ export const cardsApi = {
 // types
 
 export type CardsGradeResponseType = {
+    updatedGrade:{
     _id: string
     cardsPack_id: string
     card_id: string
     user_id: string
     grade: number
     shots: number
+}
 }
 
 export type NewCardPackResponseType = {
@@ -152,17 +154,30 @@ export type CardsResponseType = {
     token: string
     tokenDeathTime: number
 }
-export type CardType = {
+export type CardForCreateType = {
     cardsPack_id: string
     question: string
     answer: string
-    grade: number
-    shots: number
     answerImg?: string
     questionImg?: string
     questionVideo?: string
     answerVideo?: string
+    created?: string
+    updated?: string
 }
+export type CardForUpdateType = {
+    cardsPack_id?: string
+    _id: string
+    question: string
+    answer: string
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
+    created?: string
+    updated?: string
+}
+
 
 export type CardsType = {
     answer: string
@@ -170,7 +185,7 @@ export type CardsType = {
     cardsPack_id: string
     grade: number
     shots: number
-    user_id: string
+    user_id?: string
     created: string
     updated: string
     _id: string
@@ -186,7 +201,7 @@ export type CardsPacksType = {
     rating: number
     shots: number
     type: string
-    updated: Date
+    updated: string
     user_id: string
     user_name: string
     __v: number

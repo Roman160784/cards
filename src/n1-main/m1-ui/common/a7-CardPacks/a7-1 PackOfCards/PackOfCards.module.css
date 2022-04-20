@@ -6,6 +6,7 @@
 
 .blockText {
     width: 200px;
+    cursor: pointer;
 }
 
 .contentBtn {
@@ -26,4 +27,77 @@
 .btn:hover {
     background-color: lime;
 
+}
+.modalTitle {
+    height: 27px;
+    left: 466px;
+    top: 298px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 27px;
+    display: flex;
+    align-items: flex-end;
+    color: #2D2E46;
+}
+.modalInput {
+    margin-top: 35px;
+    width: 75%;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #eee;
+
+}
+.modalInput:focus {
+    outline-color: #2196f3;
+}
+.btnModalWrap {
+    display: flex;
+    justify-content: space-evenly;
+}
+.modalButtonSave {
+    width: 127px;
+    height: 36px;
+    font-size: 18px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border: 2px solid #4CAF50;
+    text-decoration: none;
+    display: inline-block;
+}
+.modalButtonSave:hover {
+    border: 2px solid #4CAF50;
+    background-color: white;
+    color: #4CAF50;
+}
+.modalButtonCancel {
+    width: 127px;
+    height: 36px;
+    font-size: 18px;
+    margin-top: 20px;
+    background-color: red;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border: 2px solid red;
+    text-decoration: none;
+    display: inline-block;
+}
+.modalButtonCancel:hover {
+    border: 2px solid red;
+    background-color: white;
+    color: red;
+}
+.modalDelete {
+    margin: 20px auto;
+}
+.modalSpanPackName {
+    font-weight: bold;
 }
