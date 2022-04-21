@@ -12,7 +12,7 @@ export const Modal = ({active, setActive, children}: PropsType) => {
     return (
         <div className={active ? 'modal active' : 'modal'} onClick={() => setActive(false)}>
             <div className={active ? 'modal__content active' : 'modal__content'} onClick={e => e.stopPropagation()}>
-                {children}
+                {active && children}
             </div>
         </div>
     );

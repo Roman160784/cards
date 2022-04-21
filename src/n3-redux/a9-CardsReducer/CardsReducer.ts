@@ -164,11 +164,11 @@ export const setAnswerAC = (answer: string) => ({type: 'CARDS/SET-ANSWER', answe
 export const setCardIdAC = (_id: string) => ({type: 'CARDS/SET-CARD-ID', _id} as const)
 
 // thunks
-export const getCardsTC = () => {
+export const getCardsTC = (learnId?: string) => {
     return (dispatch: Dispatch, getState: () => RootReducerType) => {
         const state = getState()
         const payload: getCardsPayloadType = {
-            cardsPack_id: state.cards.cardsPack_id,
+            cardsPack_id: learnId ? learnId : state.cards.cardsPack_id,
             cardAnswer: state.cards.currentAnswer || '',
             cardQuestion: state.cards.currentQuestion || '',
             min: state.cards.min || 0,
