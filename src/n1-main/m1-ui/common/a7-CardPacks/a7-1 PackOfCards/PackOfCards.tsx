@@ -58,12 +58,12 @@ export const PackOfCards = ({
         setModalDeleteActive(false)
     }
     const openModalLearn = () => {
-        if(packId) {
-            dispatch(setCardsPackIdAC(packId))
-            dispatch(getCardsTC())
-        }
+        // if(packId) {
+        //     dispatch(setCardsPackIdAC(packId))
+        //     dispatch(getCardsTC())
+        // }
 
-        // navigate(`/packs/${packId}`)
+        navigate(`/packs/${packId}`)
         setModalLearnActive(true)
     }
 
@@ -96,7 +96,10 @@ export const PackOfCards = ({
 
             <Modal active={modalLearnActive} setActive={setModalLearnActive}>
                 <LearnPage />
-                <button className={classes.modalButtonCancel} onClick={() => setModalLearnActive(false)}>cancel</button>
+                <button className={classes.modalButtonCancel} onClick={() => {
+                    setModalLearnActive(false)
+                    navigate(-1)
+                }}>cancel</button>
             </Modal>
 
             <Modal active={modalActive} setActive={setModalActive}>

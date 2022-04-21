@@ -11,6 +11,7 @@ import React from "react";
 import {CheckEmail} from "../../common/a4-NewPassword/CheckEmail";
 import {CardsPacks} from "../../common/a7-CardPacks/CardsPacks";
 import {Cards} from "../../common/a8-Cards/Cards";
+import LearnPage from "../../common/с8-LearnPage/LearnPage";
 
 
 export enum pathEnum {
@@ -24,7 +25,7 @@ export enum pathEnum {
     test = '/test',
     error404 = '/404',
     empty = '/*',
-    packs = '/packs',
+    packs = '/packs/*',
     pack = '/pack',
     cards = '/cards/:id',
 }
