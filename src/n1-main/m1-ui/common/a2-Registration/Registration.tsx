@@ -33,7 +33,6 @@ export const Registration = () => {
         }),
         onSubmit: values => {
             dispatch(addUserTC(values))
-            // alert(JSON.stringify(values, null, 2));
         },
     });
 

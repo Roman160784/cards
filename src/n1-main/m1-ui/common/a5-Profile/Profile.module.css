@@ -18,7 +18,7 @@
 }
 
 .profileImg {
-    border-radius: 60px;
+    border-radius: 50%
 }
 
 .inputName {
@@ -54,11 +54,14 @@
     width: 100px;
     border-radius: 10px;
     border: none;
-    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    margin: 50px auto;
     cursor: pointer;
     user-select: none;
     background: linear-gradient(270deg, #b2f5ba 0%, #b2f5f1 100%);
 }
+
 .profileButton:hover {
     background: lawngreen;
     color: green;
