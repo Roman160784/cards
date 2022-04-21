@@ -2,17 +2,15 @@ import React, {useEffect, useState} from "react";
 
 import {useDispatch, useSelector} from "react-redux";
 
-import {useNavigate, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {
     getCardsTC,
-    setCardsAC,
     setCardsPackIdAC,
     uptdateCardsGradeTC
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
-import {setLoadingAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
 
 
 const grades = ["I don't know", "forgot", "long thought", "confused", "I know it"];
@@ -41,7 +39,7 @@ const LearnPage = () => {
     const [first, setFirst] = useState<boolean>(true);
     // const [first, setFirst] = useState<boolean>(0);
     const {cards} = useSelector((store: RootReducerType) => store.cards);
-    const loading = useSelector<RootReducerType, boolean>(state => state.app.loading)
+    // const loading = useSelector<RootReducerType, boolean>(state => state.app.loading)
     // const id = useSelector<RootReducerType, string>(state => state.cards.cardsPack_id)
 
 
@@ -127,10 +125,7 @@ const LearnPage = () => {
                     <div>{card?.answer}</div>
 
                     {grades.map((g, i) => (
-                        <button key={'grade-' + i} onClick={() => {
-                            gradeClickHandler(g)
-                        }}>{g}</button>
-
+                        <button key={'grade-' + i} onClick={() => {gradeClickHandler(g)}}>{g}</button>
 
                     ))}
 
