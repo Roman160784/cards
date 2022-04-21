@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {
@@ -131,13 +131,13 @@ export const LearnPage = () => {
                     </div>
                     <div className={classes.checkYourSelf}>Check yourself:</div>
 
-                        {grades.map((g, i) => (
+                    {grades.map((g, i) => (
 
-                                <button key={'grade-' + i} onClick={() => {
-                                    gradeClickHandler(g)
-                                }} className={classes.btnGrade}>{g}</button>
+                        <button key={'grade-' + i} onClick={() => {
+                            gradeClickHandler(g)
+                        }} className={classes.btnGrade}>{g}</button>
 
-                        ))}
+                    ))}
 
                     <div className={classes.btnNextWrap}>
                         <button className={classes.btnNext} onClick={onNext}>next</button>
@@ -147,4 +147,3 @@ export const LearnPage = () => {
         </div>
     );
 };
-
