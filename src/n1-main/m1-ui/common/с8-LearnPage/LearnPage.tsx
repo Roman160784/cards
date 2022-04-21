@@ -1,3 +1,5 @@
+
+
 import React, {ChangeEvent, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -11,7 +13,7 @@ import {
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import classes from './LearnPage.module.css'
-import {buttonBaseClasses} from "@mui/material";
+
 
 type LearnPagePropsType = {
     packName: string
@@ -60,16 +62,6 @@ export const LearnPage = ({packName}: LearnPagePropsType) => {
         updated: '',
     });
 
-    // useEffect(() => {
-    //     if (!cards) {
-    //         setLoadingAC(true)
-    //         setCard(getCard(cards))
-    //     } else {
-    //         if(loading)
-    //         setLoadingAC(false)
-    //     }
-    //
-    // },[cards])
 
     useEffect(() => {
 
@@ -150,4 +142,4 @@ export const LearnPage = ({packName}: LearnPagePropsType) => {
             )}
         </div>
     );
-};
+}

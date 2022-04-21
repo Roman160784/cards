@@ -1,5 +1,4 @@
 .blockCards {
-    width: 900px;
     background-color: white;
     border-radius: 10px;
     padding: 30px;
@@ -20,6 +19,18 @@
 
 .btnHandler:hover {
     background: linear-gradient(135deg, #0eaf0e 100%, #baf792 0%);
+}
+
+.active {
+    justify-content: center;
+    width: 150px;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
 }
 
 .btnDisabled {

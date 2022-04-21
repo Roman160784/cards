@@ -15,16 +15,16 @@
 
 .selectedPage {
     font-weight: bold;
-    color: limegreen;
     text-align: center;
     cursor: pointer;
-}
-
-.selectedPage:hover {
-    color: limegreen;
-}
-
-.selectedPage span {
     padding: 0 5px;
+    border-radius: 3px;
+    border: 1px solid limegreen;
+    background-color: limegreen;
+    color: white;
+}
+
+.select {
+    padding-right: 15px;
     cursor: pointer;
 }
