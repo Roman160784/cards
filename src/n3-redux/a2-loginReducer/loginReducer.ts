@@ -3,6 +3,7 @@ import {AxiosError} from "axios"
 import {authLoginAPI, authLogoutAPI} from "../../n4-dal/API/CardsAPI";
 import {setUserAC} from "../a6-ProfileReducer/ProfileReducer";
 import {errorHandler} from "../../Utils/Utils";
+import {setLoadingAC} from "../a7-AppReducer/AppReducer";
 
 
 export type LoginType = {
@@ -45,6 +46,7 @@ export const setIsLoginAC = (isLogin: boolean) =>
     ({type: 'LOGIN/SET-IS-LOGIN', isLogin} as const)
 
 export const loginTC = (data: LoginType) => (dispatch: Dispatch,) => {
+
     authLoginAPI.login(data)
         .then((res) => {
             if (res.data) {
@@ -68,4 +70,5 @@ export const logoutTC = () => (dispatch: Dispatch) => {
         .catch((e: AxiosError)=> {
             errorHandler(e, dispatch)
         })
+
 }

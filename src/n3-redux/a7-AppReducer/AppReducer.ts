@@ -4,6 +4,7 @@ import {authAPI} from "../../n4-dal/API/CardsAPI"
 import {setIsLoginAC} from "../a2-loginReducer/loginReducer"
 import {setUserAC} from "../a6-ProfileReducer/ProfileReducer"
 import {errorHandler} from "../../Utils/Utils";
+import {toast} from "react-hot-toast";
 
 // types
 export type AppReducerType = {
@@ -66,6 +67,7 @@ export const setAppErrorAC = (authError: string | null) => ({type: 'APP/SET-ERRO
 export const isAuthTC = () => {
     return (dispatch: Dispatch) => {
         dispatch(setLoadingAC(true))
+
         return authAPI.me()
             .then((res) => {
                 dispatch(setUserAC(res.data))

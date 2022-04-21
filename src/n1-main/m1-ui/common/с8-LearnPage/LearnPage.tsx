@@ -91,24 +91,41 @@ export const LearnPage = () => {
         if (cards.length > 0) {
             // dispatch
             setCard(getCard(cards));
-        } else {
-
         }
+        toast('Good Job!', {
+            icon: '👏',
+        });
     }
     const gradeClickHandler = (g: string) => {
         if (g === "I don't know") {
             dispatch(uptdateCardsGradeTC(1, card._id))
+            toast('Don`t be disappointed!', {
+                icon: '😉',
+            });
         } else if (g === "forgot") {
             dispatch(uptdateCardsGradeTC(2, card._id))
+            toast('Try it in next time!', {
+                icon: '🙂 ',
+            });
         } else if (g === "long thought") {
             dispatch(uptdateCardsGradeTC(3, card._id))
+            toast('Don`t care!', {
+                icon: '😉',
+            });
         } else if (g === "confused") {
             dispatch(uptdateCardsGradeTC(4, card._id))
+            toast('Good!', {
+                icon: '🙂',
+            });
         } else if (g === "I know it") {
             dispatch(uptdateCardsGradeTC(5, card._id))
+            toast('Good Job!', {
+                icon: '👏',
+            });
         }
         setIsChecked(false)
         setIsShowAnswer(true)
+
     }
 
     const onClickShowAnswerHandler = () => {

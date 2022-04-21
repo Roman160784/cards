@@ -7,8 +7,9 @@ import {
     getCardsPayloadType
 } from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
-import {errorCardsHandler, errorHandler} from "../../Utils/Utils";
+import {errorHandler} from "../../Utils/Utils";
 import {RootReducerType} from "../a1-store/store";
+import {toast} from "react-hot-toast";
 
 
 //types
@@ -194,6 +195,7 @@ export const removeCardTC = (cardId: string) => {
         cardsApi.removeCard(cardId)
             .then(() => {
                 dispatch(getCardsTC())
+                toast.success('Successfully deleted!😕️')
             })
             .catch((e: AxiosError) => {
                 errorHandler(e, dispatch)
@@ -206,6 +208,7 @@ export const createCardTC = (card: CardForCreateType) => {
         cardsApi.createCard(card)
             .then(() => {
                 dispatch(getCardsTC())
+                toast.success('Successfully added!😏')
             })
             .catch((e: AxiosError) => {
                 errorHandler(e, dispatch)
@@ -217,8 +220,8 @@ export const updateNameCardTC = (card: CardForUpdateType) => {
     return (dispatch: any) => {
         cardsApi.updateNameCard(card)
             .then((res) => {
-                console.log(res.data)
                 dispatch(getCardsTC())
+                toast.success('Successfully edited!😏')
             })
             .catch((e: AxiosError) => {
                 errorHandler(e, dispatch)

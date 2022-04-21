@@ -5,9 +5,9 @@ import {
     UpdateNameCardPackType
 } from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
-import {setInitializedAC} from "../a7-AppReducer/AppReducer";
+import {setInitializedAC, setLoadingAC} from "../a7-AppReducer/AppReducer";
 import {RootReducerType} from "../a1-store/store";
-import {errorHandler, errorPackCardsHandler} from "../../Utils/Utils";
+import {errorHandler} from "../../Utils/Utils";
 import {toast} from "react-hot-toast";
 
 
@@ -138,8 +138,6 @@ export const fetchPackCardsTC = () => (dispatch: Dispatch, getState: () => RootR
             user_id: state.myCards === "my" ? getState().profile.user._id : ''
         }
 
-
-
         return packCardsAPI.getPackOfCards(payload)
             .then((res) => {
                 dispatch(setPackCardsAC(res.data.cardPacks))
@@ -154,9 +152,11 @@ export const fetchPackCardsTC = () => (dispatch: Dispatch, getState: () => RootR
 }
 
 export const addPackofCardsTC = (cardsPack: AddCardPackType) => (dispatch: Dispatch<any>) => {
+
     packCardsAPI.addPackOfCards(cardsPack)
         .then(() => {
             dispatch(fetchPackCardsTC())
+            toast.success('Successfully added!😏')
         })
         .catch((e: AxiosError) => {
             errorHandler(e, dispatch)
@@ -166,6 +166,7 @@ export const removePackOfCardsTC = (id: string) => (dispatch: Dispatch<any>) => 
     packCardsAPI.removePackOfCards(id)
         .then(() => {
             dispatch(fetchPackCardsTC())
+            toast.success('Successfully deleted!😕')
         })
         .catch((e: AxiosError) => {
             errorHandler(e, dispatch)
@@ -176,6 +177,7 @@ export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (d
     packCardsAPI.updateNamePackOfCards(cardsPack)
         .then(() => {
             dispatch(fetchPackCardsTC())
+            toast.success('Successfully edited!😏')
         })
         .catch((e: AxiosError) => {
             errorHandler(e, dispatch)

@@ -6,7 +6,7 @@ import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {pathEnum} from "../../routes/a0-Main/Main";
 import {Navigate, NavLink} from "react-router-dom";
 import classes from './Login.module.css'
-import {Toast, toast, Toaster} from "react-hot-toast";
+import {toast} from "react-hot-toast";
 import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
 
 
