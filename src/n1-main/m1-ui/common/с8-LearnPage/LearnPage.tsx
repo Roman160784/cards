@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import { useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {
@@ -10,6 +10,7 @@ import {
     uptdateCardsGradeTC
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
+import classes from './LearnPage.module.css'
 
 
 const grades = ["I don't know", "forgot", "long thought", "confused", "I know it"];
@@ -18,11 +19,10 @@ const getCard = (cards: CardsType[]) => {
     const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
     const rand = Math.random() * sum;
     const res = cards.reduce((acc: { sum: number, id: number }, card, i) => {
-            const newSum = acc.sum + (6 - card.grade) * (6 - card.grade);
-            return {sum: newSum, id: newSum < rand ? i : acc.id}
-        }
-        , {sum: 0, id: -1});
-    console.log('test: ', sum, rand, res)
+        const newSum = acc.sum + (6 - card.grade) * (6 - card.grade);
+        return {sum: newSum, id: newSum < rand ? i : acc.id}
+    }, {sum: 0, id: -1});
+
 
     return cards[res.id + 1];
 }
@@ -32,13 +32,13 @@ export const LearnPage = () => {
     const params = useParams<'*'>();
     let id = params['*']
     const dispatch = useDispatch();
-    console.log(id)
+
 
     const [isChecked, setIsChecked] = useState<boolean>(false);
+    const [isShowAnswer, setIsShowAnswer] = useState<boolean>(true);
     const [first, setFirst] = useState<boolean>(true);
     // const [first, setFirst] = useState<boolean>(0);
     const {cards} = useSelector((store: RootReducerType) => store.cards);
-    // const loading = useSelector<RootReducerType, boolean>(state => state.app.loading)
     // const id = useSelector<RootReducerType, string>(state => state.cards.cardsPack_id)
 
 
@@ -68,27 +68,25 @@ export const LearnPage = () => {
     // },[cards])
 
     useEffect(() => {
-        console.log('LearnContainer useEffect');
+
         if (first) {
             dispatch(getCardsTC(id));
             setFirst(false);
         }
-        console.log(cards)
+
         //if (cards.length > 0) {
-        console.log(getCard(cards));
         setCard(getCard(cards));
         //}
 
-
         return () => {
             dispatch(setCardsPackIdAC(id = ''))
-            console.log('LearnContainer useEffect off');
+
         }
     }, [cards]);
 
     const onNext = () => {
         setIsChecked(false);
-
+        setIsShowAnswer(true)
         if (cards.length > 0) {
             // dispatch
             setCard(getCard(cards));
@@ -108,27 +106,41 @@ export const LearnPage = () => {
         } else if (g === "I know it") {
             dispatch(uptdateCardsGradeTC(5, card._id))
         }
+        setIsChecked(false)
+        setIsShowAnswer(true)
     }
 
-    return (
-        <div>
-            LearnPage
+    const onClickShowAnswerHandler = () => {
+        setIsChecked(true)
+        setIsShowAnswer(false)
+    }
 
-            <div>{card?.question}</div>
-            <div>
-                <button onClick={() => setIsChecked(true)}>check</button>
-            </div>
+
+    return (
+        <div className={classes.wrapContainer}>
+            <span className={classes.title}>Learn Info</span>
+
+            <div className={classes.question}><span style={{fontWeight: 'bold'}}>Question:</span> {card?.question}</div>
+            {isShowAnswer && <div className={classes.btnCheckWrap}>
+                <button onClick={onClickShowAnswerHandler} className={classes.btnCheck}>Show answer</button>
+            </div>}
 
             {isChecked && (
                 <>
-                    <div>{card?.answer}</div>
-                    {grades.map((g, i) => (
-                        <button key={'grade-' + i} onClick={() => {gradeClickHandler(g)}}>{g}</button>
+                    <div className={classes.answer}><span style={{fontWeight: 'bold'}}>Answer:</span> {card?.answer}
+                    </div>
+                    <div className={classes.checkYourSelf}>Check yourself:</div>
 
-                    ))}
+                        {grades.map((g, i) => (
 
-                    <div>
-                        <button onClick={onNext}>next</button>
+                                <button key={'grade-' + i} onClick={() => {
+                                    gradeClickHandler(g)
+                                }} className={classes.btnGrade}>{g}</button>
+
+                        ))}
+
+                    <div className={classes.btnNextWrap}>
+                        <button className={classes.btnNext} onClick={onNext}>next</button>
                     </div>
                 </>
             )}
@@ -136,4 +148,3 @@ export const LearnPage = () => {
     );
 };
 
-// export default LearnPage;
