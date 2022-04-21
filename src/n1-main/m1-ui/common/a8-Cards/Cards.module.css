@@ -13,7 +13,7 @@
     transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 .backArrow:hover {
-    box-shadow: 0px 20px 35px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.06);
     transform: translateY(-5px);
 }
 .errors {
@@ -34,7 +34,7 @@
     border-radius: 30px;
     border: 1px solid limegreen;
     background-color: white;
-    color: limegreen;
+    color: green;
     cursor: pointer;
 }
 

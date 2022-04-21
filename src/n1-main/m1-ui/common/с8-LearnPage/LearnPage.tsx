@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from "react";
-
 import {useDispatch, useSelector} from "react-redux";
-
 import {useParams} from "react-router-dom";
-
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {getCardsTC, uptdateCardsGradeTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";

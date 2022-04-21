@@ -36,7 +36,7 @@ export const EditableSpan = ({ title, changeTitle, ...props }: EditableSpanProps
             setValue('')
             setMode(false)
         }else {
-            setError('Incorerct User Name')
+            setError('Incorrect User Name')
         } 
     }
 

@@ -2,17 +2,17 @@ import {passwordAPI, SetPasswordType} from "../../n4-dal/API/CardsAPI";
 import {Dispatch} from "redux";
 import {AxiosError} from "axios";
 
-export type NewRasswordReducerRducerType = {
+export type NewPasswordReducerType = {
     info: string | null
     error: string | null
 }
 
-const initialState: NewRasswordReducerRducerType = {
+const initialState: NewPasswordReducerType = {
     info: null,
     error: null
 }
 
-export const NewRasswordReducer = (state: NewRasswordReducerRducerType = initialState, action: ActionTypes): NewRasswordReducerRducerType => {
+export const NewPasswordReducer = (state: NewPasswordReducerType = initialState, action: ActionTypes): NewPasswordReducerType => {
     switch (action.type) {
         case 'NEW-PASSWORD/SET-NOTIFICATION': {
             return {...state, info: action.info}
@@ -41,7 +41,7 @@ export const setNewPasswordTC = (data: SetPasswordType) => {
             .then((res) => {
                 dispatch(setNotificationAC(res.data.info))
             })
-            .then(res => {
+            .then(() => {
                 setTimeout(() => {
                     dispatch(setNotificationAC(null))
                 }, 3000)

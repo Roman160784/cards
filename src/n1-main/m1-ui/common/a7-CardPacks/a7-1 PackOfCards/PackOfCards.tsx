@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
 import classes from './PackOfCards.module.css'
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {setPackIdAC, updateNamePackOfCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
+import { updateNamePackOfCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 import {Modal} from "../../../../../Utils/Modal/Modal";
 import LearnPage from "../../с8-LearnPage/LearnPage";
 import {getCardsTC, setCardsPackIdAC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
@@ -22,7 +22,7 @@ type PropsType = {
 
 export const PackOfCards = ({
                                 packId, name, cardsCount,
-                                removePackOfCards, path, updated,
+                                removePackOfCards, updated,
                                 userId, cardPackUserId
                             }: PropsType) => {
     const [modalActive, setModalActive] = useState<boolean>(false);
@@ -75,7 +75,6 @@ export const PackOfCards = ({
         <div className={classes.boxCards}>
             <div className={classes.blockText} onClick={learnClickHandler}>{name}</div>
             <div className={classes.blockText}>{cardsCount}</div>
-            {/*<div className={classes.blockText}>{path}</div>*/}
             <div className={classes.blockText}>{updated}</div>
             <div className={classes.contentBtn}>
                 {cardPackUserId === userId && <button

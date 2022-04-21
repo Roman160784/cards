@@ -2,14 +2,14 @@
 import React from "react";
 import c from "./Stars.module.css";
 
-export type StatrsPropsType = {
+export type StarsPropsType = {
     id: string
     selected:boolean
     value: 1 | 2 | 3 | 4 | 5
     callBack: ( value:number, id: string,) => void
 }
 
-export const Statrs = ({id, selected, value, callBack}:StatrsPropsType ) => {
+export const Stars = ({id, selected, value, callBack}:StarsPropsType ) => {
 
     const handlerStar = ()=>{
         callBack( value, id,)

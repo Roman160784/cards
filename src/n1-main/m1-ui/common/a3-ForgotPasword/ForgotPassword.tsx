@@ -17,7 +17,6 @@ export const ForgotPassword = () => {
     const notification = useSelector<RootReducerType, string | null>(state => state.forgotPassword.message)
     const dispatch = useDispatch()
 
-
     const message = `<div style="background-color: lime; padding: 15px">
                     password recovery link: 
                     <a href='http://localhost:3000/#/set-new-password/$token$'>
@@ -39,12 +38,11 @@ export const ForgotPassword = () => {
         },
         onSubmit: values => {
             dispatch(getParamsForNewPasswordTC({...values, from, message}))
-            // alert(JSON.stringify(values, null, 2));
         },
     });
     const emailForSending = formik.values.email
     const from = `for person, f ${emailForSending}`
-    // make the redirection to new page in order to cofirm new password on your email(Max) "sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—"
+    // make the redirection to new page in order to confirm new password on your email(Max) "sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—"
     if (notification === "sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—") {
         return <Navigate to={pathEnum.checkEmail}/>
     }

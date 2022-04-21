@@ -34,21 +34,16 @@ export const CardsPacks = () => {
 
     const dispatch = useDispatch()
 
-    // const [isOpened, setOpened] = useState<boolean>(false)
     const [value, setValue] = useState([0, 30]);
     const [cardsView, setCardsView] = useState<'my' | 'all'>('all')
     const debouncedValue = useDebounce<number[]>(value, 1000)
 
-    // const [show, setShow] = useState(false);
-    // const [answer, setAnswer] = useState('test answer');
-    //
     const [modalActive, setModalActive] = useState<boolean>(false);
     const [name, setName] = useState<string>('')
 
     useEffect(() => {
         dispatch(fetchPackCardsTC())
     }, [pageCount, page, currentPackName, myCards, maxCardsCount, minCardsCount, sortPacks])
-
 
 
     const addPack = useCallback((name: string) => {
@@ -60,7 +55,7 @@ export const CardsPacks = () => {
         setName(e.currentTarget.value)
     }
     const onKeyPressModalHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if(e.key === 'Enter') addPack(name)
+        if (e.key === 'Enter') addPack(name)
     }
 
 
@@ -80,10 +75,10 @@ export const CardsPacks = () => {
         dispatch(setCurrentPageAC(1))
     }
 
-    const sortPacksMinCardstHandler = () => {
+    const sortPacksMinCardsHandler = () => {
         dispatch(sortPacksAC('1cardsCount'))
     }
-    const sortPacksMaxCardstHandler = () => {
+    const sortPacksMaxCardsHandler = () => {
         dispatch(sortPacksAC('0cardsCount'))
     }
 
@@ -109,8 +104,7 @@ export const CardsPacks = () => {
     }, [debouncedValue])
 
 
-
-    const handleChange = (event: any,  newValue: any) => {
+    const handleChange = (event: any, newValue: any) => {
         setValue(newValue);
     };
 
@@ -157,7 +151,8 @@ export const CardsPacks = () => {
             </div>
             <div className={classes.boxCardsPack}>
                 <div className={classes.blockNameCards}>
-                    <span>Name<span className={classes.boxArrow}>
+                    <span>Name
+                        <span className={classes.boxArrow}>
                         <i className={`${classes.arrow} ${classes.arrowUp}`}
                            onClick={SortPackNameMinCards}>
                         </i>
@@ -166,18 +161,18 @@ export const CardsPacks = () => {
                         </i>
                     </span>
                     </span>
-                    <span>Cards Count<span className={classes.boxArrow}>
-                        {/*<i className={classes.up} onClick={sortPacksMinCardstHandler}></i>*/}
-                        {/*<i className={classes.down} onClick={sortPacksMaxCardstHandler}></i>*/}
+                    <span>Cards Count
+                        <span className={classes.boxArrow}>
                         <i className={`${classes.arrow} ${classes.arrowUp}`}
-                           onClick={sortPacksMinCardstHandler}>
+                           onClick={sortPacksMinCardsHandler}>
                         </i>
                         <i className={`${classes.arrow} ${classes.arrowDown}`}
-                           onClick={sortPacksMaxCardstHandler}>
+                           onClick={sortPacksMaxCardsHandler}>
                         </i>
                     </span>
                     </span>
-                    <span>Updated<span className={classes.boxArrow}>
+                    <span>Updated
+                        <span className={classes.boxArrow}>
                         <i className={`${classes.arrow} ${classes.arrowUp}`}
                            onClick={SortPackUpdatedMinCards}>
                         </i>

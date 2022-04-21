@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import classes from './Paginator.module.css';
 import {useDispatch} from "react-redux";
 import {setCurrentPageAC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
+import {Pagination, Stack} from "@mui/material";
 
 export type PaginatorPropsType = {
     cardPacksTotalCount: number
@@ -18,9 +19,6 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
                                                             pageCount,
                                                             page,
                                                             portionSize = 10,
-                                                            value,
-                                                            userId,
-                                                            cardsView
                                                         }) => {
 
     const dispatch = useDispatch()
@@ -46,18 +44,18 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
                 portionNumber > 1 &&
                 <button className={classes.btn} onClick={() => {
                     setPortionNumber(portionNumber - 1)
-                }}>prev</button>
+                }}>{'<'}</button>
             }
             {pages
                 .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                 .map(p => {
-                    return <span className={page === p ? classes.selectedPage : "" && classes.select}
+                    return <span className={page === p ? classes.selectedPage : ""}
                                  onClick={() => {onPageChanged(p)}}>{p}</span> })}
             {
                 portionCount > portionNumber &&
                 <button className={classes.btn} onClick={() => {
                     setPortionNumber(portionNumber + 1)
-                }}>next</button>
+                }}>{'>'}</button>
             }
         </div>
     )

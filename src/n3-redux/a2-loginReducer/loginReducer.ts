@@ -2,7 +2,6 @@ import {Dispatch} from "redux";
 import {AxiosError} from "axios"
 import {authLoginAPI, authLogoutAPI} from "../../n4-dal/API/CardsAPI";
 import {setUserAC} from "../a6-ProfileReducer/ProfileReducer";
-import {setAppErrorAC} from "../a7-AppReducer/AppReducer";
 import {loginErrorHandler} from "../../Utils/Utils";
 
 
