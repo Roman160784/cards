@@ -10,7 +10,7 @@
 .profileBoxUserName {
     width: 300px;
     min-height: 50vh;
-    margin: 70px auto;
+    margin: 40px auto;
 }
 
 .profileUser {
@@ -56,7 +56,7 @@
     border: none;
     display: flex;
     justify-content: center;
-    margin: 50px auto;
+    margin: 50px auto 0;
     cursor: pointer;
     user-select: none;
     background: linear-gradient(270deg, #b2f5ba 0%, #b2f5f1 100%);
