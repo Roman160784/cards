@@ -15,18 +15,15 @@
 }
 
 .selectedPage {
-    font-weight: bold;
     text-align: center;
     cursor: pointer;
-    padding: 0 5px;
     border-radius: 3px;
-    border: 1px solid limegreen;
+    padding: 0 10px;
     background-color: limegreen;
     color: white;
-
 }
 
 .select {
-    padding-right: 15px;
     cursor: pointer;
+    padding: 0 10px;
 }

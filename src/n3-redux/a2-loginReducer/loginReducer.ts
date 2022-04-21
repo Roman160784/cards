@@ -3,7 +3,7 @@ import {AxiosError} from "axios"
 import {authLoginAPI, authLogoutAPI} from "../../n4-dal/API/CardsAPI";
 import {setUserAC} from "../a6-ProfileReducer/ProfileReducer";
 import {errorHandler} from "../../Utils/Utils";
-import {setLoadingAC} from "../a7-AppReducer/AppReducer";
+
 
 
 export type LoginType = {
@@ -58,6 +58,7 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch,) => {
         .catch((e: AxiosError) => {
             errorHandler(e, dispatch)
         })
+
 }
 
 export const logoutTC = () => (dispatch: Dispatch) => {
