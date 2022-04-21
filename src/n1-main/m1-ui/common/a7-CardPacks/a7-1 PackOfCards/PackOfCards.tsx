@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import { updateNamePackOfCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 import {Modal} from "../../../../../Utils/Modal/Modal";
-import LearnPage from "../../с8-LearnPage/LearnPage";
+import {LearnPage} from "../../с8-LearnPage/LearnPage";
 import {getCardsTC, setCardsPackIdAC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
 
 

@@ -27,7 +27,7 @@ const getCard = (cards: CardsType[]) => {
     return cards[res.id + 1];
 }
 
-const LearnPage = () => {
+export const LearnPage = () => {
 
     const params = useParams<'*'>();
     let id = params['*']
@@ -122,7 +122,6 @@ const LearnPage = () => {
             {isChecked && (
                 <>
                     <div>{card?.answer}</div>
-
                     {grades.map((g, i) => (
                         <button key={'grade-' + i} onClick={() => {gradeClickHandler(g)}}>{g}</button>
 
@@ -137,4 +136,4 @@ const LearnPage = () => {
     );
 };
 
-export default LearnPage;
+// export default LearnPage;
