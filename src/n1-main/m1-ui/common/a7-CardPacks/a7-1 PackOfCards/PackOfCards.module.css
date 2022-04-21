@@ -28,6 +28,7 @@
     background-color: lime;
 
 }
+
 .modalTitle {
     height: 27px;
     left: 466px;
@@ -40,6 +41,7 @@
     align-items: flex-end;
     color: #2D2E46;
 }
+
 .modalInput {
     margin-top: 35px;
     width: 75%;
@@ -50,13 +52,16 @@
     background: #eee;
 
 }
+
 .modalInput:focus {
     outline-color: #2196f3;
 }
+
 .btnModalWrap {
     display: flex;
     justify-content: space-evenly;
 }
+
 .modalButtonSave {
     width: 127px;
     height: 36px;
@@ -71,11 +76,13 @@
     text-decoration: none;
     display: inline-block;
 }
+
 .modalButtonSave:hover {
     border: 2px solid #4CAF50;
     background-color: white;
     color: #4CAF50;
 }
+
 .modalButtonCancel {
     width: 127px;
     height: 36px;
@@ -90,14 +97,17 @@
     text-decoration: none;
     display: inline-block;
 }
+
 .modalButtonCancel:hover {
     border: 2px solid red;
     background-color: white;
     color: red;
 }
+
 .modalDelete {
     margin: 20px auto;
 }
+
 .modalSpanPackName {
     font-weight: bold;
 }

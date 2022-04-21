@@ -11,14 +11,12 @@ import {pathEnum} from "../../routes/a0-Main/Main";
 import {logoutTC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
 
 
-
 export const NewPassword = () => {
     const dispatch = useDispatch()
     const params = useParams<'token'>()
     const resetPasswordToken = params.token
 
     const successInfo = useSelector<RootReducerType, string | null>(state => state.newPassword.info)
-
 
     const formik = useFormik({
         initialValues: {
@@ -39,9 +37,9 @@ export const NewPassword = () => {
     });
     const password = formik.values.password
 
-    if(successInfo === 'setNewPassword success —ฅ/ᐠ.̫ .ᐟฅ—') {
+    if (successInfo === 'setNewPassword success —ฅ/ᐠ.̫ .ᐟฅ—') {
         dispatch(logoutTC())
-       return <Navigate to={pathEnum.login}/>
+        return <Navigate to={pathEnum.login}/>
     }
 
     return (
@@ -59,9 +57,12 @@ export const NewPassword = () => {
                     <input {...formik.getFieldProps('confirmPassword')} placeholder={'Confirm password'}
                            className={classes.inputPassword}
                     />
-                    {/*{errorServerMessage ? <div> {errorServerMessage} </div> : null}*/}
                 </div>
-               <div><p className={classes.textPassword}>Create new password and we will send you further instructions to email</p></div>
+                <div>
+                    <p className={classes.textPassword}>Create new password and we will send you further instructions
+                        to email
+                    </p>
+                </div>
                 <button type="submit" className={classes.buttonPassword}>Create new password</button>
             </form>
         </div>

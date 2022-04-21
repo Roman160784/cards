@@ -152,7 +152,7 @@ export const fetchPackCardsTC = () => {
 }
 export const addPackofCardsTC = (cardsPack: AddCardPackType) => (dispatch: Dispatch<any>) => {
     packCardsAPI.addPackOfCards(cardsPack)
-        .then((res) => {
+        .then(() => {
             dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
@@ -161,7 +161,7 @@ export const addPackofCardsTC = (cardsPack: AddCardPackType) => (dispatch: Dispa
 }
 export const removePackOfCardsTC = (id: string) => (dispatch: Dispatch<any>) => {
     packCardsAPI.removePackOfCards(id)
-        .then((res) => {
+        .then(() => {
             dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
@@ -171,7 +171,7 @@ export const removePackOfCardsTC = (id: string) => (dispatch: Dispatch<any>) => 
 
 export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (dispatch: Dispatch<any>) => {
     packCardsAPI.updateNamePackOfCards(cardsPack)
-        .then((res) => {
+        .then(() => {
             dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {

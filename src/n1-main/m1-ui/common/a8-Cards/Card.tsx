@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Statrs} from "../c7-Stars/Stars";
+import {Stars} from "../c7-Stars/Stars";
 import {Modal} from "../../../../Utils/Modal/Modal";
 import classes from "./Cards.module.css";
 import {removeCardTC, updateNameCardTC, uptdateCardsGradeTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
@@ -66,7 +66,6 @@ export const Card = ({_id, question, answer, grade, updated}: PropsType) => {
     }
 
     const getCardsGrateHandler = (value: number, id: string,) => {
-        // dispatch(setSelectedAC(id, value))
         dispatch(uptdateCardsGradeTC(value, id))
     }
 
@@ -77,11 +76,11 @@ export const Card = ({_id, question, answer, grade, updated}: PropsType) => {
             <span className={classes.textCard}>{new Date(updated).toLocaleDateString()}</span>
             <span className={classes.textCard}>{grade.toFixed(2)}</span>
             <div className={classes.textCard}>
-            <Statrs selected={grade > 0} callBack={getCardsGrateHandler} id={_id} value={1}/>
-            <Statrs selected={grade > 1.5} callBack={getCardsGrateHandler} id={_id} value={2}/>
-            <Statrs selected={grade > 2.5} callBack={getCardsGrateHandler} id={_id} value={3}/>
-            <Statrs selected={grade > 3.5} callBack={getCardsGrateHandler} id={_id} value={4}/>
-            <Statrs selected={grade > 4.5} callBack={getCardsGrateHandler} id={_id} value={5}/>
+                <Stars selected={grade > 0} callBack={getCardsGrateHandler} id={_id} value={1}/>
+                <Stars selected={grade > 1.5} callBack={getCardsGrateHandler} id={_id} value={2}/>
+                <Stars selected={grade > 2.5} callBack={getCardsGrateHandler} id={_id} value={3}/>
+                <Stars selected={grade > 3.5} callBack={getCardsGrateHandler} id={_id} value={4}/>
+                <Stars selected={grade > 4.5} callBack={getCardsGrateHandler} id={_id} value={5}/>
             </div>
             <div className={classes.buttonCard}>
                 <button onClick={() => setModalDeleteActive(true)} className={classes.btnDel}>del</button>
