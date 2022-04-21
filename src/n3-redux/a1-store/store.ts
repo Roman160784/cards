@@ -1,9 +1,9 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunk from "redux-thunk";
 import {LoginReducer} from "../a2-loginReducer/loginReducer";
-import {RegistrtionReducer} from "../a3-RegistrationReducer/RegistrationReducer";
+import {RegistrationReducer} from "../a3-RegistrationReducer/RegistrationReducer";
 import {ForgotPasswordReducer} from "../a4-ForgotRasswordReducer/ForgotRasswordRducer";
-import {NewRasswordReducer} from "../a5-NewRasswordReducer/NewRasswordRducer";
+import {NewPasswordReducer} from "../a5-NewRasswordReducer/NewRasswordRducer";
 import {ProfileReducer} from "../a6-ProfileReducer/ProfileReducer";
 import { AppReducer } from "../a7-AppReducer/AppReducer";
 import {CardsPacksReducer} from "../a8-CardsPacksReducer/CardsPacksReducer";
@@ -13,9 +13,9 @@ import {CardsReducer} from "../a9-CardsReducer/CardsReducer";
 
 const rootReducer = combineReducers({
     login: LoginReducer,
-    registration: RegistrtionReducer,
+    registration: RegistrationReducer,
     forgotPassword: ForgotPasswordReducer,
-    newPassword: NewRasswordReducer,
+    newPassword: NewPasswordReducer,
     profile: ProfileReducer,
     app: AppReducer,
     cardsPacks: CardsPacksReducer,

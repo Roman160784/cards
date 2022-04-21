@@ -1,8 +1,6 @@
 import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import { registrationAPI } from "../../n4-dal/API/CardsAPI"
-import {setErrorMessageAC} from "../a4-ForgotRasswordReducer/ForgotRasswordRducer";
-
 
 //types
 
@@ -12,19 +10,19 @@ export type userType = {
     confirmPassword?: string
 }
 
-type RegistrtionReducerType = {
+type RegistrationReducerType = {
     registration: boolean
     registrationError: string | null
 }
 
-const initialState: RegistrtionReducerType = {
+const initialState: RegistrationReducerType = {
     registration: false,
     registrationError: ''
 }
 
 //reducer
 
-export const RegistrtionReducer = (state: RegistrtionReducerType = initialState, action: MainActionType): RegistrtionReducerType => {
+export const RegistrationReducer = (state: RegistrationReducerType = initialState, action: MainActionType): RegistrationReducerType => {
     switch (action.type) {
         case 'REGISTRATION/ADD-USER': {
             return { ...state, registration: action.success }

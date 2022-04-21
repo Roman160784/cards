@@ -48,7 +48,7 @@ export const getParamsForNewPasswordTC = (data: PasswordType) => {
             .then((res) => {
                 dispatch(setNotificationAC(res.data.info))
             })
-            .then(res => {
+            .then(() => {
                 setTimeout(() => {
                     dispatch(setNotificationAC(null))
                 }, 3000)

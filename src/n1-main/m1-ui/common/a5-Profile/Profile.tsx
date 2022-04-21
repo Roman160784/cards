@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {EditableSpan} from '../c4-EditableSpan/EditableSpan';
 import {RootReducerType} from '../../../../n3-redux/a1-store/store'
-import { updateUserTC} from '../../../../n3-redux/a6-ProfileReducer/ProfileReducer';
+import {updateUserTC} from '../../../../n3-redux/a6-ProfileReducer/ProfileReducer';
 import {pathEnum} from "../../routes/a0-Main/Main";
 import {Navigate} from "react-router-dom";
 import {logoutTC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
@@ -35,19 +35,18 @@ export const Profile = () => {
                         <input type="image"
                                name="image"
                                alt="img"
-                               src="https://vjoy.cc/wp-content/uploads/2020/11/27aa5a2ff02558ef7d099355ed79b022.jpg"
+                               src="https://i.pinimg.com/736x/20/5d/95/205d9582975737a8b02fb1e5bbc02fd5.jpg"
                                width="150"
                                className={classes.profileImg}
 
                         />
                     </div>
-                    {/*<button onClick={handlerData}>click</button>*/}
                     <div className={classes.profileUserName}>
                         <EditableSpan
                             title={userName ? userName : 'User name'}
                             changeTitle={(title: string) => {
-                            changeTitleHandler(title)
-                        }}/>
+                                changeTitleHandler(title)
+                            }}/>
                     </div>
                     <div className={classes.textProfile}>Front-end developer</div>
                 </div>

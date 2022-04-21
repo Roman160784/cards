@@ -18,6 +18,10 @@
     margin-right: 20px;
 }
 
+.btnHandler:hover {
+    background: linear-gradient(135deg, #0eaf0e 100%, #baf792 0%);
+}
+
 .btnDisabled {
     justify-content: center;
     width: 150px;
@@ -30,7 +34,6 @@
     transition: background 9999999s;
     margin-right: 20px;
 }
-
 
 .boxSearchButton {
     display: flex;
@@ -57,23 +60,6 @@
     justify-content: space-between;
     margin-top: 10px;
 }
-
-/*i {*/
-/*    border: solid black;*/
-/*    border-width: 0 3px 3px 0;*/
-/*    display: inline-block;*/
-/*    padding: 3px;*/
-/*}*/
-
-/*.up {*/
-/*    transform: rotate(-135deg);*/
-/*    transform-origin: top right;*/
-/*}*/
-
-/*.down {*/
-/*    transform: rotate(45deg);*/
-/*    transform-origin: bottom left;*/
-/*}*/
 
 .errors {
     color: red;
@@ -104,9 +90,8 @@ a .arrow {
 
 .arrowDown::before {
     border-bottom-width: 0;
-    /*transform: rotate(45deg);*/
-    /*transform-origin: bottom left;*/
 }
+
 .modalTitle {
     height: 27px;
     left: 466px;
@@ -119,6 +104,7 @@ a .arrow {
     align-items: flex-end;
     color: #2D2E46;
 }
+
 .modalInput {
     margin-top: 35px;
     width: 75%;
@@ -128,9 +114,11 @@ a .arrow {
     border-radius: 10px;
     background: #eee;
 }
+
 .modalInput:focus {
     outline-color: #2196f3;
 }
+
 .modalButton {
     width: 127px;
     height: 36px;
@@ -145,11 +133,13 @@ a .arrow {
     text-decoration: none;
     display: inline-block;
 }
+
 .modalButton:hover {
     border: 2px solid #4CAF50;
     background-color: white;
     color: #4CAF50;
 }
+
 .modalBox {
     display: flex;
     flex-direction: column;
