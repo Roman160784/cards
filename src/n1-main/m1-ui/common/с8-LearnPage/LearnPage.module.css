@@ -1,0 +1,87 @@
+.wrapContainer {
+    display: flex;
+    flex-direction: column;
+}
+.title {
+    font-size: 22px;
+    color: #2D2E46;
+    margin-bottom: 30px;
+    align-items: center;
+}
+.question {
+    font-size: 18px;
+    color: #2D2E46;
+}
+.btnCheckWrap {
+
+}
+.btnCheck {
+    width: 127px;
+    height: 36px;
+    font-size: 17px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border: 2px solid #4CAF50;
+    text-decoration: none;
+    display: inline-block;
+}
+.btnCheck:hover {
+    border: 2px solid #4CAF50;
+    background-color: white;
+    color: #4CAF50;
+}
+.answer {
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 40px;
+    color: #2D2E46;
+}
+.checkYourSelf{
+    font-size: 18px;
+    color: #2D2E46;
+}
+.btnGrade {
+    width: 127px;
+    height: 36px;
+    font-size: 17px;
+    margin-top: 20px;
+    background: #a0a5e8;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border: 2px solid #a0a5e8;
+    text-decoration: none;
+    display: inline-block;
+}
+.btnGrade:hover {
+    border: 2px solid #a0a5e8;
+    background-color: white;
+    color: black;
+}
+.btnNextWrap {
+
+}
+.btnNext {
+    width: 127px;
+    height: 36px;
+    font-size: 17px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border: 2px solid #4CAF50;
+    text-decoration: none;
+    display: inline-block;
+}
+.btnNext:hover {
+    border: 2px solid #4CAF50;
+    background-color: white;
+    color: #4CAF50;
+}
