@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+
 import {useDispatch, useSelector} from "react-redux";
 
 import {useParams} from "react-router-dom";
@@ -56,16 +57,6 @@ export const LearnPage = () => {
         updated: '',
     });
 
-    // useEffect(() => {
-    //     if (!cards) {
-    //         setLoadingAC(true)
-    //         setCard(getCard(cards))
-    //     } else {
-    //         if(loading)
-    //         setLoadingAC(false)
-    //     }
-    //
-    // },[cards])
 
     useEffect(() => {
 
@@ -146,4 +137,4 @@ export const LearnPage = () => {
             )}
         </div>
     );
-};
+}
