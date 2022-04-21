@@ -35,6 +35,7 @@ export const CardsPacks = () => {
     const dispatch = useDispatch()
 
     const [value, setValue] = useState([0, 30]);
+    const [isClass, isSetClass] = useState(false);
     const [cardsView, setCardsView] = useState<'my' | 'all'>('all')
     const debouncedValue = useDebounce<number[]>(value, 1000)
 
@@ -68,11 +69,13 @@ export const CardsPacks = () => {
     const allPacksHandler = () => {
         setCardsView('all')
         dispatch(sortAllMyPacksAC('all'))
+        isSetClass(!isClass)
     }
     const MyPacksHandler = () => {
         setCardsView('my')
         dispatch(sortAllMyPacksAC('my'))
         dispatch(setCurrentPageAC(1))
+        isSetClass(!isClass)
     }
 
     const sortPacksMinCardsHandler = () => {
@@ -136,8 +139,10 @@ export const CardsPacks = () => {
             </Modal>
             <div className={classes.boxButtonAndSlider}>
                 <div>
-                    <button className={classes.btnHandler} onClick={allPacksHandler}>All</button>
-                    <button className={classes.btnHandler} onClick={MyPacksHandler}>My</button>
+                    <button className={isClass ?  classes.btnHandler : classes.active}
+                            onClick={allPacksHandler}>All</button>
+                    <button className={!isClass ?  classes.btnHandler : classes.active}
+                            onClick={MyPacksHandler}>My</button>
                 </div>
                 <div>
                     <Box sx={{width: 300, marginRight: "10px", textAlign: 'center'}}>
