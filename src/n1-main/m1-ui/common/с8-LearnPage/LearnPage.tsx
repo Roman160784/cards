@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {useParams} from "react-router-dom";
@@ -15,6 +15,10 @@ import {toast} from "react-hot-toast";
 import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
 
 
+type LearnPagePropsType = {
+    packName: string
+}
+
 const grades = ["I don't know", "forgot", "long thought", "confused", "I know it"];
 
 const getCard = (cards: CardsType[]) => {
@@ -29,13 +33,13 @@ const getCard = (cards: CardsType[]) => {
     return cards[res.id + 1];
 }
 
-export const LearnPage = () => {
+export const LearnPage = ({packName}: LearnPagePropsType) => {
 
     const params = useParams<'*'>();
     let id = params['*']
     const dispatch = useDispatch();
 
-
+    const [grade, setGrade] = useState<number>(0)
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [isShowAnswer, setIsShowAnswer] = useState<boolean>(true);
     const [first, setFirst] = useState<boolean>(true);
@@ -139,10 +143,14 @@ export const LearnPage = () => {
         }
     }
 
+    const clickGradeHandler = (i: number) => {
+        setGrade(i)
+    }
+
 
     return (
         <div className={classes.wrapContainer}>
-            <span className={classes.title}>Learn Info</span>
+            <span className={classes.title}>Pack: {packName}</span>
 
             <div className={classes.question}><span style={{fontWeight: 'bold'}}>Question:</span> {card?.question}</div>
             {isShowAnswer && <div className={classes.btnCheckWrap}>
@@ -155,14 +163,12 @@ export const LearnPage = () => {
                     </div>
                     <div className={classes.checkYourSelf}>Check yourself:</div>
 
-                        {grades.map((g, i) => (
+                    {grades.map((g, i) => (
 
-                                <button key={'grade-' + i} onClick={() => {
-                                    gradeClickHandler(g)
-                                }} className={classes.btnGrade}>{g}</button>
-
-                        ))}
-
+                        <div key={'grade-' + i}>
+                            <button className={grade === i ? classes.resultButtonActives : classes.resultButton}
+                                    onClick={()=>{clickGradeHandler(i)}}></button> <span>{g}</span></div>
+                    ))}
                     <div className={classes.btnNextWrap}>
                         <button className={classes.btnNext} onClick={onNext}>next</button>
                     </div>
@@ -171,4 +177,4 @@ export const LearnPage = () => {
             {notify()}
         </div>
     );
-};
+}

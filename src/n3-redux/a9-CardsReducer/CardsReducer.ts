@@ -35,6 +35,8 @@ export type CardsReducerType = {
     questionVideo: string
     answerVideo: string
     _id: string
+
+
 }
 
 //state
@@ -59,7 +61,7 @@ const initialState: CardsReducerType = {
     questionImg: '',
     questionVideo: '',
     answerVideo: '',
-    _id: ''
+    _id: '',
 }
 
 //reducer
@@ -104,6 +106,7 @@ export const CardsReducer = (state: CardsReducerType = initialState, action: Mai
         case "CARDS/SET-CARD-ID": {
             return {...state, _id: action._id}
         }
+
         default:
             return {...state}
     }
@@ -125,6 +128,7 @@ export type MainActionType =
     | setQuestionACType
     | setCardIdACType
 
+
 export type setCardsACType = ReturnType<typeof setCardsAC>
 export type setCardsErrorACType = ReturnType<typeof setCardsErrorAC>
 export type setCardsTotalCountACType = ReturnType<typeof setCardsTotalCountAC>
@@ -138,6 +142,7 @@ export type setSelectedACType = ReturnType<typeof setSelectedAC>
 export type setQuestionACType = ReturnType<typeof setQuestionAC>
 export type setAnswerACType = ReturnType<typeof setAnswerAC>
 export type setCardIdACType = ReturnType<typeof setCardIdAC>
+
 
 //actions
 export const setCardsAC = (cards: CardsType[]) => ({type: 'CARDS/SET-CARDS', cards} as const)
@@ -163,6 +168,7 @@ export const setCardsPackIdAC = (cardsPack_id: string) => ({type: 'CARDS/SET-CAR
 export const setQuestionAC = (question: string) => ({type: 'CARDS/SET-QUESTION', question} as const)
 export const setAnswerAC = (answer: string) => ({type: 'CARDS/SET-ANSWER', answer} as const)
 export const setCardIdAC = (_id: string) => ({type: 'CARDS/SET-CARD-ID', _id} as const)
+
 
 // thunks
 export const getCardsTC = (learnId?: string) => {

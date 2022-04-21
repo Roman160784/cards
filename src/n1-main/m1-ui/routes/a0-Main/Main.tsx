@@ -11,6 +11,7 @@ import React from "react";
 import {CheckEmail} from "../../common/a4-NewPassword/CheckEmail";
 import {CardsPacks} from "../../common/a7-CardPacks/CardsPacks";
 import {Cards} from "../../common/a8-Cards/Cards";
+import {LearnPage} from "../../common/с8-LearnPage/LearnPage";
 
 
 export enum pathEnum {
@@ -50,7 +51,7 @@ export const Main = () => {
                         <Route path={pathEnum.cards} element={<Cards/>}/>
                         <Route path={pathEnum.error404} element=
                             {<h1 style={{textAlign: 'center', fontSize: '50px'}}>404: OOPS.. PAGE NOT FOUND</h1>}/>
-                        <Route path={pathEnum.empty} element={<Navigate to={pathEnum.error404}/>}/>
+                        <Route path={pathEnum.empty} element={<Navigate to={pathEnum.login}/>}/>
                     </Routes>
                 </div>
             </div>
