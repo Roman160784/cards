@@ -85,3 +85,21 @@
     background-color: white;
     color: #4CAF50;
 }
+
+.resultButton{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #4CAF50;
+    border: white;
+}
+
+.resultButtonActives{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: red;
+    border: white;
+}
+
+

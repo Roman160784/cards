@@ -95,7 +95,7 @@ export const PackOfCards = ({
             </div>
 
             <Modal active={modalLearnActive} setActive={setModalLearnActive}>
-                <LearnPage />
+                <LearnPage  packName={name}/>
                 <button className={classes.modalButtonCancel} onClick={() => {
                     setModalLearnActive(false)
                     navigate(-1)

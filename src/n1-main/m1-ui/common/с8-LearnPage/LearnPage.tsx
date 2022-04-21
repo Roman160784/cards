@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {useParams} from "react-router-dom";
@@ -11,7 +11,11 @@ import {
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import classes from './LearnPage.module.css'
+import {buttonBaseClasses} from "@mui/material";
 
+type LearnPagePropsType = {
+    packName: string
+}
 
 const grades = ["I don't know", "forgot", "long thought", "confused", "I know it"];
 
@@ -27,13 +31,13 @@ const getCard = (cards: CardsType[]) => {
     return cards[res.id + 1];
 }
 
-export const LearnPage = () => {
+export const LearnPage = ({packName}: LearnPagePropsType) => {
 
     const params = useParams<'*'>();
     let id = params['*']
     const dispatch = useDispatch();
 
-
+    const [grade, setGrade] = useState<number>(0)
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [isShowAnswer, setIsShowAnswer] = useState<boolean>(true);
     const [first, setFirst] = useState<boolean>(true);
@@ -85,6 +89,18 @@ export const LearnPage = () => {
     }, [cards]);
 
     const onNext = () => {
+        if (grade === 0) {
+            dispatch(uptdateCardsGradeTC(1, card._id))
+        } else if (grade === 1) {
+            dispatch(uptdateCardsGradeTC(2, card._id))
+        } else if (grade === 2) {
+            dispatch(uptdateCardsGradeTC(3, card._id))
+        } else if (grade === 3) {
+            dispatch(uptdateCardsGradeTC(4, card._id))
+        } else if (grade === 4) {
+            dispatch(uptdateCardsGradeTC(5, card._id))
+        }
+        setGrade(0)
         setIsChecked(false);
         setIsShowAnswer(true)
         if (cards.length > 0) {
@@ -94,31 +110,21 @@ export const LearnPage = () => {
 
         }
     }
-    const gradeClickHandler = (g: string) => {
-        if (g === "I don't know") {
-            dispatch(uptdateCardsGradeTC(1, card._id))
-        } else if (g === "forgot") {
-            dispatch(uptdateCardsGradeTC(2, card._id))
-        } else if (g === "long thought") {
-            dispatch(uptdateCardsGradeTC(3, card._id))
-        } else if (g === "confused") {
-            dispatch(uptdateCardsGradeTC(4, card._id))
-        } else if (g === "I know it") {
-            dispatch(uptdateCardsGradeTC(5, card._id))
-        }
-        setIsChecked(false)
-        setIsShowAnswer(true)
-    }
+
 
     const onClickShowAnswerHandler = () => {
         setIsChecked(true)
         setIsShowAnswer(false)
     }
 
+    const clickGradeHandler = (i: number) => {
+        setGrade(i)
+    }
+
 
     return (
         <div className={classes.wrapContainer}>
-            <span className={classes.title}>Learn Info</span>
+            <span className={classes.title}>Pack: {packName}</span>
 
             <div className={classes.question}><span style={{fontWeight: 'bold'}}>Question:</span> {card?.question}</div>
             {isShowAnswer && <div className={classes.btnCheckWrap}>
@@ -133,12 +139,10 @@ export const LearnPage = () => {
 
                     {grades.map((g, i) => (
 
-                        <button key={'grade-' + i} onClick={() => {
-                            gradeClickHandler(g)
-                        }} className={classes.btnGrade}>{g}</button>
-
+                        <div key={'grade-' + i}>
+                            <button className={grade === i ? classes.resultButtonActives : classes.resultButton}
+                                    onClick={()=>{clickGradeHandler(i)}}></button> <span>{g}</span></div>
                     ))}
-
                     <div className={classes.btnNextWrap}>
                         <button className={classes.btnNext} onClick={onNext}>next</button>
                     </div>
