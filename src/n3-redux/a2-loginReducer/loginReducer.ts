@@ -2,7 +2,7 @@ import {Dispatch} from "redux";
 import {AxiosError} from "axios"
 import {authLoginAPI, authLogoutAPI} from "../../n4-dal/API/CardsAPI";
 import {setUserAC} from "../a6-ProfileReducer/ProfileReducer";
-import {loginErrorHandler} from "../../Utils/Utils";
+import {errorHandler} from "../../Utils/Utils";
 
 
 export type LoginType = {
@@ -54,7 +54,7 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch,) => {
             }
         })
         .catch((e: AxiosError) => {
-            loginErrorHandler(e, dispatch)
+            errorHandler(e, dispatch)
         })
 }
 
@@ -66,6 +66,6 @@ export const logoutTC = () => (dispatch: Dispatch) => {
             }
         })
         .catch((e: AxiosError)=> {
-            loginErrorHandler(e, dispatch)
+            errorHandler(e, dispatch)
         })
 }

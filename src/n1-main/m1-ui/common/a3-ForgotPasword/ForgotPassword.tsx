@@ -6,6 +6,8 @@ import {getParamsForNewPasswordTC} from "../../../../n3-redux/a4-ForgotRasswordR
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {pathEnum} from "../../routes/a0-Main/Main";
+import {toast} from "react-hot-toast";
+import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
 
 export type FormikErrorRestoreType = {
     email?: string
@@ -13,7 +15,7 @@ export type FormikErrorRestoreType = {
 
 export const ForgotPassword = () => {
 
-    const errorServerMessage = useSelector<RootReducerType, string | null>(state => state.forgotPassword.error)
+    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
     const notification = useSelector<RootReducerType, string | null>(state => state.forgotPassword.message)
     const dispatch = useDispatch()
 
@@ -40,6 +42,12 @@ export const ForgotPassword = () => {
             dispatch(getParamsForNewPasswordTC({...values, from, message}))
         },
     });
+    const notify = () => {
+        if(error) {
+            toast.error(error)
+            dispatch(setAppErrorAC(null))
+        }
+    }
     const emailForSending = formik.values.email
     const from = `for person, f ${emailForSending}`
     // make the redirection to new page in order to confirm new password on your email(Max) "sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—"
@@ -54,7 +62,7 @@ export const ForgotPassword = () => {
                 <div>
                     {formik.touched.email && formik.errors.email ?
                         <div className={classes.errors}>{formik.errors.email}</div> :
-                        <div className={classes.errors}>{errorServerMessage}</div>}
+                        <div className={classes.errors}>{error}</div>}
                     <input className={classes.inputRestore} placeholder={'Email'}
                            {...formik.getFieldProps('email')}
                     />
@@ -62,8 +70,9 @@ export const ForgotPassword = () => {
                 </div>
                 <button type="submit" className={classes.buttonSend}>Send Instructions</button>
                 <div className={classes.linkRemember}>Did you remember yor password?</div>
-                <NavLink to={'/'} className={classes.loggingIn}>Try logging in</NavLink>
+                <NavLink to={'/login'} className={classes.loggingIn}>Try logging in</NavLink>
             </form>
+            {notify()}
         </div>
     )
 }

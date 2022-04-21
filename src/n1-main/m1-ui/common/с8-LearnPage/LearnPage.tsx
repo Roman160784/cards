@@ -11,6 +11,8 @@ import {
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import classes from './LearnPage.module.css'
+import {toast} from "react-hot-toast";
+import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
 
 
 const grades = ["I don't know", "forgot", "long thought", "confused", "I know it"];
@@ -40,7 +42,7 @@ export const LearnPage = () => {
     // const [first, setFirst] = useState<boolean>(0);
     const {cards} = useSelector((store: RootReducerType) => store.cards);
     // const id = useSelector<RootReducerType, string>(state => state.cards.cardsPack_id)
-
+    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
 
     const [card, setCard] = useState<CardsType>({
         _id: 'fake',
@@ -80,7 +82,6 @@ export const LearnPage = () => {
 
         return () => {
             dispatch(setCardsPackIdAC(id = ''))
-
         }
     }, [cards]);
 
@@ -114,6 +115,12 @@ export const LearnPage = () => {
         setIsChecked(true)
         setIsShowAnswer(false)
     }
+    const notify = () => {
+        if(error) {
+            toast.error(error)
+            dispatch(setAppErrorAC(null))
+        }
+    }
 
 
     return (
@@ -144,6 +151,7 @@ export const LearnPage = () => {
                     </div>
                 </>
             )}
+            {notify()}
         </div>
     );
 };

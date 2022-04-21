@@ -1,6 +1,7 @@
 import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import { profileAPI} from "../../n4-dal/API/CardsAPI"
+import {errorHandler} from "../../Utils/Utils";
 
 // types 
 export type userType = {
@@ -85,10 +86,7 @@ export const updateUserTC = (user: { name?: string, avatar?: string }) => {
                 dispatch(setUserAC(res.data.updatedUser))
             })
             .catch((e: AxiosError) => {
-                dispatch(setUserErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-                setTimeout(() => {
-                    dispatch(setUserErrorAC(null))
-                }, 3000)
+                errorHandler(e, dispatch)
             })
     }
 }

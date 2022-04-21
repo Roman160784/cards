@@ -7,7 +7,7 @@ import {
     getCardsPayloadType
 } from "../../n4-dal/API/CardsAPI";
 import {AxiosError} from "axios";
-import {errorCardsHandler} from "../../Utils/Utils";
+import {errorCardsHandler, errorHandler} from "../../Utils/Utils";
 import {RootReducerType} from "../a1-store/store";
 
 
@@ -180,12 +180,11 @@ export const getCardsTC = (learnId?: string) => {
 
         cardsApi.getCards(payload)
             .then((res) => {
-
                 dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
                 dispatch(setCardsAC(res.data.cards))
             })
             .catch((e: AxiosError) => {
-                errorCardsHandler(e, dispatch)
+                errorHandler(e, dispatch)
             })
     }
 }
@@ -197,7 +196,7 @@ export const removeCardTC = (cardId: string) => {
                 dispatch(getCardsTC())
             })
             .catch((e: AxiosError) => {
-                errorCardsHandler(e, dispatch)
+                errorHandler(e, dispatch)
             })
     }
 }
@@ -209,7 +208,7 @@ export const createCardTC = (card: CardForCreateType) => {
                 dispatch(getCardsTC())
             })
             .catch((e: AxiosError) => {
-                errorCardsHandler(e, dispatch)
+                errorHandler(e, dispatch)
             })
     }
 }
@@ -222,7 +221,7 @@ export const updateNameCardTC = (card: CardForUpdateType) => {
                 dispatch(getCardsTC())
             })
             .catch((e: AxiosError) => {
-                errorCardsHandler(e, dispatch)
+                errorHandler(e, dispatch)
             })
     }
 }
@@ -234,7 +233,7 @@ export const uptdateCardsGradeTC = (grade: number, card_id: string) => {
                 dispatch(setSelectedAC(res.data.updatedGrade.card_id, res.data.updatedGrade.grade))
             })
             .catch((e: AxiosError) => {
-                errorCardsHandler(e, dispatch)
+                errorHandler(e, dispatch)
             })
     }
 }

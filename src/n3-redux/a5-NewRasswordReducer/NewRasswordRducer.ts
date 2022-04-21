@@ -1,6 +1,7 @@
 import {passwordAPI, SetPasswordType} from "../../n4-dal/API/CardsAPI";
 import {Dispatch} from "redux";
 import {AxiosError} from "axios";
+import {errorHandler} from "../../Utils/Utils";
 
 export type NewPasswordReducerType = {
     info: string | null
@@ -47,10 +48,7 @@ export const setNewPasswordTC = (data: SetPasswordType) => {
                 }, 3000)
             })
             .catch((e: AxiosError) => {
-                dispatch(setErrorMessageAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-                setTimeout(() => {
-                    dispatch(setErrorMessageAC(null))
-                }, 3000)
+                errorHandler(e, dispatch)
             } )
     }
 }

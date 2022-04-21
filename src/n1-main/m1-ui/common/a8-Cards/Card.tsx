@@ -3,7 +3,10 @@ import {Stars} from "../c7-Stars/Stars";
 import {Modal} from "../../../../Utils/Modal/Modal";
 import classes from "./Cards.module.css";
 import {removeCardTC, updateNameCardTC, uptdateCardsGradeTC} from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {toast} from "react-hot-toast";
+import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
+import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 
 type PropsType = {
     question: string
@@ -15,6 +18,8 @@ type PropsType = {
 
 
 export const Card = ({_id, question, answer, grade, updated}: PropsType) => {
+
+    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
 
     const [modalDeleteActive, setModalDeleteActive] = useState<boolean>(false);
     const [modalUpdateActive, setModalUpdateActive] = useState<boolean>(false);
@@ -67,6 +72,12 @@ export const Card = ({_id, question, answer, grade, updated}: PropsType) => {
 
     const getCardsGrateHandler = (value: number, id: string,) => {
         dispatch(uptdateCardsGradeTC(value, id))
+    }
+    const notify = () => {
+        if(error) {
+            toast.error(error)
+            dispatch(setAppErrorAC(null))
+        }
     }
 
     return (
@@ -131,7 +142,7 @@ export const Card = ({_id, question, answer, grade, updated}: PropsType) => {
                     <button className={classes.modalButtonCancel} onClick={onCloseModalUpdateHandler}>cancel</button>
                 </div>
             </Modal>
-
+            {notify()}
         </>
     );
 };

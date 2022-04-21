@@ -7,7 +7,8 @@ import {
 import {AxiosError} from "axios";
 import {setInitializedAC} from "../a7-AppReducer/AppReducer";
 import {RootReducerType} from "../a1-store/store";
-import {errorPackCardsHandler} from "../../Utils/Utils";
+import {errorHandler, errorPackCardsHandler} from "../../Utils/Utils";
+import {toast} from "react-hot-toast";
 
 
 //types
@@ -123,9 +124,9 @@ export const sortAllMyPacksAC = (value : 'my' | 'all') => ({type: 'PACKS/SORT-MY
 export const setPackIdAC = (packId : string) => ({type: 'PACKS/SET-PACK-ID', packId} as const )
 // thunks
 
-export const fetchPackCardsTC = () => {
-    return (dispatch: Dispatch, getState: () => RootReducerType) => {
 
+
+export const fetchPackCardsTC = () => (dispatch: Dispatch, getState: () => RootReducerType) => {
         const state = getState().cardsPacks
         const payload = {
             packName: state.currentPackName || '',
@@ -137,26 +138,28 @@ export const fetchPackCardsTC = () => {
             user_id: state.myCards === "my" ? getState().profile.user._id : ''
         }
 
+
+
         return packCardsAPI.getPackOfCards(payload)
             .then((res) => {
                 dispatch(setPackCardsAC(res.data.cardPacks))
                 dispatch(setTotalCountAC(res.data.cardPacksTotalCount))
             })
             .catch((e: AxiosError) => {
-                errorPackCardsHandler(e, dispatch)
+                errorHandler(e, dispatch)
             })
             .finally(() => {
                 dispatch(setInitializedAC(true))
             })
-    }
 }
+
 export const addPackofCardsTC = (cardsPack: AddCardPackType) => (dispatch: Dispatch<any>) => {
     packCardsAPI.addPackOfCards(cardsPack)
         .then(() => {
             dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
-            errorPackCardsHandler(e, dispatch)
+            errorHandler(e, dispatch)
         })
 }
 export const removePackOfCardsTC = (id: string) => (dispatch: Dispatch<any>) => {
@@ -165,7 +168,7 @@ export const removePackOfCardsTC = (id: string) => (dispatch: Dispatch<any>) => 
             dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
-            errorPackCardsHandler(e, dispatch)
+            errorHandler(e, dispatch)
         })
 }
 
@@ -175,7 +178,7 @@ export const updateNamePackOfCardsTC = (cardsPack: UpdateNameCardPackType) => (d
             dispatch(fetchPackCardsTC())
         })
         .catch((e: AxiosError) => {
-            errorPackCardsHandler(e, dispatch)
+            errorHandler(e, dispatch)
         })
 }
 

@@ -4,6 +4,7 @@ import {setPackCardsErrorAC} from "../n3-redux/a8-CardsPacksReducer/CardsPacksRe
 import {setAppErrorAC} from "../n3-redux/a7-AppReducer/AppReducer";
 import {setCardsErrorAC} from "../n3-redux/a9-CardsReducer/CardsReducer";
 
+
 export const errorPackCardsHandler = (e:AxiosError, dispatch: Dispatch) => {
         dispatch(setPackCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
         setTimeout(() => {
@@ -11,16 +12,16 @@ export const errorPackCardsHandler = (e:AxiosError, dispatch: Dispatch) => {
         }, 3000)
 }
 
-export const loginErrorHandler = (e:AxiosError, dispatch: Dispatch) => {
+export const errorHandler = (e:AxiosError, dispatch: Dispatch) => {
         dispatch(setAppErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-        setTimeout(() => {
-            dispatch(setAppErrorAC(null))
-        }, 3000)
+        // setTimeout(() => {
+        //     dispatch(setAppErrorAC(null))
+        // }, 3000)
 }
 
 export const errorCardsHandler = (e:AxiosError, dispatch: Dispatch) => {
         dispatch(setCardsErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-        setTimeout(() => {
-            dispatch(setCardsErrorAC(null))
-        }, 3000)
+        // setTimeout(() => {
+        //     dispatch(setCardsErrorAC(null))
+        // }, 3000)
 }

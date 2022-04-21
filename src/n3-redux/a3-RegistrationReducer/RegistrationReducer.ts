@@ -1,6 +1,7 @@
 import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import { registrationAPI } from "../../n4-dal/API/CardsAPI"
+import {errorHandler} from "../../Utils/Utils";
 
 //types
 
@@ -60,10 +61,7 @@ export const addUserTC = (user: userType) => {
         .catch((e: AxiosError) => {
             //good method for reading error
             // console.log({...err});
-            dispatch(registrationErrorAC(e.response ? e.response.data.error : 'Some error occurred 😠'))
-            setTimeout(() => {
-                dispatch(registrationErrorAC(null))
-            }, 3000)
+            errorHandler(e, dispatch)
         })
     }
 }

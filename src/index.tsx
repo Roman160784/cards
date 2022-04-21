@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux';
 import {store} from './n3-redux/a1-store/store';
 import {HashRouter} from 'react-router-dom';
+import {Toaster} from "react-hot-toast";
 
 
 
@@ -15,6 +16,7 @@ ReactDOM.render(
     <React.StrictMode>
         <HashRouter>
             <Provider store={store}>
+                <Toaster />
                     <App/>
             </Provider>
         </HashRouter>

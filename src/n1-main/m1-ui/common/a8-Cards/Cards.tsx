@@ -14,11 +14,13 @@ import {CardsPaginator} from "./cardsPaginater";
 import {Modal} from "../../../../Utils/Modal/Modal";
 import BackArrow from './Images/BackArrow.svg'
 import {Card} from "./Card";
+import {toast} from "react-hot-toast";
+import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
 
 
 export const Cards = () => {
     const cards = useSelector<RootReducerType, CardsType[]>(state => state.cards.cards)
-    const error = useSelector<RootReducerType, string | null>(state => state.cards.error)
+    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
     const {
         pageCount,
         page,
@@ -85,6 +87,12 @@ export const Cards = () => {
     const onClickModalHandler = () => {
         if (newQuestion.trim() !== '' && newAnswer.trim() !== '') {
             addCard(newQuestion, newAnswer)
+        }
+    }
+    const notify = () => {
+        if(error) {
+            toast.error(error)
+            dispatch(setAppErrorAC(null))
         }
     }
 
@@ -154,7 +162,7 @@ export const Cards = () => {
                 }
             </div>
             <CardsPaginator cardsTotalCount={cardsTotalCount} page={page} pageCount={pageCount}/>
-            {error && <div className={classes.errors}>{error}</div>}
+            {notify()}
         </div>
     )
 }

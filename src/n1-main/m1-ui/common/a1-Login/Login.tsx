@@ -6,6 +6,9 @@ import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {pathEnum} from "../../routes/a0-Main/Main";
 import {Navigate, NavLink} from "react-router-dom";
 import classes from './Login.module.css'
+import {Toast, toast, Toaster} from "react-hot-toast";
+import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
+
 
 export type FormikErrorType = {
     email?: string
@@ -45,7 +48,15 @@ export const Login = () => {
         },
     });
 
+    const notify = () => {
+        if(error) {
+            toast.error(error)
+            dispatch(setAppErrorAC(null))
+        }
+    }
+
     if (isLogin) return <Navigate to={pathEnum.profile}/>
+
 
     return (
         <div className={classes.blockLogin}>
@@ -61,8 +72,7 @@ export const Login = () => {
 
                 <div>
                     {formik.touched.password && formik.errors.password ?
-                        <div className={classes.errors}>{formik.errors.password}</div> :
-                        <div className={classes.errors}>{error}</div>}
+                        <div className={classes.errors}>{formik.errors.password}</div> : null}
                     <input className={classes.inputLogin} placeholder={'Password'}
                            {...formik.getFieldProps('password')}
                     />
@@ -79,6 +89,7 @@ export const Login = () => {
                 <button type="submit" className={classes.buttonLogin}>Login</button>
                 <NavLink to={pathEnum.registration} className={classes.signUp}>Sign Up</NavLink>
             </form>
+            {notify()}
         </div>
     );
 }

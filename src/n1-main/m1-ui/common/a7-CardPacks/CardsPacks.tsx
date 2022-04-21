@@ -14,11 +14,13 @@ import {Box, Slider} from "@mui/material";
 import {useDebounce, useUpdateEffect} from "usehooks-ts";
 import {SearchPacks} from "../c6-SearchPacks/SearchPacks";
 import {Modal} from "../../../../Utils/Modal/Modal";
+import {toast} from "react-hot-toast";
+import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
 
 
 export const CardsPacks = () => {
 
-    const error = useSelector<RootReducerType, string | null>(state => state.cardsPacks.error)
+    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
     const {
         pageCount,
         page,
@@ -47,9 +49,11 @@ export const CardsPacks = () => {
 
 
     const addPack = useCallback((name: string) => {
-        dispatch(addPackofCardsTC({name}))
-        setName('')
-        setModalActive(false)
+        if(name.trim() !== '') {
+            dispatch(addPackofCardsTC({name}))
+            setName('')
+            setModalActive(false)
+        }
     }, [dispatch])
     const onChangeModalHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setName(e.currentTarget.value)
@@ -96,6 +100,12 @@ export const CardsPacks = () => {
 
     const SortPackUpdatedMaxCards = () => {
         dispatch(sortPacksAC('1updated'))
+    }
+    const notify = () => {
+        if(error) {
+            toast.error(error)
+            dispatch(setAppErrorAC(null))
+        }
     }
 
     //for Slider
@@ -211,7 +221,7 @@ export const CardsPacks = () => {
                 userId={user_id}
                 cardsView={cardsView}
             />
-            {error && <div className={classes.errors}>{error}</div>}
+            {notify()}
         </div>
     )
 

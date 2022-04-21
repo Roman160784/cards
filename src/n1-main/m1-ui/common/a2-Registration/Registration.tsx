@@ -4,15 +4,18 @@ import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {addUserTC} from '../../../../n3-redux/a3-RegistrationReducer/RegistrationReducer';
 import {RootReducerType} from '../../../../n3-redux/a1-store/store';
-import {Navigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import {pathEnum} from '../../routes/a0-Main/Main';
 import classes from "./Registration.module.css";
+import {toast, Toaster} from "react-hot-toast";
+import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
 
 export const Registration = () => {
 
     const isRegistration = useSelector<RootReducerType, boolean>(state => state.registration.registration)
-    const error = useSelector<RootReducerType, string | null>(state => state.registration.registrationError)
+    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const formik = useFormik({
         initialValues: {
@@ -35,6 +38,12 @@ export const Registration = () => {
             dispatch(addUserTC(values))
         },
     });
+    const notify = () => {
+        if(error) {
+            toast.error(error)
+            dispatch(setAppErrorAC(null))
+        }
+    }
 
     if (isRegistration) return <Navigate to={pathEnum.login}/>
 
@@ -65,10 +74,11 @@ export const Registration = () => {
                         <div className={classes.errors}>{formik.errors.confirmPassword}</div> : null}
                 </div>
                 <div className={classes.boxButton}>
-                    <button className={classes.buttonCancel}>Cancel</button>
+                    <button className={classes.buttonCancel} onClick={() => navigate('/login')}>Cancel</button>
                     <button type="submit" className={classes.buttonRegistration}>Register</button>
                 </div>
             </form>
+            {notify()}
         </div>
     );
 

@@ -7,12 +7,15 @@ import {pathEnum} from "../../routes/a0-Main/Main";
 import {Navigate} from "react-router-dom";
 import {logoutTC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
 import classes from "./Profile.module.css"
+import {toast} from "react-hot-toast";
+import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
 
 
 export const Profile = () => {
 
     const userName = useSelector<RootReducerType, string | null>(state => state.profile.user.name)
     const isLoggedIn = useSelector<RootReducerType, boolean>(state => state.login.isLogin)
+    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
     const dispatch = useDispatch()
 
     const changeTitleHandler = (name: string) => {
@@ -22,6 +25,12 @@ export const Profile = () => {
         dispatch(logoutTC())
     }, [])
 
+    const notify = () => {
+        if(error) {
+            toast.error(error)
+            dispatch(setAppErrorAC(null))
+        }
+    }
 
     if (!isLoggedIn) {
         return <Navigate to={pathEnum.login}/>
@@ -52,6 +61,7 @@ export const Profile = () => {
                 </div>
                 {isLoggedIn && <button onClick={logoutHandler} className={classes.profileButton}>Log out</button>}
             </div>
+            {notify()}
         </div>
     )
 }

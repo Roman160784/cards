@@ -9,6 +9,8 @@ import {setNewPasswordTC} from "../../../../n3-redux/a5-NewRasswordReducer/NewRa
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {pathEnum} from "../../routes/a0-Main/Main";
 import {logoutTC} from "../../../../n3-redux/a2-loginReducer/loginReducer";
+import {toast, Toaster} from "react-hot-toast";
+import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
 
 
 export const NewPassword = () => {
@@ -17,6 +19,7 @@ export const NewPassword = () => {
     const resetPasswordToken = params.token
 
     const successInfo = useSelector<RootReducerType, string | null>(state => state.newPassword.info)
+    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
 
     const formik = useFormik({
         initialValues: {
@@ -36,6 +39,13 @@ export const NewPassword = () => {
         },
     });
     const password = formik.values.password
+
+    const notify = () => {
+        if(error) {
+            toast.error(error)
+            dispatch(setAppErrorAC(null))
+        }
+    }
 
     if (successInfo === 'setNewPassword success —ฅ/ᐠ.̫ .ᐟฅ—') {
         dispatch(logoutTC())
@@ -65,6 +75,7 @@ export const NewPassword = () => {
                 </div>
                 <button type="submit" className={classes.buttonPassword}>Create new password</button>
             </form>
+            {notify()}
         </div>
     )
 }

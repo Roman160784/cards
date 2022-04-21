@@ -1,11 +1,13 @@
 import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
 import classes from './PackOfCards.module.css'
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import { updateNamePackOfCardsTC} from "../../../../../n3-redux/a8-CardsPacksReducer/CardsPacksReducer";
 import {Modal} from "../../../../../Utils/Modal/Modal";
-import LearnPage from "../../с8-LearnPage/LearnPage";
-import {getCardsTC, setCardsPackIdAC} from "../../../../../n3-redux/a9-CardsReducer/CardsReducer";
+import {LearnPage} from "../../с8-LearnPage/LearnPage";
+import {toast} from "react-hot-toast";
+import {RootReducerType} from "../../../../../n3-redux/a1-store/store";
+import {setAppErrorAC} from "../../../../../n3-redux/a7-AppReducer/AppReducer";
 
 
 type PropsType = {
@@ -29,6 +31,7 @@ export const PackOfCards = ({
     const [modalDeleteActive, setModalDeleteActive] = useState<boolean>(false);
     const [modalLearnActive, setModalLearnActive] = useState<boolean>(false);
     const [title, setTitle] = useState<string>('')
+    const error = useSelector<RootReducerType, string | null>(state => state.app.authError)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -66,10 +69,17 @@ export const PackOfCards = ({
         navigate(`/packs/${packId}`)
         setModalLearnActive(true)
     }
+    const notify = () => {
+        if(error) {
+            toast.error(error)
+            dispatch(setAppErrorAC(null))
+        }
+    }
 
     const learnClickHandler = () => {
         return navigate(`/cards/${packId}`)
     }
+
 
     return (
         <div className={classes.boxCards}>
@@ -128,6 +138,7 @@ export const PackOfCards = ({
                     <button className={classes.modalButtonSave} onClick={onCloseModalDeleteHandler}>cancel</button>
                 </div>
             </Modal>
+            {notify()}
         </div>
     );
 };
