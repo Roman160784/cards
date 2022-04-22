@@ -164,10 +164,11 @@ export const LearnPage = ({packName}: LearnPagePropsType) => {
                     <div className={classes.checkYourSelf}>Check yourself:</div>
 
                     {grades.map((g, i) => (
-
-                        <div key={'grade-' + i}>
+                        <div key={'grade-' + i} style={{paddingBottom: '7px', display:'flex',width:'110px',
+                            margin: 'auto',alignItems:'center'}}>
                             <button className={grade === i ? classes.resultButtonActives : classes.resultButton}
-                                    onClick={()=>{clickGradeHandler(i)}}></button> <span>{g}</span></div>
+                                    onClick={()=>{clickGradeHandler(i)}}>
+                            </button> <span>{g}</span></div>
                     ))}
                     <div className={classes.btnNextWrap}>
                         <button className={classes.btnNext} onClick={onNext}>next</button>

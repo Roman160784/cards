@@ -4,6 +4,10 @@
     padding: 10px;
 }
 
+.boxCards:hover {
+    background-color: #b9f6ca;
+}
+
 .blockText {
     width: 200px;
     cursor: pointer;
@@ -18,7 +22,7 @@
 
 .btn {
     border-radius: 5px;
-    background-color: #b2ff59;
+    background-color: #86f75e;
     border: none;
     padding: 7px;
     cursor: pointer;
