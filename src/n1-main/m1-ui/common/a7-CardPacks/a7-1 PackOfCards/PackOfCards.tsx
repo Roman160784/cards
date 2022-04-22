@@ -61,13 +61,16 @@ export const PackOfCards = ({
         setModalDeleteActive(false)
     }
     const openModalLearn = () => {
+
         // if(packId) {
         //     dispatch(setCardsPackIdAC(packId))
         //     dispatch(getCardsTC())
         // }
 
-        navigate(`/packs/${packId}`)
-        setModalLearnActive(true)
+            navigate(`/packs/${packId}`)
+            setModalLearnActive(true)
+
+
     }
     const notify = () => {
         if(error) {
@@ -95,6 +98,7 @@ export const PackOfCards = ({
                 <button
                     className={classes.btn}
                     onClick={openModalLearn}
+                    disabled={cardsCount === 0}
                 >learn
                 </button>
                 {cardPackUserId === userId && <button
@@ -104,6 +108,7 @@ export const PackOfCards = ({
                 </button>}
             </div>
 
+
             <Modal active={modalLearnActive} setActive={setModalLearnActive}>
                 <LearnPage  packName={name}/>
                 <button className={classes.modalButtonCancel} onClick={() => {
@@ -111,6 +116,7 @@ export const PackOfCards = ({
                     navigate(-1)
                 }}>cancel</button>
             </Modal>
+            
 
             <Modal active={modalActive} setActive={setModalActive}>
                 <div className={classes.modalTitle}>Edit your pack name</div>
