@@ -90,9 +90,37 @@ export const LearnPage = ({packName}: LearnPagePropsType) => {
     }, [cards]);
 
     const onNext = () => {
+        if (grade === 0) {
+            dispatch(uptdateCardsGradeTC(1, card._id))
+            toast('Don`t be disappointed!', {
+                icon: '😉',
+            });
+        } else if (grade === 1) {
+            dispatch(uptdateCardsGradeTC(2, card._id))
+            toast('Try it in next time!', {
+                icon: '🙂 ',
+            });
+        } else if (grade === 2) {
+            dispatch(uptdateCardsGradeTC(3, card._id))
+            toast('Don`t care!', {
+                icon: '😉',
+            });
+        } else if (grade === 3) {
+            dispatch(uptdateCardsGradeTC(4, card._id))
+            toast('Good!', {
+                icon: '🙂',
+            });
+        } else if (grade === 4) {
+            dispatch(uptdateCardsGradeTC(5, card._id))
+            toast('Good Job!', {
+                icon: '👏',
+            });
+
         setIsChecked(false);
         setIsShowAnswer(true)
         setGrade(0)
+
+
         if (cards.length > 0) {
             // dispatch
             setCard(getCard(cards));
@@ -101,33 +129,9 @@ export const LearnPage = ({packName}: LearnPagePropsType) => {
             icon: '👏',
         });
     }
-    const gradeClickHandler = (g: string) => {
-        if (g === "I don't know") {
-            dispatch(uptdateCardsGradeTC(1, card._id))
-            toast('Don`t be disappointed!', {
-                icon: '😉',
-            });
-        } else if (g === "forgot") {
-            dispatch(uptdateCardsGradeTC(2, card._id))
-            toast('Try it in next time!', {
-                icon: '🙂 ',
-            });
-        } else if (g === "long thought") {
-            dispatch(uptdateCardsGradeTC(3, card._id))
-            toast('Don`t care!', {
-                icon: '😉',
-            });
-        } else if (g === "confused") {
-            dispatch(uptdateCardsGradeTC(4, card._id))
-            toast('Good!', {
-                icon: '🙂',
-            });
-        } else if (g === "I know it") {
-            dispatch(uptdateCardsGradeTC(5, card._id))
-            toast('Good Job!', {
-                icon: '👏',
-            });
-        }
+
+
+
         setIsChecked(false)
         setIsShowAnswer(true)
 
