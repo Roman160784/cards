@@ -92,6 +92,7 @@ export const LearnPage = ({packName}: LearnPagePropsType) => {
     const onNext = () => {
         setIsChecked(false);
         setIsShowAnswer(true)
+        setGrade(0)
         if (cards.length > 0) {
             // dispatch
             setCard(getCard(cards));
