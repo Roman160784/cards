@@ -37,12 +37,13 @@
 .answer {
     font-size: 18px;
     margin-top: 15px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     color: #2D2E46;
 }
 .checkYourSelf{
     font-size: 18px;
     color: #2D2E46;
+    margin-bottom: 20px;
 }
 .btnGrade {
     width: 127px;
@@ -92,6 +93,7 @@
     border-radius: 50%;
     background: #4CAF50;
     border: white;
+    margin-right: 2px;
 }
 
 .resultButtonActives{
@@ -100,6 +102,7 @@
     border-radius: 50%;
     background: red;
     border: white;
+    margin-right: 2px;
 }
 
 
