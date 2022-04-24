@@ -34,7 +34,7 @@ export const LoginReducer = (state: LoginReducerType = initialState, action: Mai
             return {...state, isLogin: action.isLogin}
         }
         default:
-            return {...state}
+            return state
     }
 }
 

@@ -1,7 +1,9 @@
-import { AxiosError } from "axios"
-import { Dispatch } from "redux"
+import {AxiosError} from "axios"
+import {Dispatch} from "redux"
 import { profileAPI} from "../../n4-dal/API/CardsAPI"
 import {errorHandler} from "../../Utils/Utils";
+import {dispatch} from "react-hot-toast/dist/core/store";
+
 
 // types 
 export type userType = {
@@ -30,7 +32,7 @@ export type ProfileReducerType = {
 
 const initialState: ProfileReducerType = {
     user: {
-        avatar: '',
+        avatar: 'https://i.pinimg.com/736x/20/5d/95/205d9582975737a8b02fb1e5bbc02fd5.jpg',
         created: null,
         email: '',
         isAdmin: false,
@@ -52,13 +54,14 @@ const initialState: ProfileReducerType = {
 export const ProfileReducer = (state: ProfileReducerType = initialState, action: MainActionType): ProfileReducerType => {
     switch (action.type) {
         case 'PROFILE/UPDATE-USER': {
-            return { ...state, user: action.user }
+            return {...state, user: action.user}
         }
         case 'PROFILE/SET-USER-ERROR': {
             return {...state, error: action.error}
         }
+
         default:
-            return { ...state }
+            return state
     }
 }
 
@@ -72,8 +75,8 @@ export type setUserErrorACType = ReturnType<typeof setUserErrorAC>
 
 // actions
 
-export const setUserAC = (user: userType) => ({ type: 'PROFILE/UPDATE-USER', user } as const)
-export const setUserErrorAC = (error: string | null) => ({ type: 'PROFILE/SET-USER-ERROR', error } as const)
+export const setUserAC = (user: userType) => ({type: 'PROFILE/UPDATE-USER', user} as const)
+export const setUserErrorAC = (error: string | null) => ({type: 'PROFILE/SET-USER-ERROR', error} as const)
 
 
 
@@ -91,3 +94,21 @@ export const updateUserTC = (user: { name?: string, avatar?: string }) => {
     }
 }
 
+// for test server
+
+// export const updateProfilePhotoTC = (formData: FormData) => {
+//     return (dispatch: Dispatch<any>, getState: () => RootReducerType) => {
+//         const state = getState()
+//         const name = state.profile.user.name
+//         return addProfilePhotoAPI.addPhoto(formData)
+//             .then((res) => {
+//                 if (res.config.url) {
+//                     // dispatch(updateProfilePhotoAC(res.config.url))
+//                     dispatch(updateUserTC({name: name || '', avatar: res.config.url}))
+//                 }
+//             })
+//             .catch((e: AxiosError) => {
+//                 errorHandler(e, dispatch)
+//             })
+//     }
+// }

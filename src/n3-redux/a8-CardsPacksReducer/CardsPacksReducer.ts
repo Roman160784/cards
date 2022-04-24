@@ -79,7 +79,7 @@ export const CardsPacksReducer = (state: CardsPacksReducerType = initialState, a
         }
 
         default:
-            return {...state}
+            return state
     }
 }
 

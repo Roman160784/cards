@@ -7,7 +7,7 @@ import {LoginType} from "../../n3-redux/a2-loginReducer/loginReducer";
 // baseURL   http://localhost:7542/2.0/
 
 export const instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0/',
+    baseURL: 'http://localhost:7542/2.0/',
     withCredentials: true,
 })
 
@@ -50,6 +50,7 @@ export const passwordAPI = {
         return instance.post<SetPasswordType, AxiosResponse<PasswordResponseType>>('/auth/set-new-password', data)
     }
 }
+
 
 //type for getPackOfCards
 export type getPackOfCardArgsType = {
@@ -110,6 +111,13 @@ export const cardsApi = {
     }
 }
 
+// for test server
+
+// export const addProfilePhotoAPI = {
+//     addPhoto(formData: FormData) {
+//     return axios.post('https://dry-forest-56016.herokuapp.com/file', formData)
+//     }
+// }
 
 // types
 
