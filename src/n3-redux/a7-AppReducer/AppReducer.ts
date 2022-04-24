@@ -39,7 +39,7 @@ export const AppReducer = (state: AppReducerType = initialState, action: MainAct
             return {...state, initialized: action.initialized}
         }
         default:
-            return {...state}
+            return state
     }
 }
 

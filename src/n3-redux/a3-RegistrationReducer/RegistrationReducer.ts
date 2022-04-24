@@ -32,7 +32,7 @@ export const RegistrationReducer = (state: RegistrationReducerType = initialStat
             return {...state, registrationError: action.error}
         }
         default:
-            return { ...state}
+            return state
     }
 }
 
