@@ -136,6 +136,7 @@ export const fetchPackCardsTC = () => (dispatch: Dispatch, getState: () => RootR
             page: state.page || 1,
             pageCount: state.pageCount || 10,
             user_id: state.myCards === "my" ? getState().profile.user._id : ''
+
         }
 
         return packCardsAPI.getPackOfCards(payload)

@@ -110,10 +110,10 @@
     border: none;
     border-radius: 10px;
     background: #eee;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     display: flex;
-
 }
+
 .modalInput:focus {
     outline-color: #2196f3;
 }
@@ -186,3 +186,27 @@
 .modalSpanPackName {
     font-weight: bold;
 }
+
+.imgButton {
+    color: green;
+    padding: 5px;
+    width: 100px;
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    margin: 20px auto 0;
+    cursor: pointer;
+    user-select: none;
+    background: linear-gradient(270deg, #b2f5ba 0%, #b2f5f1 100%);
+}
+
+.imgButton:hover {
+    background: limegreen;
+    color: white;
+}
+
+.questionImg, .answerImg {
+    width: 100%;
+}
+
