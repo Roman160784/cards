@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {ChangeEvent, useCallback, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {EditableSpan} from '../c4-EditableSpan/EditableSpan';
 import {RootReducerType} from '../../../../n3-redux/a1-store/store'
@@ -41,13 +41,11 @@ export const Profile = () => {
             <div className={classes.profileBoxUserName}>
                 <div className={classes.profileUser}>
                     <div>
-                        <input type="image"
-                               name="image"
-                               alt="img"
-                               src="https://i.pinimg.com/736x/20/5d/95/205d9582975737a8b02fb1e5bbc02fd5.jpg"
+                        <input type="file"
+                               name="file"
+                               alt="file"
                                width="150"
                                className={classes.profileImg}
-
                         />
                     </div>
                     <div className={classes.profileUserName}>
