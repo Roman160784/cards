@@ -108,7 +108,7 @@ export const CardsReducer = (state: CardsReducerType = initialState, action: Mai
         }
 
         default:
-            return {...state}
+            return state
     }
 }
 

@@ -27,7 +27,7 @@ export const ForgotPasswordReducer = (state: ForgotPasswordReducerType = initial
            return {...state, message: action.info}
        }
        default:
-           return { ...state }
+           return state
    }
 }
 
