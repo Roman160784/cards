@@ -37,6 +37,7 @@ export const Profile = () => {
     }
 
     const onChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
+        debugger
         const newFile = e.target.files && e.target.files[0]
         if (newFile) {
             const reader = new FileReader()

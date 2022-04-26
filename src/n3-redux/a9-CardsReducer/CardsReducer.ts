@@ -30,8 +30,8 @@ export type CardsReducerType = {
     cardsPack_id: string
     question: string
     answer: string
-    answerImg?: string
-    questionImg?: string
+    answerImg: string
+    questionImg: string
     questionVideo: string
     answerVideo: string
     _id: string
