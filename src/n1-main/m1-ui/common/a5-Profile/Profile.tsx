@@ -37,6 +37,7 @@ export const Profile = () => {
     }
 
     const onChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
+        debugger
         const newFile = e.target.files && e.target.files[0]
         if (newFile) {
             const reader = new FileReader()
@@ -49,7 +50,7 @@ export const Profile = () => {
 
             // if I need newFile Base64
             reader.onloadend = () => {
-                if(typeof reader.result === 'string') {
+                if (typeof reader.result === 'string') {
                     const base64String = reader.result
                     dispatch(updateUserTC({avatar: base64String}));
                 }
@@ -78,7 +79,9 @@ export const Profile = () => {
                         {/*/>*/}
                         <div>
                             <img style={{width: '190px', height: '210px'}} className={classes.profileImg} alt={'avatar'}
-                                 src={!avatar ? "https://i.pinimg.com/736x/20/5d/95/205d9582975737a8b02fb1e5bbc02fd5.jpg" : avatar}/>
+                                 src={!avatar
+                                     ? "https://i.pinimg.com/736x/20/5d/95/205d9582975737a8b02fb1e5bbc02fd5.jpg"
+                                     : avatar}/>
                             <div style={{opacity: '0.5'}}>{`please choose avatar < 2Mb`}</div>
                         </div>
                         <input

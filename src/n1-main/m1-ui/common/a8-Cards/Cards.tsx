@@ -1,11 +1,11 @@
-import React, {ChangeEvent, KeyboardEvent, useCallback, useEffect, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../../n3-redux/a1-store/store";
 import {useNavigate, useParams} from "react-router-dom";
 import {
     CardsReducerType,
     createCardTC, getCardsTC,
-    setCardsPackIdAC
+    setCardsPackIdAC, updateNameCardTC
 } from "../../../../n3-redux/a9-CardsReducer/CardsReducer";
 import {CardsType} from "../../../../n4-dal/API/CardsAPI";
 import {SearchCards} from "../c6-SearchPacks/SearchCards";
@@ -16,7 +16,6 @@ import BackArrow from './Images/BackArrow.svg'
 import {Card} from "./Card";
 import {toast} from "react-hot-toast";
 import {setAppErrorAC} from "../../../../n3-redux/a7-AppReducer/AppReducer";
-
 
 export const Cards = () => {
     const cards = useSelector<RootReducerType, CardsType[]>(state => state.cards.cards)
@@ -32,9 +31,12 @@ export const Cards = () => {
         currentQuestion,
         _id,
         question,
-        answer
+        answer,
+        questionImg,
+        answerImg,
     } = useSelector<RootReducerType, CardsReducerType>(state => state.cards)
     const dispatch = useDispatch()
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const params = useParams<'id'>()
     const cardsPack_id = params.id
@@ -52,45 +54,57 @@ export const Cards = () => {
             dispatch(setCardsPackIdAC(cardsPack_id))
             dispatch(getCardsTC())
         }
-    }, [cardsPack_id, pageCount, page, max, min, sortCards, currentQuestion, currentAnswer, _id, question, answer])
+    }, [cardsPack_id, pageCount, page, max, min, sortCards, currentQuestion, currentAnswer, _id, question, answer,
+        questionImg, answerImg])
 
 
-    const addCard = useCallback((question: string, answer: string) => {
+    const addCard = useCallback((question: string, answer: string, questionImg: string, answerImg: string) => {
         if (cardsPack_id) {
             dispatch(createCardTC({
                 question,
                 answer,
-                cardsPack_id
+                cardsPack_id,
+                questionImg,
+                answerImg,
             }))
         }
         setQuestion('')
         setAnswer('')
         setModalActive(false)
     }, [dispatch])
+
     const onChangeQuestionHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setQuestion(e.currentTarget.value)
     }
+
     const onChangeAnswerHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setAnswer(e.currentTarget.value)
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && newQuestion.trim() !== '' && newAnswer.trim() !== '') {
-            addCard(newQuestion, newAnswer)
+            if (questionImg != null && answerImg != null) {
+                addCard(newQuestion, newAnswer, questionImg, answerImg)
+            }
         }
     }
+
     const onCloseModalHandler = () => {
         setQuestion('')
         setAnswer('')
         setModalActive(false)
     }
+
     const onClickModalHandler = () => {
         if (newQuestion.trim() !== '' && newAnswer.trim() !== '') {
-            addCard(newQuestion, newAnswer)
+            if (questionImg?.trim() != null && answerImg?.trim() != null) {
+                addCard(newQuestion, newAnswer, questionImg, answerImg)
+            }
         }
     }
+
     const notify = () => {
-        if(error) {
+        if (error) {
             toast.error(error)
             dispatch(setAppErrorAC(null))
         }
@@ -111,7 +125,8 @@ export const Cards = () => {
                     <span className={classes.textHeader}>Updated</span>
                     <span className={classes.textHeader}>Grade</span>
                     <span className={classes.textHeader}>Rating</span>
-                    <button onClick={() => setModalActive(true)} className={classes.buttonAddCard}>Add new card</button>
+                    <button onClick={() => setModalActive(true)} className={classes.buttonAddCard}>Add new card
+                    </button>
                 </div>
                 <Modal active={modalActive} setActive={setModalActive}>
                     <div className={classes.modalTitle}>Card Info</div>
@@ -155,6 +170,8 @@ export const Cards = () => {
                                     answer={card.answer}
                                     grade={card.grade}
                                     updated={card.updated}
+                                    questionImg={card.questionImg}
+                                    answerImg={card.answerImg}
                                 />
                             </div>
                         )

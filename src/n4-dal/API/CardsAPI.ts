@@ -197,6 +197,8 @@ export type CardsType = {
     created: string
     updated: string
     _id: string
+    questionImg: string
+    answerImg: string
 }
 export type CardsPacksType = {
     cardsCount: number

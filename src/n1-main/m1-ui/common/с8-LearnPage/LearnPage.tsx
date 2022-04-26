@@ -60,6 +60,8 @@ export const LearnPage = ({packName}: LearnPagePropsType) => {
 
         created: '',
         updated: '',
+        questionImg: '',
+        answerImg: '',
     });
 
     // useEffect(() => {

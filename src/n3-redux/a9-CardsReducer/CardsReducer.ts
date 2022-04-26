@@ -86,7 +86,7 @@ export const CardsReducer = (state: CardsReducerType = initialState, action: Mai
             return {...state, currentQuestion: action.currentQuestion}
         }
         case "CARDS/SET-MIN-MAX-CARDS-IN-CARDS": {
-            return {...state, min: action.min, max: action.max }
+            return {...state, min: action.min, max: action.max}
         }
         case "CARDS/SORT-CARDS": {
             return {...state, sortCards: action.sortCards}
@@ -95,7 +95,7 @@ export const CardsReducer = (state: CardsReducerType = initialState, action: Mai
             return {...state, cardsPack_id: action.cardsPack_id}
         }
         case 'CARDS/SET-GRADE' : {
-            return {...state, cards : state.cards.map(c => c._id === action.id ? {...c, grade: action.grade} : c) }
+            return {...state, cards: state.cards.map(c => c._id === action.id ? {...c, grade: action.grade} : c)}
         }
         case "CARDS/SET-QUESTION": {
             return {...state, question: action.question}
@@ -106,7 +106,12 @@ export const CardsReducer = (state: CardsReducerType = initialState, action: Mai
         case "CARDS/SET-CARD-ID": {
             return {...state, _id: action._id}
         }
-
+        case "CARDS/SET-QUESTION-IMG": {
+            return {...state, questionImg: action.questionImg}
+        }
+        case "CARDS/SET-ANSWER-IMG": {
+            return {...state, answerImg: action.answerImg}
+        }
         default:
             return state
     }
@@ -114,7 +119,7 @@ export const CardsReducer = (state: CardsReducerType = initialState, action: Mai
 
 //actions type
 export type MainActionType =
-    setCardsACType
+    | setCardsACType
     | setCardsErrorACType
     | setCardsTotalCountACType
     | setCurrentPageCardsACType
@@ -127,6 +132,8 @@ export type MainActionType =
     | setAnswerACType
     | setQuestionACType
     | setCardIdACType
+    | SetQuestionImgActionType
+    | SetAnswerImgActionType
 
 
 export type setCardsACType = ReturnType<typeof setCardsAC>
@@ -142,12 +149,17 @@ export type setSelectedACType = ReturnType<typeof setSelectedAC>
 export type setQuestionACType = ReturnType<typeof setQuestionAC>
 export type setAnswerACType = ReturnType<typeof setAnswerAC>
 export type setCardIdACType = ReturnType<typeof setCardIdAC>
+export type SetQuestionImgActionType = ReturnType<typeof setQuestionImgAC>
+export type SetAnswerImgActionType = ReturnType<typeof setAnswerImgAC>
 
 
 //actions
 export const setCardsAC = (cards: CardsType[]) => ({type: 'CARDS/SET-CARDS', cards} as const)
 export const setCardsErrorAC = (error: string | null) => ({type: 'CARDS/SET-CARDS-ERROR', error} as const)
-export const setCardsTotalCountAC = (cardsTotalCount: number) => ({type: 'CARDS/SET-CARDS-TOTAL-COUNT', cardsTotalCount} as const)
+export const setCardsTotalCountAC = (cardsTotalCount: number) => ({
+    type: 'CARDS/SET-CARDS-TOTAL-COUNT',
+    cardsTotalCount
+} as const)
 export const setSelectedAC = (id: string, grade: number) => ({type: 'CARDS/SET-GRADE', id, grade} as const)
 export const setCurrentPageCardsAC = (page: number) => ({type: 'CARDS/SET-CURRENT-PAGE', page} as const)
 export const searchCardsAnswerAC = (currentAnswer: string) => ({
@@ -168,6 +180,8 @@ export const setCardsPackIdAC = (cardsPack_id: string) => ({type: 'CARDS/SET-CAR
 export const setQuestionAC = (question: string) => ({type: 'CARDS/SET-QUESTION', question} as const)
 export const setAnswerAC = (answer: string) => ({type: 'CARDS/SET-ANSWER', answer} as const)
 export const setCardIdAC = (_id: string) => ({type: 'CARDS/SET-CARD-ID', _id} as const)
+export const setQuestionImgAC = (questionImg: string) => ({type: 'CARDS/SET-QUESTION-IMG', questionImg} as const)
+export const setAnswerImgAC = (answerImg: string) => ({type: 'CARDS/SET-ANSWER-IMG', answerImg} as const)
 
 
 // thunks
@@ -210,6 +224,7 @@ export const removeCardTC = (cardId: string) => {
 }
 
 export const createCardTC = (card: CardForCreateType) => {
+    debugger
     return (dispatch: Dispatch<any>) => {
         cardsApi.createCard(card)
             .then(() => {

@@ -3,6 +3,7 @@
     border-radius: 10px;
     padding: 30px;
 }
+
 .backArrow {
     display: inline-block;
     margin: 4px 4px 11px 4px;
@@ -11,10 +12,12 @@
     cursor: pointer;
     transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
+
 .backArrow:hover {
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.06);
     transform: translateY(-5px);
 }
+
 .errors {
     color: red;
 }
@@ -76,7 +79,7 @@
 .boxCards {
     border: 1px solid lightgray;
     border-radius: 5px;
-    box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2) ;
+    box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
     margin-top: 10px;
 }
 
@@ -89,6 +92,7 @@
     display: flex;
     justify-content: space-between;
 }
+
 .modalTitle {
     height: 27px;
     left: 466px;
@@ -102,6 +106,7 @@
     color: #2D2E46;
     margin-top: 22px
 }
+
 .modalInput {
     width: 100%;
     margin-top: 5px;
@@ -110,18 +115,21 @@
     border: none;
     border-radius: 10px;
     background: #eee;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     display: flex;
-
 }
+
 .modalInput:focus {
     outline-color: #2196f3;
 }
+
 .modalInputQuestion {
     width: 80%;
 }
+
 .modalInputAnswer {
     width: 80%;
+    margin: auto;
 }
 
 .btnModalWrap {
@@ -129,6 +137,7 @@
     justify-content: space-evenly;
     margin-bottom: 18px;
 }
+
 .modalButtonSave {
     width: 127px;
     height: 36px;
@@ -143,11 +152,13 @@
     text-decoration: none;
     display: inline-block;
 }
+
 .modalButtonSave:hover {
     border: 2px solid #4CAF50;
     background-color: white;
     color: #4CAF50;
 }
+
 .modalButtonCancel {
     width: 127px;
     height: 36px;
@@ -162,27 +173,54 @@
     text-decoration: none;
     display: inline-block;
 }
+
 .modalButtonCancel:hover {
     border: 2px solid red;
     background-color: white;
     color: red;
 }
+
 .modalInputBox {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 20px
-
 }
+
 .modalSpan {
     display: flex;
     line-height: 20px;
     font-size: 15px;
     color: dimgray;
 }
+
 .modalDelete {
     margin: 20px auto;
 }
+
 .modalSpanPackName {
     font-weight: bold;
 }
+
+.fileButton {
+    color: lime;
+    padding: 5px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    margin: 10px auto 0;
+    cursor: pointer;
+    user-select: none;
+    background-color: white;
+    font-size: 15px;
+}
+
+.fileButton:hover {
+    color: green;
+    font-weight: bold;
+}
+
+.questionImg, .answerImg {
+    width: 100%;
+}
+
