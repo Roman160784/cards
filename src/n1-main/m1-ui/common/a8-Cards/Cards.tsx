@@ -81,53 +81,6 @@ export const Cards = () => {
         setAnswer(e.currentTarget.value)
     }
 
-    // const onChangeQuestionImg = (e: ChangeEvent<HTMLInputElement>) => {
-    //     debugger
-    //     const newImgQuestion = e.target.files && e.target.files[0]
-    //     if (newImgQuestion) {
-    //         debugger
-    //         const reader = new FileReader()
-    //         reader.onloadend = () => {
-    //             if (typeof reader.result === 'string') {
-    //                 const base64Img = reader.result
-    //                 if (cardsPack_id)
-    //                     dispatch(updateNameCardTC({
-    //                         cardsPack_id: cardsPack_id,
-    //                         _id: _id,
-    //                         question: '',
-    //                         answer: '',
-    //                         questionImg: base64Img
-    //                     }))
-    //             }
-    //         }
-    //         reader.readAsDataURL(newImgQuestion)
-    //     }
-    // }
-
-    // const onChangeAnswerImg = (e: ChangeEvent<HTMLInputElement>) => {
-    //     debugger
-    //     console.log("file")
-    //     const newImgAnswer = e.target.files && e.target.files[0]
-    //     if (newImgAnswer) {
-    //         // setFileURL(window.URL.createObjectURL(newImgQuestion))
-    //         const reader = new FileReader()
-    //         reader.onloadend = () => {
-    //             if (typeof reader.result === 'string') {
-    //                 const base64Img = reader.result
-    //                 if (cardsPack_id)
-    //                     dispatch(updateNameCardTC({
-    //                         cardsPack_id: cardsPack_id,
-    //                         _id: _id,
-    //                         question: '',
-    //                         answer: '',
-    //                         answerImg: base64Img
-    //                     }));
-    //             }
-    //         }
-    //         reader.readAsDataURL(newImgAnswer)
-    //     }
-    // }
-
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && newQuestion.trim() !== '' && newAnswer.trim() !== '') {
             if (questionImg != null && answerImg != null) {
@@ -188,30 +141,6 @@ export const Cards = () => {
                                 placeholder={'Enter your question..'}
                                 autoFocus
                             />
-                        {/*    <div>*/}
-                        {/*        <img className={classes.questionImg}*/}
-                        {/*             alt={'questionImg'}*/}
-                        {/*             src={!questionImg*/}
-                        {/*                 ? "http://storge.pic2.me/c/1360x800/703/55510c0f6e924.jpg"*/}
-                        {/*                 : questionImg}*/}
-                        {/*        />*/}
-                        {/*    </div>*/}
-                        {/*    <input*/}
-                        {/*        type={'file'}*/}
-                        {/*        name={'image'}*/}
-                        {/*        ref={inputRef}*/}
-                        {/*        style={{display: 'none'}}*/}
-                        {/*        onChange={onChangeQuestionImg}*/}
-                        {/*        className={classes.modalInput}*/}
-                        {/*    />*/}
-                        {/*</div>*/}
-                        {/*<div>*/}
-                        {/*    <button className={classes.fileButton}*/}
-                        {/*            onClick={() => {*/}
-                        {/*                inputRef && inputRef.current && inputRef.current.click()*/}
-                        {/*            }}> + Attach file*/}
-                        {/*    </button>*/}
-                        {/*</div>*/}
                         </div>
                         <div className={classes.modalInputAnswer}>
                             <span className={classes.modalSpan}>Answer</span>
@@ -223,29 +152,6 @@ export const Cards = () => {
                                 placeholder={'Enter your answer...'}
                                 autoFocus
                             />
-                            {/*<div>*/}
-                            {/*    <img className={classes.answerImg}*/}
-                            {/*         alt={'answerImg'}*/}
-                            {/*         src={!answerImg*/}
-                            {/*             ? "http://media.kg-portal.ru/movies/m/madagascar2/trailers/4721t.jpg"*/}
-                            {/*             : answerImg}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            {/*<input*/}
-                            {/*    type={'file'}*/}
-                            {/*    name={'image'}*/}
-                            {/*    ref={inputRef}*/}
-                            {/*    style={{display: 'none'}}*/}
-                            {/*    onChange={onChangeAnswerImg}*/}
-                            {/*    className={classes.modalInput}*/}
-                            {/*/>*/}
-                            {/*<div>*/}
-                            {/*    <button className={classes.fileButton}*/}
-                            {/*            onClick={() => {*/}
-                            {/*                inputRef && inputRef.current && inputRef.current.click()*/}
-                            {/*            }}> + Attach file*/}
-                            {/*    </button>*/}
-                            {/*</div>*/}
                         </div>
                     </div>
                     <div className={classes.btnModalWrap}>
