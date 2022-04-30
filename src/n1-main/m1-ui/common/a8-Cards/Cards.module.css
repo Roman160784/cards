@@ -53,7 +53,8 @@
 }
 
 .textHeader {
-    width: 150px;
+    width: 130px;
+    text-align: center;
 }
 
 .btnDel {
@@ -84,7 +85,8 @@
 }
 
 .textCard {
-    width: 150px;
+    width: 130px;
+    text-align: center;
 }
 
 .buttonCard {
