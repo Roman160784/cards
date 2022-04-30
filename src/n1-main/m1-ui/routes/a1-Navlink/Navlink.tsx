@@ -13,24 +13,24 @@ export const Nav = () => {
                     Login
                 </NavLink>
             </div>
-            <div>
-                <NavLink to={pathEnum.registration}
-                         className={({isActive}) => `${isActive ? classes.active : classes.link}`}>
-                    Registration
-                </NavLink>
-            </div>
-            <div>
-                <NavLink to={pathEnum.forgotPassword}
-                         className={({isActive}) => `${isActive ? classes.active : classes.link}`}>
-                    Forgot Password
-                </NavLink>
-            </div>
-            <div>
-                <NavLink to={pathEnum.newPassword}
-                         className={({isActive}) => `${isActive ? classes.active : classes.link}`}>
-                    New Password
-                </NavLink>
-            </div>
+            {/*<div>*/}
+            {/*    <NavLink to={pathEnum.registration}*/}
+            {/*             className={({isActive}) => `${isActive ? classes.active : classes.link}`}>*/}
+            {/*        Registration*/}
+            {/*    </NavLink>*/}
+            {/*</div>*/}
+            {/*<div>*/}
+            {/*    <NavLink to={pathEnum.forgotPassword}*/}
+            {/*             className={({isActive}) => `${isActive ? classes.active : classes.link}`}>*/}
+            {/*        Forgot Password*/}
+            {/*    </NavLink>*/}
+            {/*</div>*/}
+            {/*<div>*/}
+            {/*    <NavLink to={pathEnum.newPassword}*/}
+            {/*             className={({isActive}) => `${isActive ? classes.active : classes.link}`}>*/}
+            {/*        New Password*/}
+            {/*    </NavLink>*/}
+            {/*</div>*/}
             <div>
                 <NavLink to={pathEnum.profile}
                          className={({isActive}) => `${isActive ? classes.active : classes.link}`}>
@@ -43,12 +43,12 @@ export const Nav = () => {
                     Packs
                 </NavLink>
             </div>
-            <div>
-                <NavLink to={pathEnum.test}
-                         className={({isActive}) => `${isActive ? classes.active : classes.link}`}>
-                    Test
-                </NavLink>
-            </div>
+            {/*<div>*/}
+            {/*    <NavLink to={pathEnum.test}*/}
+            {/*             className={({isActive}) => `${isActive ? classes.active : classes.link}`}>*/}
+            {/*        Test*/}
+            {/*    </NavLink>*/}
+            {/*</div>*/}
         </nav>
     )
 }

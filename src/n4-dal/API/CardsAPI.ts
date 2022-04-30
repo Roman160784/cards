@@ -64,11 +64,12 @@ export type getPackOfCardArgsType = {
 }
 //api
 export const packCardsAPI = {
-    getPackOfCards(args : getPackOfCardArgsType) {
+    getPackOfCards(args: getPackOfCardArgsType) {
         return instance.get<CardPacksResponseType>(`/cards/pack`, {params: args})
     },
     addPackOfCards(cardsPack: AddCardPackType) {
-        return instance.post<AddCardPackType, AxiosResponse<NewCardPackResponseType>>('cards/pack', {cardsPack: {name: cardsPack.name}})
+        return instance.post<AddCardPackType, AxiosResponse<NewCardPackResponseType>>('cards/pack',
+            {cardsPack: {name: cardsPack.name}})
     },
     removePackOfCards(id: string) {
         return instance.delete(`/cards/pack?id=${id}`)
@@ -79,16 +80,15 @@ export const packCardsAPI = {
 }
 
 
-
 //type for get cards payload
 export type getCardsPayloadType = {
     cardsPack_id: string
     cardAnswer: string
     cardQuestion: string
     min?: number
-    max?:number
+    max?: number
     sortCards?: string
-    page?:number
+    page?: number
     pageCount?: number
 }
 //api
@@ -122,14 +122,14 @@ export const cardsApi = {
 // types
 
 export type CardsGradeResponseType = {
-    updatedGrade:{
-    _id: string
-    cardsPack_id: string
-    card_id: string
-    user_id: string
-    grade: number
-    shots: number
-}
+    updatedGrade: {
+        _id: string
+        cardsPack_id: string
+        card_id: string
+        user_id: string
+        grade: number
+        shots: number
+    }
 }
 
 export type NewCardPackResponseType = {
