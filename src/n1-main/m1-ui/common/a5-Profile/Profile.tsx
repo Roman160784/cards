@@ -69,16 +69,9 @@ export const Profile = () => {
             <div className={classes.profileBoxUserName}>
                 <div className={classes.profileUser}>
                     <div>
-                        {/*<input type="image"*/}
-                        {/*       name="image"*/}
-                        {/*       alt="img"*/}
-                        {/*       src="https://i.pinimg.com/736x/20/5d/95/205d9582975737a8b02fb1e5bbc02fd5.jpg"*/}
-                        {/*       width="150"*/}
-                        {/*       className={classes.profileImg}*/}
-
-                        {/*/>*/}
                         <div>
-                            <img style={{width: '190px', height: '210px'}} className={classes.profileImg} alt={'avatar'}
+                            <img style={{width: '100%', borderRadius: '5px'}} className={classes.profileImg}
+                                 alt={'avatar'}
                                  src={!avatar
                                      ? "https://i.pinimg.com/736x/20/5d/95/205d9582975737a8b02fb1e5bbc02fd5.jpg"
                                      : avatar}/>
